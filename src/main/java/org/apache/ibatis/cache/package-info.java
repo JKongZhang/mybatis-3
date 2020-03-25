@@ -15,5 +15,6 @@
  */
 /**
  * Base package for caching stuff
+ * 缓存处理
  */
 package org.apache.ibatis.cache;

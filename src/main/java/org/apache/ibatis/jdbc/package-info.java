@@ -15,5 +15,6 @@
  */
 /**
  * Utilities for JDBC.
+ * JDBC 模块
  */
 package org.apache.ibatis.jdbc;
