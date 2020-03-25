@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.ibatis.session.SqlSession</OriginalElement>
+  <nodes>
+    <node x="170.0" y="240.0">org.apache.ibatis.session.SqlSessionManager</node>
+    <node x="109.25" y="80.0">java.io.Closeable</node>
+    <node x="0.0" y="240.0">org.apache.ibatis.session.defaults.DefaultSqlSession</node>
+    <node x="96.25" y="0.0">java.lang.AutoCloseable</node>
+    <node x="107.75" y="160.0">org.apache.ibatis.session.SqlSession</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.ibatis.session.SqlSession" target="java.io.Closeable">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.session.SqlSessionManager" target="org.apache.ibatis.session.SqlSession">
+      <point x="0.0" y="-15.0" />
+      <point x="249.5" y="215.0" />
+      <point x="189.5" y="215.0" />
+      <point x="27.25" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.session.defaults.DefaultSqlSession" target="org.apache.ibatis.session.SqlSession">
+      <point x="0.0" y="-15.0" />
+      <point x="75.0" y="215.0" />
+      <point x="135.0" y="215.0" />
+      <point x="-27.25" y="15.0" />
+    </edge>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="66.0" y="95.0" />
+  <SelectedNodes>
+    <node>org.apache.ibatis.session.SqlSession</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
