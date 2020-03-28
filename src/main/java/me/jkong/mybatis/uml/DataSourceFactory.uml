@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.ibatis.datasource.DataSourceFactory</OriginalElement>
+  <nodes>
+    <node x="8.0" y="160.0">org.apache.ibatis.datasource.pooled.PooledDataSourceFactory</node>
+    <node x="0.0" y="80.0">org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory</node>
+    <node x="231.0" y="80.0">org.apache.ibatis.datasource.jndi.JndiDataSourceFactory</node>
+    <node x="134.75" y="0.0">org.apache.ibatis.datasource.DataSourceFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.ibatis.datasource.jndi.JndiDataSourceFactory" target="org.apache.ibatis.datasource.DataSourceFactory">
+      <point x="0.0" y="-15.0" />
+      <point x="320.0" y="55.0" />
+      <point x="251.75" y="55.0" />
+      <point x="39.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory" target="org.apache.ibatis.datasource.DataSourceFactory">
+      <point x="0.0" y="-15.0" />
+      <point x="105.5" y="55.0" />
+      <point x="173.75" y="55.0" />
+      <point x="-39.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.datasource.pooled.PooledDataSourceFactory" target="org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="78.0" y="15.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.ibatis.exceptions.PersistenceException</OriginalElement>
+  <nodes>
+    <node x="1095.25" y="80.0">java.lang.Throwable</node>
+    <node x="2129.5" y="530.0">org.apache.ibatis.exceptions.TooManyResultsException</node>
+    <node x="1226.0" y="400.0">org.apache.ibatis.exceptions.PersistenceException</node>
+    <node x="1769.5" y="530.0">org.apache.ibatis.scripting.ScriptingException</node>
+    <node x="766.5" y="530.0">org.apache.ibatis.cache.CacheException</node>
+    <node x="207.0" y="610.0">org.apache.ibatis.builder.IncompleteElementException</node>
+    <node x="1944.5" y="530.0">org.apache.ibatis.session.SqlSessionException</node>
+    <node x="407.5" y="530.0">org.apache.ibatis.datasource.DataSourceException</node>
+    <node x="2541.5" y="530.0">org.apache.ibatis.type.TypeException</node>
+    <node x="1401.5" y="530.0">org.apache.ibatis.reflection.ReflectionException</node>
+    <node x="927.5" y="530.0">org.apache.ibatis.logging.LogException</node>
+    <node x="2348.5" y="530.0">org.apache.ibatis.transaction.TransactionException</node>
+    <node x="598.5" y="530.0">org.apache.ibatis.binding.BindingException</node>
+    <node x="1583.5" y="530.0">org.apache.ibatis.executor.result.ResultMapException</node>
+    <node x="1317.0" y="320.0">java.lang.SuppressWarnings</node>
+    <node x="1247.25" y="240.0">java.lang.Deprecated</node>
+    <node x="15.5" y="530.0">org.apache.ibatis.executor.ExecutorException</node>
+    <node x="1074.25" y="240.0">java.lang.RuntimeException</node>
+    <node x="241.5" y="530.0">org.apache.ibatis.builder.BuilderException</node>
+    <node x="1073.5" y="530.0">org.apache.ibatis.parsing.ParsingException</node>
+    <node x="1097.75" y="160.0">java.lang.Exception</node>
+    <node x="1092.75" y="0.0">java.io.Serializable</node>
+    <node x="1160.0" y="320.0">org.apache.ibatis.exceptions.IbatisException</node>
+    <node x="1241.5" y="530.0">org.apache.ibatis.plugin.PluginException</node>
+    <node x="0.0" y="610.0">org.apache.ibatis.executor.BatchExecutorException</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.ibatis.cache.CacheException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="837.0" y="490.0" />
+      <point x="1277.3" y="490.0" />
+      <point x="-34.200000000000045" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.TypeException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="2609.0" y="450.0" />
+      <point x="1391.3000000000002" y="450.0" />
+      <point x="79.80000000000018" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.reflection.ReflectionException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="1482.5" y="510.0" />
+      <point x="1322.9" y="510.0" />
+      <point x="11.400000000000091" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.plugin.PluginException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.executor.BatchExecutorException" target="org.apache.ibatis.executor.ExecutorException">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.logging.LogException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="990.5" y="500.0" />
+      <point x="1288.7" y="500.0" />
+      <point x="-22.799999999999955" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.exceptions.PersistenceException" target="java.lang.SuppressWarnings">
+      <point x="42.75" y="-15.0" />
+      <point x="1354.25" y="375.0" />
+      <point x="1394.5" y="375.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="java.lang.Throwable" target="java.io.Serializable">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.builder.BuilderException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="314.5" y="460.0" />
+      <point x="1243.1" y="460.0" />
+      <point x="-68.40000000000009" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.parsing.ParsingException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="1147.5" y="510.0" />
+      <point x="1300.1" y="510.0" />
+      <point x="-11.400000000000091" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.exceptions.TooManyResultsException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="2229.0" y="470.0" />
+      <point x="1368.5" y="470.0" />
+      <point x="57.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.executor.ExecutorException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="93.5" y="450.0" />
+      <point x="1231.7" y="450.0" />
+      <point x="-79.79999999999995" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.exceptions.IbatisException" target="java.lang.Deprecated">
+      <point x="34.25" y="-15.0" />
+      <point x="1262.75" y="295.0" />
+      <point x="1306.25" y="295.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.scripting.ScriptingException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="1847.0" y="490.0" />
+      <point x="1345.7" y="490.0" />
+      <point x="34.200000000000045" y="15.0" />
+    </edge>
+    <edge source="java.lang.RuntimeException" target="java.lang.Exception">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.session.SqlSessionException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="2027.0" y="480.0" />
+      <point x="1357.1000000000001" y="480.0" />
+      <point x="45.600000000000136" y="15.0" />
+    </edge>
+    <edge source="java.lang.Exception" target="java.lang.Throwable">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.executor.result.ResultMapException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="1666.5" y="500.0" />
+      <point x="1334.3" y="500.0" />
+      <point x="22.799999999999955" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.binding.BindingException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="672.5" y="480.0" />
+      <point x="1265.9" y="480.0" />
+      <point x="-45.59999999999991" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.exceptions.PersistenceException" target="org.apache.ibatis.exceptions.IbatisException">
+      <point x="-42.75" y="-15.0" />
+      <point x="1268.75" y="375.0" />
+      <point x="1228.5" y="375.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.exceptions.IbatisException" target="java.lang.RuntimeException">
+      <point x="-34.25" y="-15.0" />
+      <point x="1194.25" y="295.0" />
+      <point x="1150.75" y="295.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.datasource.DataSourceException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="493.0" y="470.0" />
+      <point x="1254.5" y="470.0" />
+      <point x="-57.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.transaction.TransactionException" target="org.apache.ibatis.exceptions.PersistenceException">
+      <point x="0.0" y="-15.0" />
+      <point x="2435.0" y="460.0" />
+      <point x="1379.9" y="460.0" />
+      <point x="68.40000000000009" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.builder.IncompleteElementException" target="org.apache.ibatis.builder.BuilderException">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8405797101449275" x="1608.0" y="300.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
