@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.datasource.unpooled;
 
@@ -38,20 +38,48 @@ import org.apache.ibatis.io.Resources;
  */
 public class UnpooledDataSource implements DataSource {
 
+  /**
+   * Driver 类加载器
+   */
   private ClassLoader driverClassLoader;
+  /**
+   * Driver 属性
+   */
   private Properties driverProperties;
+  /**
+   * 已注册的 Driver 映射
+   * <p>
+   * KEY：Driver 类名
+   * VALUE：Driver 对象
+   */
   private static Map<String, Driver> registeredDrivers = new ConcurrentHashMap<>();
 
+  /**
+   * - 数据库 driver name
+   * - 数据库url
+   * - 数据库用户名
+   * - 数据库用户密码
+   */
   private String driver;
   private String url;
   private String username;
   private String password;
 
+  /**
+   * 是否自动提交事务
+   */
   private Boolean autoCommit;
+  /**
+   * 指定事务默认隔离级别
+   */
   private Integer defaultTransactionIsolationLevel;
+  /**
+   * 默认数据库连接超时设置
+   */
   private Integer defaultNetworkTimeout;
 
   static {
+    // 初始化 registeredDrivers todo 赞
     Enumeration<Driver> drivers = DriverManager.getDrivers();
     while (drivers.hasMoreElements()) {
       Driver driver = drivers.nextElement();
@@ -90,6 +118,12 @@ public class UnpooledDataSource implements DataSource {
     this.driverProperties = driverProperties;
   }
 
+  /**
+   * 获得 Connection 连接
+   *
+   * @return {@link Connection}
+   * @throws SQLException e
+   */
   @Override
   public Connection getConnection() throws SQLException {
     return doGetConnection(username, password);
@@ -194,39 +228,61 @@ public class UnpooledDataSource implements DataSource {
   /**
    * Sets the default network timeout value to wait for the database operation to complete. See {@link Connection#setNetworkTimeout(java.util.concurrent.Executor, int)}
    *
-   * @param defaultNetworkTimeout
-   *          The time in milliseconds to wait for the database operation to complete.
+   * @param defaultNetworkTimeout The time in milliseconds to wait for the database operation to complete.
    * @since 3.5.2
    */
   public void setDefaultNetworkTimeout(Integer defaultNetworkTimeout) {
     this.defaultNetworkTimeout = defaultNetworkTimeout;
   }
 
+  /**
+   * 真正获取 Connection 连接
+   *
+   * @param username 用户名
+   * @param password 密码
+   * @return {@link Connection}
+   * @throws SQLException
+   */
   private Connection doGetConnection(String username, String password) throws SQLException {
+    // 创建 Properties 对象
     Properties props = new Properties();
     if (driverProperties != null) {
+      // 将驱动配置添加到当前Properties对象中
       props.putAll(driverProperties);
     }
+    // 设置用户名
     if (username != null) {
       props.setProperty("user", username);
     }
+    // 设置密码
     if (password != null) {
       props.setProperty("password", password);
     }
+    // 获取 Connection
     return doGetConnection(props);
   }
 
   private Connection doGetConnection(Properties properties) throws SQLException {
+    // 1. 初始化 Driver
     initializeDriver();
+    // 2. 获得 Connection 对象
     Connection connection = DriverManager.getConnection(url, properties);
+    // 3. 配置 Connection 对象
     configureConnection(connection);
     return connection;
   }
 
+  /**
+   * 获取当前数据库连接的驱动
+   *
+   * @throws SQLException e
+   */
   private synchronized void initializeDriver() throws SQLException {
+    // 1. 判断 registeredDrivers 是否已经存在该 driver ，若不存在，进行初始化
     if (!registeredDrivers.containsKey(driver)) {
       Class<?> driverType;
       try {
+        // 2. 获得 driver 类
         if (driverClassLoader != null) {
           driverType = Class.forName(driver, true, driverClassLoader);
         } else {
@@ -234,8 +290,12 @@ public class UnpooledDataSource implements DataSource {
         }
         // DriverManager requires the driver to be loaded via the system ClassLoader.
         // http://www.kfu.com/~nsayer/Java/dyn-jdbc.html
-        Driver driverInstance = (Driver)driverType.getDeclaredConstructor().newInstance();
+        // 3. 创建 Driver 对象
+        Driver driverInstance = (Driver) driverType.getDeclaredConstructor().newInstance();
+        // 4. 创建 DriverProxy 对象，并注册到 DriverManager 中
+        // todo 为什么此处会有使用 DriverProxy 呢？
         DriverManager.registerDriver(new DriverProxy(driverInstance));
+        // 5. 添加到 registeredDrivers 中
         registeredDrivers.put(driver, driverInstance);
       } catch (Exception e) {
         throw new SQLException("Error setting driver on UnpooledDataSource. Cause: " + e);
@@ -244,17 +304,23 @@ public class UnpooledDataSource implements DataSource {
   }
 
   private void configureConnection(Connection conn) throws SQLException {
+    // 1. 设置超时时间
     if (defaultNetworkTimeout != null) {
       conn.setNetworkTimeout(Executors.newSingleThreadExecutor(), defaultNetworkTimeout);
     }
+    // 2. 设置是否自动提交
     if (autoCommit != null && autoCommit != conn.getAutoCommit()) {
       conn.setAutoCommit(autoCommit);
     }
+    // 3. 设置事务隔离级别
     if (defaultTransactionIsolationLevel != null) {
       conn.setTransactionIsolation(defaultTransactionIsolationLevel);
     }
   }
 
+  /**
+   * 使用静态代理模式对原生driver能力进行增强
+   */
   private static class DriverProxy implements Driver {
     private Driver driver;
 

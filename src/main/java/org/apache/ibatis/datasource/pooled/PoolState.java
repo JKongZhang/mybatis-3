@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2018 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.datasource.pooled;
 
@@ -25,16 +25,50 @@ public class PoolState {
 
   protected PooledDataSource dataSource;
 
+  /**
+   * 空闲的 PooledConnection 集合
+   */
   protected final List<PooledConnection> idleConnections = new ArrayList<>();
+  /**
+   * 激活的的 PooledConnection 集合
+   */
   protected final List<PooledConnection> activeConnections = new ArrayList<>();
+
+  /**
+   * 全局统计 - 获取连接的次数
+   */
   protected long requestCount = 0;
+  /**
+   * 全局统计 - 获取连接的时间
+   */
   protected long accumulatedRequestTime = 0;
+  /**
+   * 全局统计 - 获取到连接非超时 + 超时的占用时长
+   *
+   * 所以，包括 {@link #accumulatedCheckoutTimeOfOverdueConnections} 部分
+   */
   protected long accumulatedCheckoutTime = 0;
+  /**
+   * 全局统计 - 获取到连接超时的次数
+   */
   protected long claimedOverdueConnectionCount = 0;
+  /**
+   * 全局统计 - 获取到连接超时的占用时长
+   */
   protected long accumulatedCheckoutTimeOfOverdueConnections = 0;
+  /**
+   * 全局统计 - 等待连接的时间
+   */
   protected long accumulatedWaitTime = 0;
+  /**
+   * 全局统计 - 等待连接的次数
+   */
   protected long hadToWaitCount = 0;
+  /**
+   * 全局统计 - 获取到坏的连接的次数
+   */
   protected long badConnectionCount = 0;
+
 
   public PoolState(PooledDataSource dataSource) {
     this.dataSource = dataSource;
