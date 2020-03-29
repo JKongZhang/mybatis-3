@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.transaction.jdbc;
 
@@ -32,16 +32,27 @@ import org.apache.ibatis.transaction.TransactionException;
  * Ignores commit or rollback requests when autocommit is on.
  *
  * @author Clinton Begin
- *
  * @see JdbcTransactionFactory
  */
 public class JdbcTransaction implements Transaction {
 
   private static final Log log = LogFactory.getLog(JdbcTransaction.class);
 
+  /**
+   * Connection 对象
+   */
   protected Connection connection;
+  /**
+   * DataSource 对象
+   */
   protected DataSource dataSource;
+  /**
+   * 事务隔离级别
+   */
   protected TransactionIsolationLevel level;
+  /**
+   * 是否自动提交
+   */
   protected boolean autoCommit;
 
   public JdbcTransaction(DataSource ds, TransactionIsolationLevel desiredLevel, boolean desiredAutoCommit) {
@@ -57,6 +68,7 @@ public class JdbcTransaction implements Transaction {
   @Override
   public Connection getConnection() throws SQLException {
     if (connection == null) {
+      // 如果连接为空，则获取一个新的Connection
       openConnection();
     }
     return connection;
@@ -64,6 +76,7 @@ public class JdbcTransaction implements Transaction {
 
   @Override
   public void commit() throws SQLException {
+    // 如果连接不为空，且非自动提交，将提交事务
     if (connection != null && !connection.getAutoCommit()) {
       if (log.isDebugEnabled()) {
         log.debug("Committing JDBC Connection [" + connection + "]");
@@ -74,6 +87,7 @@ public class JdbcTransaction implements Transaction {
 
   @Override
   public void rollback() throws SQLException {
+    // 如果连接不为空，且非自动提交，将回滚事务
     if (connection != null && !connection.getAutoCommit()) {
       if (log.isDebugEnabled()) {
         log.debug("Rolling back JDBC Connection [" + connection + "]");
@@ -84,6 +98,7 @@ public class JdbcTransaction implements Transaction {
 
   @Override
   public void close() throws SQLException {
+    // 如果连接不为空，并将重置是否自动提交，并且关闭连接。
     if (connection != null) {
       resetAutoCommit();
       if (log.isDebugEnabled()) {
@@ -93,6 +108,11 @@ public class JdbcTransaction implements Transaction {
     }
   }
 
+  /**
+   * 设置指定的 autoCommit 属性
+   *
+   * @param desiredAutoCommit 指定的 autoCommit 属性
+   */
   protected void setDesiredAutoCommit(boolean desiredAutoCommit) {
     try {
       if (connection.getAutoCommit() != desiredAutoCommit) {
@@ -105,11 +125,14 @@ public class JdbcTransaction implements Transaction {
       // Only a very poorly implemented driver would fail here,
       // and there's not much we can do about that.
       throw new TransactionException("Error configuring AutoCommit.  "
-          + "Your driver may not support getAutoCommit() or setAutoCommit(). "
-          + "Requested setting: " + desiredAutoCommit + ".  Cause: " + e, e);
+        + "Your driver may not support getAutoCommit() or setAutoCommit(). "
+        + "Requested setting: " + desiredAutoCommit + ".  Cause: " + e, e);
     }
   }
 
+  /**
+   * 重置 autoCommit 属性
+   */
   protected void resetAutoCommit() {
     try {
       if (!connection.getAutoCommit()) {
@@ -126,19 +149,27 @@ public class JdbcTransaction implements Transaction {
     } catch (SQLException e) {
       if (log.isDebugEnabled()) {
         log.debug("Error resetting autocommit to true "
-            + "before closing the connection.  Cause: " + e);
+          + "before closing the connection.  Cause: " + e);
       }
     }
   }
 
+  /**
+   * 获得 Connection 对象
+   *
+   * @throws SQLException 获得失败
+   */
   protected void openConnection() throws SQLException {
     if (log.isDebugEnabled()) {
       log.debug("Opening JDBC Connection");
     }
+    // 通过DataSource获取Connection对象
     connection = dataSource.getConnection();
     if (level != null) {
+      // 设置事务等级
       connection.setTransactionIsolation(level.getLevel());
     }
+    // 设置是否自动提交
     setDesiredAutoCommit(autoCommit);
   }
 
