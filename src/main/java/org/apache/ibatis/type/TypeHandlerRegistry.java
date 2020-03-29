@@ -56,14 +56,16 @@ public final class TypeHandlerRegistry {
 
   /**
    * JDBC Type 和 {@link TypeHandler} 的映射
-   *
+   * 一个 JDBC Type 只对应一个 Java Type ，也就是一个 TypeHandler。
+   * <p>
    * {@link #register(JdbcType, TypeHandler)}
    */
-  private final Map<JdbcType, TypeHandler<?>>  jdbcTypeHandlerMap = new EnumMap<>(JdbcType.class);
+  private final Map<JdbcType, TypeHandler<?>> jdbcTypeHandlerMap = new EnumMap<>(JdbcType.class);
 
   /**
    * {@link TypeHandler} 的映射
-   *
+   * 一个 Java Type 可以对应多个 JDBC Type ，也就是多个 TypeHandler ，所以 Map 的第一层的值是 Map<JdbcType, TypeHandler<?>> 。
+   * <p>
    * KEY1：JDBC Type
    * KEY2：Java Type
    * VALUE：{@link TypeHandler} 对象
@@ -72,19 +74,24 @@ public final class TypeHandlerRegistry {
 
   /**
    * {@link UnknownTypeHandler} 对象
+   * UnknownTypeHandler 对象，用于 Object 类型的注册。
    */
   private final TypeHandler<Object> unknownTypeHandler;
 
   /**
    * 所有 TypeHandler 的“集合”
-   *
+   * <p>
    * KEY：{@link TypeHandler#getClass()}
    * VALUE：{@link TypeHandler} 对象
    */
   private final Map<Class<?>, TypeHandler<?>> allTypeHandlersMap = new HashMap<>();
 
   /**
-   * 空 TypeHandler 集合的标识，即使 {@link #typeHandlerMap} 中，某个 KEY1 对应的 Map<JdbcType, TypeHandler<?>> 为空。
+   * 空 TypeHandler 集合的标识，即使 {@link #typeHandlerMap} 中，
+   * 某个 KEY1 对应的 Map<JdbcType, TypeHandler<?>> 为空。
+   * <p>
+   * 当一个 Java Type 不存在对应的 JDBC Type 时，
+   * 就使用 NULL_TYPE_HANDLER_MAP 静态属性，添加到 TYPE_HANDLER_MAP 中进行占位。
    *
    * @see #getJdbcHandlerMap(Type)
    */
@@ -215,6 +222,7 @@ public final class TypeHandlerRegistry {
   /**
    * Set a default {@link TypeHandler} class for {@link Enum}.
    * A default {@link TypeHandler} is {@link org.apache.ibatis.type.EnumTypeHandler}.
+   *
    * @param typeHandler a type handler class for {@link Enum}
    * @since 3.4.5
    */
