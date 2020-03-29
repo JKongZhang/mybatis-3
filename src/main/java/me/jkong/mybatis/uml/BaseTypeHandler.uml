@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.ibatis.type.ArrayTypeHandler</OriginalElement>
+  <nodes>
+    <node x="140.92307692307702" y="80.0">java.lang.Enum</node>
+    <node x="424.0" y="265.0">org.apache.ibatis.type.MappedJdbcTypes</node>
+    <node x="745.75" y="0.0">org.apache.ibatis.type.TypeReference</node>
+    <node x="1252.0" y="190.0">org.apache.ibatis.type.ObjectTypeHandler</node>
+    <node x="203.4719432527532" y="384.12130547534684">org.apache.ibatis.type.TypeAliasRegistry</node>
+    <node x="1005.0" y="265.0">org.apache.ibatis.type.MappedTypes</node>
+    <node x="0.0" y="190.0">org.apache.ibatis.type.JdbcType</node>
+    <node x="0.0" y="265.0">org.apache.ibatis.type.TypeHandlerRegistry</node>
+    <node x="521.0" y="190.0">org.apache.ibatis.type.DateOnlyTypeHandler</node>
+    <node x="903.0" y="190.0">org.apache.ibatis.type.DateTypeHandler</node>
+    <node x="718.0" y="190.0">org.apache.ibatis.type.IntegerTypeHandler</node>
+    <node x="1075.0" y="190.0">org.apache.ibatis.type.StringTypeHandler</node>
+    <node x="302.00000000000006" y="190.0">org.apache.ibatis.type.EnumOrdinalTypeHandler</node>
+    <node x="125.0" y="190.0">org.apache.ibatis.type.EnumTypeHandler</node>
+    <node x="216.0" y="265.0">org.apache.ibatis.type.SimpleTypeRegistry</node>
+    <node x="902.75" y="0.0">org.apache.ibatis.type.TypeHandler</node>
+    <node x="825.0" y="265.0">org.apache.ibatis.type.TypeException</node>
+    <node x="1435.0" y="190.0">org.apache.ibatis.type.UnknownTypeHandler</node>
+    <node x="813.75" y="80.0">org.apache.ibatis.type.BaseTypeHandler</node>
+    <node x="1183.0" y="265.0">org.apache.ibatis.type.ByteArrayUtils</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.ibatis.type.ObjectTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="0.0" y="-15.0" />
+      <point x="1333.5" y="150.0" />
+      <point x="937.25" y="150.0" />
+      <point x="47.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.IntegerTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="0.0" y="-15.0" />
+      <point x="800.5" y="170.0" />
+      <point x="880.25" y="170.0" />
+      <point x="-9.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.BaseTypeHandler" target="org.apache.ibatis.type.TypeReference">
+      <point x="-38.0" y="-15.0" />
+      <point x="851.75" y="55.0" />
+      <point x="814.25" y="55.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.EnumOrdinalTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="49.75" y="-15.0" />
+      <point x="451.25000000000006" y="150.0" />
+      <point x="842.25" y="150.0" />
+      <point x="-47.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.EnumTypeHandler" target="java.lang.Enum">
+      <point x="-39.25" y="-15.0" />
+      <point x="164.25" y="170.0" />
+      <point x="181.92307692307702" y="170.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.DateTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="0.0" y="-15.0" />
+      <point x="979.0" y="170.0" />
+      <point x="899.25" y="170.0" />
+      <point x="9.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.EnumTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="39.25" y="-15.0" />
+      <point x="242.75" y="140.0" />
+      <point x="823.25" y="140.0" />
+      <point x="-66.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.EnumOrdinalTypeHandler" target="java.lang.Enum">
+      <point x="-49.75" y="-15.0" />
+      <point x="351.75000000000006" y="130.0" />
+      <point x="209.2564102564104" y="130.0" />
+      <point x="27.333333333333314" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.StringTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="0.0" y="-15.0" />
+      <point x="1153.5" y="160.0" />
+      <point x="918.25" y="160.0" />
+      <point x="28.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.BaseTypeHandler" target="org.apache.ibatis.type.TypeHandler">
+      <point x="38.0" y="-15.0" />
+      <point x="927.75" y="55.0" />
+      <point x="965.25" y="55.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.JdbcType" target="java.lang.Enum">
+      <point x="0.0" y="-15.0" />
+      <point x="52.5" y="170.0" />
+      <point x="154.58974358974365" y="170.0" />
+      <point x="-27.333333333333343" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.DateOnlyTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="0.0" y="-15.0" />
+      <point x="609.5" y="160.0" />
+      <point x="861.25" y="160.0" />
+      <point x="-28.5" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.type.UnknownTypeHandler" target="org.apache.ibatis.type.BaseTypeHandler">
+      <point x="0.0" y="-15.0" />
+      <point x="1523.5" y="140.0" />
+      <point x="956.25" y="140.0" />
+      <point x="66.5" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7891115667755512" x="958.3154024145508" y="271.0" />
+  <SelectedNodes>
+    <node>org.apache.ibatis.type.TypeAliasRegistry</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

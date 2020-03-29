@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2020 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2020 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.type;
 
@@ -54,13 +54,45 @@ import org.apache.ibatis.session.Configuration;
  */
 public final class TypeHandlerRegistry {
 
+  /**
+   * JDBC Type 和 {@link TypeHandler} 的映射
+   *
+   * {@link #register(JdbcType, TypeHandler)}
+   */
   private final Map<JdbcType, TypeHandler<?>>  jdbcTypeHandlerMap = new EnumMap<>(JdbcType.class);
+
+  /**
+   * {@link TypeHandler} 的映射
+   *
+   * KEY1：JDBC Type
+   * KEY2：Java Type
+   * VALUE：{@link TypeHandler} 对象
+   */
   private final Map<Type, Map<JdbcType, TypeHandler<?>>> typeHandlerMap = new ConcurrentHashMap<>();
+
+  /**
+   * {@link UnknownTypeHandler} 对象
+   */
   private final TypeHandler<Object> unknownTypeHandler;
+
+  /**
+   * 所有 TypeHandler 的“集合”
+   *
+   * KEY：{@link TypeHandler#getClass()}
+   * VALUE：{@link TypeHandler} 对象
+   */
   private final Map<Class<?>, TypeHandler<?>> allTypeHandlersMap = new HashMap<>();
 
+  /**
+   * 空 TypeHandler 集合的标识，即使 {@link #typeHandlerMap} 中，某个 KEY1 对应的 Map<JdbcType, TypeHandler<?>> 为空。
+   *
+   * @see #getJdbcHandlerMap(Type)
+   */
   private static final Map<JdbcType, TypeHandler<?>> NULL_TYPE_HANDLER_MAP = Collections.emptyMap();
 
+  /**
+   * 默认的枚举类型的 TypeHandler 对象
+   */
   private Class<? extends TypeHandler> defaultEnumTypeHandler = EnumTypeHandler.class;
 
   /**
@@ -77,6 +109,7 @@ public final class TypeHandlerRegistry {
    * @since 3.5.4
    */
   public TypeHandlerRegistry(Configuration configuration) {
+    // 类型注册
     this.unknownTypeHandler = new UnknownTypeHandler(configuration);
 
     register(Boolean.class, new BooleanTypeHandler());
@@ -292,7 +325,7 @@ public final class TypeHandlerRegistry {
   }
 
   private Map<JdbcType, TypeHandler<?>> getJdbcHandlerMapForSuperclass(Class<?> clazz) {
-    Class<?> superclass =  clazz.getSuperclass();
+    Class<?> superclass = clazz.getSuperclass();
     if (superclass == null || Object.class.equals(superclass)) {
       return null;
     }
@@ -442,7 +475,9 @@ public final class TypeHandlerRegistry {
   public <T> TypeHandler<T> getInstance(Class<?> javaTypeClass, Class<?> typeHandlerClass) {
     if (javaTypeClass != null) {
       try {
+        // 获得 Class 类型的构造方法
         Constructor<?> c = typeHandlerClass.getConstructor(Class.class);
+        // 符合这个条件的，例如 EnumTypeHandler
         return (TypeHandler<T>) c.newInstance(javaTypeClass);
       } catch (NoSuchMethodException ignored) {
         // ignored
@@ -451,6 +486,7 @@ public final class TypeHandlerRegistry {
       }
     }
     try {
+      // 获得空参的构造方法
       Constructor<?> c = typeHandlerClass.getConstructor();
       return (TypeHandler<T>) c.newInstance();
     } catch (Exception e) {

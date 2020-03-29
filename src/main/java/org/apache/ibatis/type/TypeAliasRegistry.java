@@ -37,6 +37,9 @@ import org.apache.ibatis.io.Resources;
  */
 public class TypeAliasRegistry {
 
+  /**
+   * Java类与别名的映射
+   */
   private final Map<String, Class<?>> typeAliases = new HashMap<>();
 
   public TypeAliasRegistry() {

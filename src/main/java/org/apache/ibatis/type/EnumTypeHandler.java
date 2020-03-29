@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2017 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.type;
 
@@ -27,6 +27,10 @@ public class EnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
 
   private final Class<E> type;
 
+  /**
+   * 设置枚举class
+   * @param type 枚举class
+   */
   public EnumTypeHandler(Class<E> type) {
     if (type == null) {
       throw new IllegalArgumentException("Type argument cannot be null");
@@ -36,6 +40,7 @@ public class EnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
 
   @Override
   public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
+    // 将 Enum 转换成 String 类型
     if (jdbcType == null) {
       ps.setString(i, parameter.name());
     } else {
@@ -45,7 +50,9 @@ public class EnumTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
 
   @Override
   public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    // 获得 String 的值
     String s = rs.getString(columnName);
+    // 将 String 转换成 Enum 类型
     return s == null ? null : Enum.valueOf(type, s);
   }
 

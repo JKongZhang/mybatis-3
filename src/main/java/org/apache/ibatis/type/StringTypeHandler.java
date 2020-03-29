@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2015 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.type;
 
@@ -27,25 +27,29 @@ public class StringTypeHandler extends BaseTypeHandler<String> {
 
   @Override
   public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType)
-      throws SQLException {
+    throws SQLException {
+    // 设置指定位置的参数类型
     ps.setString(i, parameter);
   }
 
   @Override
   public String getNullableResult(ResultSet rs, String columnName)
-      throws SQLException {
+    throws SQLException {
+    // 根据参数名称获取string类型的数据
     return rs.getString(columnName);
   }
 
   @Override
   public String getNullableResult(ResultSet rs, int columnIndex)
-      throws SQLException {
+    throws SQLException {
+    // 根据参数下标位置过去string类型的数据
     return rs.getString(columnIndex);
   }
 
   @Override
   public String getNullableResult(CallableStatement cs, int columnIndex)
-      throws SQLException {
+    throws SQLException {
+    // 根据下标，获取指定位置的数据
     return cs.getString(columnIndex);
   }
 }

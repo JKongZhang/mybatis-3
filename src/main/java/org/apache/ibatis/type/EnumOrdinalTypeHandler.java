@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.type;
 
@@ -25,7 +25,15 @@ import java.sql.SQLException;
  */
 public class EnumOrdinalTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E> {
 
+  /**
+   * 枚举类
+   */
   private final Class<E> type;
+  /**
+   * {@link #type} 下所有的枚举值
+   *
+   * @see Class#getEnumConstants()
+   */
   private final E[] enums;
 
   public EnumOrdinalTypeHandler(Class<E> type) {
@@ -41,15 +49,18 @@ public class EnumOrdinalTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E
 
   @Override
   public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
+    // 将 Enum 转换成 int 类型
     ps.setInt(i, parameter.ordinal());
   }
 
   @Override
   public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    // 获得 int 的值
     int ordinal = rs.getInt(columnName);
     if (ordinal == 0 && rs.wasNull()) {
       return null;
     }
+    // 将 int 转换成 Enum 类型
     return toOrdinalEnum(ordinal);
   }
 
@@ -71,6 +82,12 @@ public class EnumOrdinalTypeHandler<E extends Enum<E>> extends BaseTypeHandler<E
     return toOrdinalEnum(ordinal);
   }
 
+  /**
+   * 将 int 转换成 Enum 类型
+   *
+   * @param ordinal 下标
+   * @return 枚举值
+   */
   private E toOrdinalEnum(int ordinal) {
     try {
       return enums[ordinal];

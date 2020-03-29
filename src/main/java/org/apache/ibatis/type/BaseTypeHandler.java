@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.type;
 
@@ -30,6 +30,10 @@ import org.apache.ibatis.session.Configuration;
  * {@link CallableStatement#wasNull()} method for handling the SQL {@code NULL} value.
  * In other words, {@code null} value handling should be performed on subclass.
  * </p>
+ * 类型转换模块的另一个功能是实现 JDBC 类型与 Java 类型之间的转换，
+ * 该功能在为 SQL 语句绑定实参以及映射查询结果集时都会涉及：
+ * - 在为 SQL 语句绑定实参时，会将数据由 Java 类型转换成 JDBC 类型。
+ * - 而在映射结果集时，会将数据由 JDBC 类型转换成 Java 类型。
  *
  * @author Clinton Begin
  * @author Simone Tripodi
@@ -54,6 +58,7 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
   @Override
   public void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
     if (parameter == null) {
+      // 1. 参数为空时，设置为 null 类型
       if (jdbcType == null) {
         throw new TypeException("JDBC requires that the JdbcType must be specified for all nullable parameters.");
       }
@@ -61,20 +66,29 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
         ps.setNull(i, jdbcType.TYPE_CODE);
       } catch (SQLException e) {
         throw new TypeException("Error setting null for parameter #" + i + " with JdbcType " + jdbcType + " . "
-              + "Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. "
-              + "Cause: " + e, e);
+          + "Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. "
+          + "Cause: " + e, e);
       }
     } else {
+      // 参数非空时，设置对应的参数
       try {
         setNonNullParameter(ps, i, parameter, jdbcType);
       } catch (Exception e) {
         throw new TypeException("Error setting non null for parameter #" + i + " with JdbcType " + jdbcType + " . "
-              + "Try setting a different JdbcType for this parameter or a different configuration property. "
-              + "Cause: " + e, e);
+          + "Try setting a different JdbcType for this parameter or a different configuration property. "
+          + "Cause: " + e, e);
       }
     }
   }
 
+  /**
+   * 调用 {@link #getNullableResult(ResultSet, String)} 抽象方法，获得指定结果的字段值。
+   *
+   * @param rs         ResultSet 对象
+   * @param columnName Column name, when configuration <code>useColumnLabel</code> is <code>false</code> 字段名
+   * @return 处理的结果
+   * @throws SQLException e
+   */
   @Override
   public T getResult(ResultSet rs, String columnName) throws SQLException {
     try {
@@ -84,6 +98,14 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     }
   }
 
+  /**
+   * 调用 {@link #getNullableResult(ResultSet, String)} 抽象方法，获得指定结果的字段值。
+   *
+   * @param rs          ResultSet 对象
+   * @param columnIndex 字段下标
+   * @return 处理的结果
+   * @throws SQLException e
+   */
   @Override
   public T getResult(ResultSet rs, int columnIndex) throws SQLException {
     try {
@@ -93,6 +115,14 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     }
   }
 
+  /**
+   * 调用 {@link #getNullableResult(ResultSet, String)} 抽象方法，获得指定结果的字段值。
+   *
+   * @param cs          CallableStatement 对象，支持调用存储过程
+   * @param columnIndex 字段下标
+   * @return 处理的结果
+   * @throws SQLException e
+   */
   @Override
   public T getResult(CallableStatement cs, int columnIndex) throws SQLException {
     try {
@@ -102,6 +132,15 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     }
   }
 
+  /**
+   * 具体类型转换器实现类型转换能力
+   *
+   * @param ps        PreparedStatement 对象
+   * @param i         参数占位符的位置
+   * @param parameter 参数
+   * @param jdbcType  JDBC 类型
+   * @throws SQLException 当发生 SQL 异常时
+   */
   public abstract void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;
 
   /**
