@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.cache;
 
@@ -47,18 +47,24 @@ public interface Cache {
   String getId();
 
   /**
-   * @param key Can be any object but usually it is a {@link CacheKey}
+   * 将数据存于缓存中
+   *
+   * @param key   Can be any object but usually it is a {@link CacheKey}
    * @param value The result of a select.
    */
   void putObject(Object key, Object value);
 
   /**
+   * 根据key获取值value
+   *
    * @param key The key
    * @return The object stored in the cache.
    */
   Object getObject(Object key);
 
   /**
+   * 根据key移除指定值
+   * <p>
    * As of 3.3.0 this method is only called during a rollback
    * for any previous value that was missing in the cache.
    * This lets any blocking cache to release the lock that
@@ -68,7 +74,6 @@ public interface Cache {
    * This way other threads will wait for the value to be
    * available instead of hitting the database.
    *
-   *
    * @param key The key
    * @return Not used
    */
@@ -76,11 +81,13 @@ public interface Cache {
 
   /**
    * Clears this cache instance.
+   * 清空缓存中的数据
    */
   void clear();
 
   /**
    * Optional. This method is not called by the core.
+   * 获得容器中缓存的数量
    *
    * @return The number of elements stored in the cache (not its capacity).
    */
@@ -90,6 +97,8 @@ public interface Cache {
    * Optional. As of 3.2.6 this method is no longer called by the core.
    * <p>
    * Any locking needed by the cache must be provided internally by the cache provider.
+   * <p>
+   * 获得读取写锁。该方法可以忽略了已经。
    *
    * @return A ReadWriteLock
    */

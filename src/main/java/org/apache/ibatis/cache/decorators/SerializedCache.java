@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.cache.decorators;
 
@@ -29,10 +29,14 @@ import org.apache.ibatis.cache.CacheException;
 import org.apache.ibatis.io.Resources;
 
 /**
+ * 实现 Cache 接口，支持序列化值的 Cache 实现类。
+ *
  * @author Clinton Begin
  */
 public class SerializedCache implements Cache {
-
+  /**
+   * 装饰的 Cache 对象
+   */
   private final Cache delegate;
 
   public SerializedCache(Cache delegate) {
@@ -52,8 +56,10 @@ public class SerializedCache implements Cache {
   @Override
   public void putObject(Object key, Object object) {
     if (object == null || object instanceof Serializable) {
+      // 先将数据序列化，然后再存入缓存。
       delegate.putObject(key, serialize((Serializable) object));
     } else {
+      // 如果需要存入的对象未实现serializable接口，将会抛出异常。
       throw new CacheException("SharedCache failed to make a copy of a non-serializable object: " + object);
     }
   }
@@ -61,6 +67,7 @@ public class SerializedCache implements Cache {
   @Override
   public Object getObject(Object key) {
     Object object = delegate.getObject(key);
+    // 如果存在，则先将数据反序列化后，在返回
     return object == null ? null : deserialize((byte[]) object);
   }
 

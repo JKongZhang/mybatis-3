@@ -16,6 +16,8 @@
 package org.apache.ibatis.cache;
 
 /**
+ * 从 3.5.3 版本开始弃用，可以参见 {@link CacheKey#NULL_CACHE_KEY}
+ *
  * @author Clinton Begin
  * @deprecated Since 3.5.3, This class never used and will be removed future version.
  */
