@@ -142,13 +142,24 @@ public class Reflector {
    * @param clazz 指定类class
    */
   private void addGetMethods(Class<?> clazz) {
+    // 属性与其 getting 方法的映射。
     Map<String, List<Method>> conflictingGetters = new HashMap<>();
+    // 获取所有的方法（去重）
     Method[] methods = getClassMethods(clazz);
-    Arrays.stream(methods).filter(m -> m.getParameterTypes().length == 0 && PropertyNamer.isGetter(m.getName()))
+    Arrays.stream(methods)
+      // 参数大于 0 ，说明不是 getter 方法，忽略
+      // 以 get 和 is 方法名开头，说明是 getter 方法
+      .filter(m -> m.getParameterTypes().length == 0 && PropertyNamer.isGetter(m.getName()))
+      // 获取属性名称，并添加到 conflictingGetters
       .forEach(m -> addMethodConflict(conflictingGetters, PropertyNamer.methodToProperty(m.getName()), m));
+    // 解决 getting 冲突方法
     resolveGetterConflicts(conflictingGetters);
   }
 
+  /**
+   * todo 继续
+   * @param conflictingGetters
+   */
   private void resolveGetterConflicts(Map<String, List<Method>> conflictingGetters) {
     for (Entry<String, List<Method>> entry : conflictingGetters.entrySet()) {
       Method winner = null;
@@ -331,23 +342,25 @@ public class Reflector {
    * @return An array containing all methods in this class
    */
   private Method[] getClassMethods(Class<?> clazz) {
+    // 唯一的方法
     Map<String, Method> uniqueMethods = new HashMap<>();
     Class<?> currentClass = clazz;
     while (currentClass != null && currentClass != Object.class) {
       addUniqueMethods(uniqueMethods, currentClass.getDeclaredMethods());
 
-      // we also need to look for interface methods -
-      // because the class may be abstract
+      // we also need to look for interface methods - because the class may be abstract
+      // 因为当前的类存在是抽象类的可能，所以需要记录接口中定义的方法
       Class<?>[] interfaces = currentClass.getInterfaces();
       for (Class<?> anInterface : interfaces) {
         addUniqueMethods(uniqueMethods, anInterface.getMethods());
       }
-
+      // 获得父类
       currentClass = currentClass.getSuperclass();
     }
 
+    // 转换成 Method 数组返回
     Collection<Method> methods = uniqueMethods.values();
-
+    // todo 为什么是一个 new Method[0] 而不是 new Method[methods.size()]？？？
     return methods.toArray(new Method[0]);
   }
 
@@ -355,11 +368,14 @@ public class Reflector {
     for (Method currentMethod : methods) {
       // 忽略 bridge 方法，参见 https://www.zhihu.com/question/54895701/answer/141623158 文章
       if (!currentMethod.isBridge()) {
+        // 获得方法签名
         String signature = getSignature(currentMethod);
         // check to see if the method is already known
         // if it is known, then an extended class must have
         // overridden a method
+        // 当 uniqueMethods 不存在时，进行添加
         if (!uniqueMethods.containsKey(signature)) {
+          // 添加到 uniqueMethods 中
           uniqueMethods.put(signature, currentMethod);
         }
       }
