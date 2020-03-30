@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Insert {
   /**
-   * Returns an SQL for inserting record(s).
+   * Returns an SQL for inserting record(s).插入语句
    *
    * @return an SQL for inserting record(s)
    */

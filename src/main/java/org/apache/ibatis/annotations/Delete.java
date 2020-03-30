@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Delete {
   /**
-   * Returns an SQL for deleting record(s).
+   * Returns an SQL for deleting record(s).删除语句
    *
    * @return an SQL for deleting record(s)
    */

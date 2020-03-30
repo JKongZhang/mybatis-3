@@ -24,7 +24,7 @@ import org.apache.ibatis.mapping.FetchType;
 
 /**
  * The annotation that specify the nested statement for retrieving collections.
- *
+ * 复杂类型的集合属性值的注解。
  * @see Result
  * @see Results
  * @author Clinton Begin
@@ -35,6 +35,7 @@ import org.apache.ibatis.mapping.FetchType;
 public @interface Many {
   /**
    * Returns the statement id that retrieves collection.
+   * 已映射语句（也就是映射器方法）的全限定名
    *
    * @return the statement id
    */
@@ -42,6 +43,7 @@ public @interface Many {
 
   /**
    * Returns the fetch strategy for nested statement.
+   * 加载类型
    *
    * @return the fetch strategy
    */

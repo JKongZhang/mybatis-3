@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.ibatis.annotations.Arg</OriginalElement>
+  <nodes>
+    <node x="2194.1180593795907" y="1068.0">org.apache.ibatis.annotations.CacheNamespace</node>
+    <node x="4003.1180593795907" y="1068.0">org.apache.ibatis.annotations.Options</node>
+    <node x="1174.4" y="1068.0">org.apache.ibatis.annotations.TypeDiscriminator</node>
+    <node x="310.4000000000001" y="1068.0">org.apache.ibatis.annotations.SelectProvider</node>
+    <node x="1393.4" y="1068.0">org.apache.ibatis.annotations.UpdateProvider</node>
+    <node x="2160.2925385462577" y="464.0">java.lang.annotation.Retention</node>
+    <node x="1585.4" y="1068.0">org.apache.ibatis.annotations.Results</node>
+    <node x="2017.4" y="1068.0">java.lang.annotation.Repeatable</node>
+    <node x="2386.1180593795907" y="1068.0">org.apache.ibatis.annotations.AutomapConstructor</node>
+    <node x="2114.3731869910544" y="222.0">java.lang.annotation.Documented</node>
+    <node x="3376.1180593795907" y="1068.0">org.apache.ibatis.annotations.MapKey</node>
+    <node x="4165.618059379591" y="1160.0">org.apache.ibatis.annotations.Result</node>
+    <node x="163.4000000000001" y="1068.0">org.apache.ibatis.annotations.ResultMap</node>
+    <node x="3256.1180593795907" y="1068.0">org.apache.ibatis.annotations.Insert</node>
+    <node x="1018.4000000000001" y="1068.0">org.apache.ibatis.annotations.ResultType</node>
+    <node x="502.4000000000001" y="1068.0">org.apache.ibatis.annotations.Select</node>
+    <node x="4132.118059379591" y="1068.0">org.apache.ibatis.annotations.Many</node>
+    <node x="622.4000000000001" y="1068.0">org.apache.ibatis.annotations.Param</node>
+    <node x="1906.4" y="1068.0">org.apache.ibatis.annotations.Flush</node>
+    <node x="0.0" y="1160.0">org.apache.ibatis.annotations.Arg</node>
+    <node x="2935.1180593795907" y="1068.0">org.apache.ibatis.annotations.Delete</node>
+    <node x="2130.1153744910544" y="726.0">java.lang.annotation.Target</node>
+    <node x="871.4000000000001" y="1068.0">org.apache.ibatis.annotations.SelectKey</node>
+    <node x="3055.1180593795907" y="1068.0">org.apache.ibatis.annotations.ConstructorArgs</node>
+    <node x="733.4000000000001" y="1068.0">org.apache.ibatis.annotations.Property</node>
+    <node x="3688.1180593795907" y="1068.0">org.apache.ibatis.annotations.Lang</node>
+    <node x="3790.1180593795907" y="1068.0">org.apache.ibatis.annotations.One</node>
+    <node x="3883.1180593795907" y="1068.0">org.apache.ibatis.annotations.Mapper</node>
+    <node x="2114.3731869910544" y="0.0">java.lang.annotation.Annotation</node>
+    <node x="2614.1180593795907" y="1068.0">org.apache.ibatis.annotations.Case</node>
+    <node x="1714.4" y="1068.0">org.apache.ibatis.annotations.DeleteProvider</node>
+    <node x="2716.1180593795907" y="1068.0">org.apache.ibatis.annotations.CacheNamespaceRef</node>
+    <node x="3496.1180593795907" y="1068.0">org.apache.ibatis.annotations.InsertProvider</node>
+    <node x="43.400000000000546" y="1068.0">org.apache.ibatis.annotations.Update</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.ibatis.annotations.MapKey" target="java.lang.annotation.Retention">
+      <point x="-12.5" y="-16.0" />
+      <point x="3413.6180593795907" y="898.0" />
+      <point x="3365.782041157721" y="898.0" />
+      <point x="3365.782041157721" y="626.0" />
+      <point x="2257.5269135462577" y="626.0" />
+      <point x="33.734375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Mapper" target="java.lang.annotation.Documented">
+      <point x="12.5" y="-16.0" />
+      <point x="3945.6180593795907" y="1038.0" />
+      <point x="4005.469541157721" y="1038.0" />
+      <point x="4005.469541157721" y="314.0" />
+      <point x="2236.3731869910544" y="314.0" />
+      <point x="54.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.One" target="java.lang.annotation.Target">
+      <point x="-27.375" y="-16.0" />
+      <point x="3799.2430593795907" y="848.0" />
+      <point x="2218.448707824388" y="848.0" />
+      <point x="38.333333333333485" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Documented" target="java.lang.annotation.Annotation">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Case" target="java.lang.annotation.Documented">
+      <point x="10.25" y="-16.0" />
+      <point x="2665.3680593795907" y="1038.0" />
+      <point x="2736.469541157721" y="1038.0" />
+      <point x="2736.469541157721" y="404.0" />
+      <point x="2200.3731869910544" y="404.0" />
+      <point x="18.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Select" target="java.lang.annotation.Annotation">
+      <point x="-37.5" y="-16.0" />
+      <point x="514.9000000000001" y="908.0" />
+      <point x="528.9000000000001" y="908.0" />
+      <point x="528.9000000000001" y="92.0" />
+      <point x="2132.918641536509" y="92.0" />
+      <point x="-49.454545454545496" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultMap" target="java.lang.annotation.Documented">
+      <point x="-15.875000000000455" y="-16.0" />
+      <point x="211.02499999999964" y="294.0" />
+      <point x="2124.3731869910544" y="294.0" />
+      <point x="-58.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultType" target="java.lang.annotation.Annotation">
+      <point x="-51.0" y="-16.0" />
+      <point x="1035.4" y="908.0" />
+      <point x="1058.4" y="908.0" />
+      <point x="1058.4" y="132.0" />
+      <point x="2149.4034900213574" y="132.0" />
+      <point x="-32.969696969697" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ConstructorArgs" target="java.lang.annotation.Documented">
+      <point x="22.625" y="-16.0" />
+      <point x="3168.2430593795907" y="1038.0" />
+      <point x="3251.719541157721" y="1038.0" />
+      <point x="3251.719541157721" y="374.0" />
+      <point x="2212.3731869910544" y="374.0" />
+      <point x="30.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespace" target="java.lang.annotation.Retention">
+      <point x="-21.5" y="-16.0" />
+      <point x="2258.6180593795907" y="1048.0" />
+      <point x="2286.797666157721" y="1048.0" />
+      <point x="2286.797666157721" y="696.0" />
+      <point x="2229.7456635462577" y="696.0" />
+      <point x="5.953125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.UpdateProvider" target="java.lang.annotation.Annotation">
+      <point x="-64.5" y="-16.0" />
+      <point x="1414.9" y="908.0" />
+      <point x="1446.9" y="908.0" />
+      <point x="1446.9" y="152.0" />
+      <point x="2157.645914263782" y="152.0" />
+      <point x="-24.72727272727252" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Insert" target="java.lang.annotation.Target">
+      <point x="-37.5" y="-16.0" />
+      <point x="3268.6180593795907" y="928.0" />
+      <point x="2205.1153744910544" y="928.0" />
+      <point x="25.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Result" target="java.lang.annotation.Retention">
+      <point x="0.0" y="-16.0" />
+      <point x="4215.618059379591" y="1140.0" />
+      <point x="4224.618059379591" y="1140.0" />
+      <point x="4224.618059379591" y="556.0" />
+      <point x="2285.3081635462577" y="556.0" />
+      <point x="61.515625" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Many" target="java.lang.annotation.Retention">
+      <point x="-10.25" y="-16.0" />
+      <point x="4162.868059379591" y="778.0" />
+      <point x="4117.844541157721" y="778.0" />
+      <point x="4117.844541157721" y="566.0" />
+      <point x="2281.3394135462577" y="566.0" />
+      <point x="57.546875" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Retention" target="java.lang.annotation.Documented">
+      <point x="-42.33333333333326" y="-16.0" />
+      <point x="2181.459205212924" y="444.0" />
+      <point x="2184.3731869910544" y="444.0" />
+      <point x="2.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.DeleteProvider" target="java.lang.annotation.Retention">
+      <point x="21.5" y="-16.0" />
+      <point x="1821.9" y="908.0" />
+      <point x="1789.9" y="908.0" />
+      <point x="1789.9" y="666.0" />
+      <point x="2209.9019135462577" y="666.0" />
+      <point x="-13.890625" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespace" target="java.lang.annotation.Documented">
+      <point x="21.5" y="-16.0" />
+      <point x="2301.6180593795907" y="1038.0" />
+      <point x="2402.532041157721" y="1038.0" />
+      <point x="2402.532041157721" y="424.0" />
+      <point x="2192.3731869910544" y="424.0" />
+      <point x="10.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Many" target="java.lang.annotation.Documented">
+      <point x="10.25" y="-16.0" />
+      <point x="4183.368059379591" y="1048.0" />
+      <point x="4192.532041157721" y="1048.0" />
+      <point x="4192.532041157721" y="294.0" />
+      <point x="2244.3731869910544" y="294.0" />
+      <point x="62.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.AutomapConstructor" target="java.lang.annotation.Annotation">
+      <point x="78.0" y="-16.0" />
+      <point x="2568.1180593795907" y="1048.0" />
+      <point x="2652.8999999999996" y="1048.0" />
+      <point x="2652.8999999999996" y="182.0" />
+      <point x="2194.736823354691" y="182.0" />
+      <point x="12.363636363636488" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.InsertProvider" target="java.lang.annotation.Annotation">
+      <point x="64.5" y="-16.0" />
+      <point x="3646.6180593795907" y="1048.0" />
+      <point x="3726.8999999999996" y="1048.0" />
+      <point x="3726.8999999999996" y="112.0" />
+      <point x="2223.585308203176" y="112.0" />
+      <point x="41.212121212121474" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Result" target="java.lang.annotation.Documented">
+      <point x="20.0" y="-16.0" />
+      <point x="4235.618059379591" y="284.0" />
+      <point x="2248.3731869910544" y="284.0" />
+      <point x="66.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Flush" target="java.lang.annotation.Retention">
+      <point x="11.375" y="-16.0" />
+      <point x="1963.275" y="908.0" />
+      <point x="1951.525" y="908.0" />
+      <point x="1951.525" y="676.0" />
+      <point x="2213.8706635462577" y="676.0" />
+      <point x="-9.921875" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Options" target="java.lang.annotation.Retention">
+      <point x="-13.625" y="-16.0" />
+      <point x="4043.9930593795907" y="798.0" />
+      <point x="3994.469541157721" y="798.0" />
+      <point x="3994.469541157721" y="576.0" />
+      <point x="2277.3706635462577" y="576.0" />
+      <point x="53.578125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.One" target="java.lang.annotation.Annotation">
+      <point x="27.375" y="-16.0" />
+      <point x="3853.9930593795907" y="1048.0" />
+      <point x="3930.8999999999996" y="1048.0" />
+      <point x="3930.8999999999996" y="92.0" />
+      <point x="2231.8277324456" y="92.0" />
+      <point x="49.454545454545496" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Lang" target="java.lang.annotation.Annotation">
+      <point x="30.75" y="-16.0" />
+      <point x="3759.8680593795907" y="1048.0" />
+      <point x="3824.3999999999996" y="1048.0" />
+      <point x="3824.3999999999996" y="102.0" />
+      <point x="2227.706520324388" y="102.0" />
+      <point x="45.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespaceRef" target="java.lang.annotation.Retention">
+      <point x="-24.875" y="-16.0" />
+      <point x="2790.7430593795907" y="978.0" />
+      <point x="2725.469541157721" y="978.0" />
+      <point x="2725.469541157721" y="666.0" />
+      <point x="2241.6519135462577" y="666.0" />
+      <point x="17.859375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Update" target="java.lang.annotation.Retention">
+      <point x="12.5" y="-16.0" />
+      <point x="105.90000000000055" y="1048.0" />
+      <point x="91.90000000000055" y="1048.0" />
+      <point x="91.90000000000055" y="556.0" />
+      <point x="2166.2456635462577" y="556.0" />
+      <point x="-57.546875" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Mapper" target="java.lang.annotation.Retention">
+      <point x="-12.5" y="-16.0" />
+      <point x="3920.6180593795907" y="818.0" />
+      <point x="3874.469541157721" y="818.0" />
+      <point x="3874.469541157721" y="586.0" />
+      <point x="2273.4019135462577" y="586.0" />
+      <point x="49.609375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Arg" target="java.lang.annotation.Annotation">
+      <point x="-29.199999999999818" y="-16.0" />
+      <point x="7.300000000000182" y="1140.0" />
+      <point x="10.900000000000546" y="1140.0" />
+      <point x="10.900000000000546" y="52.0" />
+      <point x="2116.4337930516604" y="52.0" />
+      <point x="-65.939393939394" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Select" target="java.lang.annotation.Target">
+      <point x="37.5" y="-16.0" />
+      <point x="589.9000000000001" y="948.0" />
+      <point x="2141.782041157721" y="948.0" />
+      <point x="-38.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.MapKey" target="java.lang.annotation.Documented">
+      <point x="12.5" y="-16.0" />
+      <point x="3438.6180593795907" y="1038.0" />
+      <point x="3510.282041157721" y="1038.0" />
+      <point x="3510.282041157721" y="354.0" />
+      <point x="2220.3731869910544" y="354.0" />
+      <point x="38.0" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Repeatable" target="java.lang.annotation.Target">
+      <point x="51.0" y="-16.0" />
+      <point x="2136.4" y="1048.0" />
+      <point x="2175.1153744910544" y="1048.0" />
+      <point x="-5.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Case" target="java.lang.annotation.Target">
+      <point x="-30.75" y="-16.0" />
+      <point x="2624.3680593795907" y="1008.0" />
+      <point x="2191.782041157721" y="1008.0" />
+      <point x="11.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Param" target="java.lang.annotation.Retention">
+      <point x="11.375" y="-16.0" />
+      <point x="679.2750000000001" y="908.0" />
+      <point x="667.5250000000001" y="908.0" />
+      <point x="667.5250000000001" y="596.0" />
+      <point x="2182.1206635462577" y="596.0" />
+      <point x="-41.671875" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Target" target="java.lang.annotation.Annotation">
+      <point x="-40.0" y="-16.0" />
+      <point x="2140.1153744910544" y="536.0" />
+      <point x="2100.5425385462577" y="536.0" />
+      <point x="2100.5425385462577" y="202.0" />
+      <point x="2178.2519748698423" y="202.0" />
+      <point x="-4.121212121212011" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Retention" target="java.lang.annotation.Target">
+      <point x="1.984375" y="16.0" />
+      <point x="2225.7769135462577" y="706.0" />
+      <point x="2220.1153744910544" y="706.0" />
+      <point x="40.0" y="-16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Repeatable" target="java.lang.annotation.Annotation">
+      <point x="-51.0" y="-16.0" />
+      <point x="2034.4" y="908.0" />
+      <point x="2047.2898536577209" y="908.0" />
+      <point x="2047.2898536577209" y="192.0" />
+      <point x="2174.1307627486303" y="192.0" />
+      <point x="-8.242424242424022" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Case" target="java.lang.annotation.Annotation">
+      <point x="30.75" y="-16.0" />
+      <point x="2685.8680593795907" y="1048.0" />
+      <point x="2813.3999999999996" y="1048.0" />
+      <point x="2813.3999999999996" y="172.0" />
+      <point x="2198.858035475903" y="172.0" />
+      <point x="16.4848484848485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Update" target="java.lang.annotation.Annotation">
+      <point x="-37.5" y="-16.0" />
+      <point x="55.900000000000546" y="1048.0" />
+      <point x="69.90000000000055" y="1048.0" />
+      <point x="69.90000000000055" y="62.0" />
+      <point x="2120.5550051728724" y="62.0" />
+      <point x="-61.818181818181756" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespaceRef" target="java.lang.annotation.Documented">
+      <point x="24.875" y="-16.0" />
+      <point x="2840.4930593795907" y="1038.0" />
+      <point x="2929.594541157721" y="1038.0" />
+      <point x="2929.594541157721" y="394.0" />
+      <point x="2204.3731869910544" y="394.0" />
+      <point x="22.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Mapper" target="java.lang.annotation.Target">
+      <point x="-37.5" y="-16.0" />
+      <point x="3895.6180593795907" y="828.0" />
+      <point x="2221.782041157721" y="828.0" />
+      <point x="41.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Lang" target="java.lang.annotation.Retention">
+      <point x="-10.25" y="-16.0" />
+      <point x="3718.8680593795907" y="858.0" />
+      <point x="3669.907041157721" y="858.0" />
+      <point x="3669.907041157721" y="606.0" />
+      <point x="2265.4644135462577" y="606.0" />
+      <point x="41.671875" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Property" target="java.lang.annotation.Target">
+      <point x="44.25" y="-16.0" />
+      <point x="836.6500000000001" y="968.0" />
+      <point x="2148.448707824388" y="968.0" />
+      <point x="-31.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectKey" target="java.lang.annotation.Retention">
+      <point x="15.875" y="-16.0" />
+      <point x="950.7750000000001" y="908.0" />
+      <point x="930.0250000000001" y="908.0" />
+      <point x="930.0250000000001" y="616.0" />
+      <point x="2190.0581635462577" y="616.0" />
+      <point x="-33.734375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.InsertProvider" target="java.lang.annotation.Retention">
+      <point x="-21.5" y="-16.0" />
+      <point x="3560.6180593795907" y="878.0" />
+      <point x="3499.282041157721" y="878.0" />
+      <point x="3499.282041157721" y="616.0" />
+      <point x="2261.4956635462577" y="616.0" />
+      <point x="37.703125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Property" target="java.lang.annotation.Annotation">
+      <point x="-44.25" y="-16.0" />
+      <point x="748.1500000000001" y="908.0" />
+      <point x="766.6500000000001" y="908.0" />
+      <point x="766.6500000000001" y="112.0" />
+      <point x="2141.161065778933" y="112.0" />
+      <point x="-41.21212121212125" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Retention" target="java.lang.annotation.Annotation">
+      <point x="42.333333333333485" y="-16.0" />
+      <point x="2266.125871879591" y="444.0" />
+      <point x="2296.706520324388" y="444.0" />
+      <point x="2296.706520324388" y="202.0" />
+      <point x="2186.4943991122664" y="202.0" />
+      <point x="4.121212121212011" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Delete" target="java.lang.annotation.Retention">
+      <point x="-12.5" y="-16.0" />
+      <point x="2972.6180593795907" y="958.0" />
+      <point x="2918.594541157721" y="958.0" />
+      <point x="2918.594541157721" y="656.0" />
+      <point x="2245.6206635462577" y="656.0" />
+      <point x="21.828125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Property" target="java.lang.annotation.Documented">
+      <point x="-14.75" y="-16.0" />
+      <point x="777.6500000000001" y="334.0" />
+      <point x="2140.3731869910544" y="334.0" />
+      <point x="-42.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.TypeDiscriminator" target="java.lang.annotation.Documented">
+      <point x="-24.875" y="-16.0" />
+      <point x="1249.025" y="364.0" />
+      <point x="2152.3731869910544" y="364.0" />
+      <point x="-30.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ConstructorArgs" target="java.lang.annotation.Retention">
+      <point x="-22.625" y="-16.0" />
+      <point x="3122.9930593795907" y="938.0" />
+      <point x="3059.969541157721" y="938.0" />
+      <point x="3059.969541157721" y="646.0" />
+      <point x="2249.5894135462577" y="646.0" />
+      <point x="25.796875" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Documented" target="java.lang.annotation.Target">
+      <point x="-6.0" y="16.0" />
+      <point x="2176.3731869910544" y="424.0" />
+      <point x="2138.7925385462577" y="424.0" />
+      <point x="2138.7925385462577" y="526.0" />
+      <point x="2160.1153744910544" y="526.0" />
+      <point x="-20.0" y="-16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.AutomapConstructor" target="java.lang.annotation.Documented">
+      <point x="26.0" y="-16.0" />
+      <point x="2516.1180593795907" y="1038.0" />
+      <point x="2604.657041157721" y="1038.0" />
+      <point x="2604.657041157721" y="414.0" />
+      <point x="2196.3731869910544" y="414.0" />
+      <point x="14.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.AutomapConstructor" target="java.lang.annotation.Target">
+      <point x="-78.0" y="-16.0" />
+      <point x="2412.1180593795907" y="1028.0" />
+      <point x="2188.448707824388" y="1028.0" />
+      <point x="8.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Results" target="java.lang.annotation.Documented">
+      <point x="-13.625" y="-16.0" />
+      <point x="1626.275" y="384.0" />
+      <point x="2160.3731869910544" y="384.0" />
+      <point x="-22.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Insert" target="java.lang.annotation.Retention">
+      <point x="-12.5" y="-16.0" />
+      <point x="3293.6180593795907" y="918.0" />
+      <point x="3240.719541157721" y="918.0" />
+      <point x="3240.719541157721" y="636.0" />
+      <point x="2253.5581635462577" y="636.0" />
+      <point x="29.765625" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultMap" target="java.lang.annotation.Retention">
+      <point x="15.874999999999545" y="-16.0" />
+      <point x="242.77499999999964" y="908.0" />
+      <point x="222.02499999999964" y="908.0" />
+      <point x="222.02499999999964" y="566.0" />
+      <point x="2170.2144135462577" y="566.0" />
+      <point x="-53.578125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectProvider" target="java.lang.annotation.Retention">
+      <point x="21.5" y="-16.0" />
+      <point x="417.9000000000001" y="908.0" />
+      <point x="385.9000000000001" y="908.0" />
+      <point x="385.9000000000001" y="576.0" />
+      <point x="2174.1831635462577" y="576.0" />
+      <point x="-49.609375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Lang" target="java.lang.annotation.Documented">
+      <point x="10.25" y="-16.0" />
+      <point x="3739.3680593795907" y="1038.0" />
+      <point x="3786.844541157721" y="1038.0" />
+      <point x="3786.844541157721" y="334.0" />
+      <point x="2228.3731869910544" y="334.0" />
+      <point x="46.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.TypeDiscriminator" target="java.lang.annotation.Annotation">
+      <point x="-74.625" y="-16.0" />
+      <point x="1199.275" y="908.0" />
+      <point x="1238.025" y="908.0" />
+      <point x="1238.025" y="142.0" />
+      <point x="2153.5247021425694" y="142.0" />
+      <point x="-28.84848484848476" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Repeatable" target="java.lang.annotation.Documented">
+      <point x="-17.0" y="-16.0" />
+      <point x="2068.4" y="908.0" />
+      <point x="2058.289853657721" y="908.0" />
+      <point x="2058.289853657721" y="414.0" />
+      <point x="2172.3731869910544" y="414.0" />
+      <point x="-10.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultType" target="java.lang.annotation.Retention">
+      <point x="17.0" y="-16.0" />
+      <point x="1103.4" y="908.0" />
+      <point x="1080.4" y="908.0" />
+      <point x="1080.4" y="626.0" />
+      <point x="2194.0269135462577" y="626.0" />
+      <point x="-29.765625" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Documented" target="java.lang.annotation.Retention">
+      <point x="6.0" y="16.0" />
+      <point x="2188.3731869910544" y="434.0" />
+      <point x="2223.7925385462577" y="434.0" />
+      <point x="0.0" y="-16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Results" target="java.lang.annotation.Target">
+      <point x="40.875" y="-16.0" />
+      <point x="1680.775" y="1018.0" />
+      <point x="2165.1153744910544" y="1018.0" />
+      <point x="-15.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.MapKey" target="java.lang.annotation.Annotation">
+      <point x="37.5" y="-16.0" />
+      <point x="3463.6180593795907" y="1048.0" />
+      <point x="3579.8999999999996" y="1048.0" />
+      <point x="3579.8999999999996" y="122.0" />
+      <point x="2219.4640960819634" y="122.0" />
+      <point x="37.09090909090901" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespaceRef" target="java.lang.annotation.Target">
+      <point x="-74.625" y="-16.0" />
+      <point x="2740.9930593795907" y="988.0" />
+      <point x="2195.1153744910544" y="988.0" />
+      <point x="15.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectProvider" target="java.lang.annotation.Annotation">
+      <point x="-64.5" y="-16.0" />
+      <point x="331.9000000000001" y="908.0" />
+      <point x="363.9000000000001" y="908.0" />
+      <point x="363.9000000000001" y="82.0" />
+      <point x="2128.797429415297" y="82.0" />
+      <point x="-53.57575757575751" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.UpdateProvider" target="java.lang.annotation.Retention">
+      <point x="21.5" y="-16.0" />
+      <point x="1500.9" y="908.0" />
+      <point x="1468.9" y="908.0" />
+      <point x="1468.9" y="646.0" />
+      <point x="2201.9644135462577" y="646.0" />
+      <point x="-21.828125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Result" target="java.lang.annotation.Annotation">
+      <point x="40.0" y="-16.0" />
+      <point x="4255.618059379591" y="1140.0" />
+      <point x="4246.618059379591" y="1140.0" />
+      <point x="4246.618059379591" y="52.0" />
+      <point x="2248.3125809304483" y="52.0" />
+      <point x="65.939393939394" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Options" target="java.lang.annotation.Target">
+      <point x="-40.875" y="-16.0" />
+      <point x="4016.7430593795907" y="808.0" />
+      <point x="2225.1153744910544" y="808.0" />
+      <point x="45.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Param" target="java.lang.annotation.Documented">
+      <point x="-11.375" y="-16.0" />
+      <point x="656.5250000000001" y="324.0" />
+      <point x="2136.3731869910544" y="324.0" />
+      <point x="-46.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.DeleteProvider" target="java.lang.annotation.Target">
+      <point x="64.5" y="-16.0" />
+      <point x="1864.9" y="1028.0" />
+      <point x="2168.448707824388" y="1028.0" />
+      <point x="-11.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Results" target="java.lang.annotation.Annotation">
+      <point x="-40.875" y="-16.0" />
+      <point x="1599.025" y="908.0" />
+      <point x="1615.275" y="908.0" />
+      <point x="1615.275" y="162.0" />
+      <point x="2161.767126384994" y="162.0" />
+      <point x="-20.60606060606051" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Many" target="java.lang.annotation.Annotation">
+      <point x="30.75" y="-16.0" />
+      <point x="4203.868059379591" y="1048.0" />
+      <point x="4208.743059379591" y="1048.0" />
+      <point x="4208.743059379591" y="62.0" />
+      <point x="2244.1913688092363" y="62.0" />
+      <point x="61.81818181818198" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Select" target="java.lang.annotation.Retention">
+      <point x="12.5" y="-16.0" />
+      <point x="564.9000000000001" y="908.0" />
+      <point x="550.9000000000001" y="908.0" />
+      <point x="550.9000000000001" y="586.0" />
+      <point x="2178.1519135462577" y="586.0" />
+      <point x="-45.640625" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Target" target="java.lang.annotation.Documented">
+      <point x="0.0" y="-16.0" />
+      <point x="2180.1153744910544" y="516.0" />
+      <point x="2149.7925385462577" y="516.0" />
+      <point x="2149.7925385462577" y="434.0" />
+      <point x="2180.3731869910544" y="434.0" />
+      <point x="-2.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.TypeDiscriminator" target="java.lang.annotation.Target">
+      <point x="74.625" y="-16.0" />
+      <point x="1348.525" y="998.0" />
+      <point x="2158.448707824388" y="998.0" />
+      <point x="-21.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectProvider" target="java.lang.annotation.Target">
+      <point x="64.5" y="-16.0" />
+      <point x="460.9000000000001" y="938.0" />
+      <point x="2138.448707824388" y="938.0" />
+      <point x="-41.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.One" target="java.lang.annotation.Retention">
+      <point x="-9.125" y="-16.0" />
+      <point x="3817.4930593795907" y="838.0" />
+      <point x="3775.844541157721" y="838.0" />
+      <point x="3775.844541157721" y="596.0" />
+      <point x="2269.4331635462577" y="596.0" />
+      <point x="45.640625" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectKey" target="java.lang.annotation.Annotation">
+      <point x="-47.625" y="-16.0" />
+      <point x="887.2750000000001" y="908.0" />
+      <point x="908.0250000000001" y="908.0" />
+      <point x="908.0250000000001" y="122.0" />
+      <point x="2145.2822779001453" y="122.0" />
+      <point x="-37.09090909090901" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.DeleteProvider" target="java.lang.annotation.Annotation">
+      <point x="-64.5" y="-16.0" />
+      <point x="1735.9" y="908.0" />
+      <point x="1767.9" y="908.0" />
+      <point x="1767.9" y="172.0" />
+      <point x="2165.888338506206" y="172.0" />
+      <point x="-16.4848484848485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Result" target="java.lang.annotation.Target">
+      <point x="-20.0" y="-16.0" />
+      <point x="4195.618059379591" y="1120.0" />
+      <point x="2181.782041157721" y="1120.0" />
+      <point x="1.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Update" target="java.lang.annotation.Documented">
+      <point x="-12.5" y="-16.0" />
+      <point x="80.90000000000055" y="284.0" />
+      <point x="2120.3731869910544" y="284.0" />
+      <point x="-62.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Select" target="java.lang.annotation.Documented">
+      <point x="-12.5" y="-16.0" />
+      <point x="539.9000000000001" y="314.0" />
+      <point x="2132.3731869910544" y="314.0" />
+      <point x="-50.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Arg" target="java.lang.annotation.Retention">
+      <point x="0.0" y="-16.0" />
+      <point x="36.5" y="1140.0" />
+      <point x="32.900000000000546" y="1140.0" />
+      <point x="32.900000000000546" y="546.0" />
+      <point x="2162.2769135462577" y="546.0" />
+      <point x="-61.515625" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Arg" target="java.lang.annotation.Repeatable">
+      <point x="14.600000000000364" y="-16.0" />
+      <point x="51.100000000000364" y="1130.0" />
+      <point x="2051.4" y="1130.0" />
+      <point x="-34.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Update" target="java.lang.annotation.Target">
+      <point x="37.5" y="-16.0" />
+      <point x="130.90000000000055" y="918.0" />
+      <point x="2131.782041157721" y="918.0" />
+      <point x="-48.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.MapKey" target="java.lang.annotation.Target">
+      <point x="-37.5" y="-16.0" />
+      <point x="3388.6180593795907" y="908.0" />
+      <point x="2208.448707824388" y="908.0" />
+      <point x="28.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Mapper" target="java.lang.annotation.Annotation">
+      <point x="37.5" y="-16.0" />
+      <point x="3970.6180593795907" y="1048.0" />
+      <point x="4055.3999999999996" y="1048.0" />
+      <point x="4055.3999999999996" y="82.0" />
+      <point x="2235.948944566812" y="82.0" />
+      <point x="53.57575757575751" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Param" target="java.lang.annotation.Target">
+      <point x="34.125" y="-16.0" />
+      <point x="702.0250000000001" y="958.0" />
+      <point x="2145.1153744910544" y="958.0" />
+      <point x="-35.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Flush" target="java.lang.annotation.Target">
+      <point x="34.125" y="-16.0" />
+      <point x="1986.025" y="1038.0" />
+      <point x="2171.782041157721" y="1038.0" />
+      <point x="-8.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespace" target="java.lang.annotation.Annotation">
+      <point x="64.5" y="-16.0" />
+      <point x="2344.6180593795907" y="1048.0" />
+      <point x="2487.8999999999996" y="1048.0" />
+      <point x="2487.8999999999996" y="192.0" />
+      <point x="2190.615611233479" y="192.0" />
+      <point x="8.242424242424477" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Options" target="java.lang.annotation.Annotation">
+      <point x="40.875" y="-16.0" />
+      <point x="4098.493059379591" y="1048.0" />
+      <point x="4176.4" y="1048.0" />
+      <point x="4176.4" y="72.0" />
+      <point x="2240.0701566880243" y="72.0" />
+      <point x="57.69696969696997" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespaceRef" target="java.lang.annotation.Annotation">
+      <point x="74.625" y="-16.0" />
+      <point x="2890.2430593795907" y="1048.0" />
+      <point x="2982.8999999999996" y="1048.0" />
+      <point x="2982.8999999999996" y="162.0" />
+      <point x="2202.979247597115" y="162.0" />
+      <point x="20.60606060606051" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Many" target="java.lang.annotation.Target">
+      <point x="-30.75" y="-16.0" />
+      <point x="4142.368059379591" y="788.0" />
+      <point x="2228.448707824388" y="788.0" />
+      <point x="48.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.One" target="java.lang.annotation.Documented">
+      <point x="9.125" y="-16.0" />
+      <point x="3835.7430593795907" y="1038.0" />
+      <point x="3885.469541157721" y="1038.0" />
+      <point x="3885.469541157721" y="324.0" />
+      <point x="2232.3731869910544" y="324.0" />
+      <point x="50.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Lang" target="java.lang.annotation.Target">
+      <point x="-30.75" y="-16.0" />
+      <point x="3698.3680593795907" y="868.0" />
+      <point x="2215.1153744910544" y="868.0" />
+      <point x="35.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultMap" target="java.lang.annotation.Annotation">
+      <point x="-47.625000000000455" y="-16.0" />
+      <point x="179.27499999999964" y="908.0" />
+      <point x="200.02499999999964" y="908.0" />
+      <point x="200.02499999999964" y="72.0" />
+      <point x="2124.6762172940844" y="72.0" />
+      <point x="-57.696969696969745" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Target" target="java.lang.annotation.Retention">
+      <point x="20.0" y="-16.0" />
+      <point x="2200.1153744910544" y="696.0" />
+      <point x="2221.8081635462577" y="696.0" />
+      <point x="-1.984375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Flush" target="java.lang.annotation.Documented">
+      <point x="-11.375" y="-16.0" />
+      <point x="1940.525" y="404.0" />
+      <point x="2168.3731869910544" y="404.0" />
+      <point x="-14.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Param" target="java.lang.annotation.Annotation">
+      <point x="-34.125" y="-16.0" />
+      <point x="633.7750000000001" y="908.0" />
+      <point x="645.5250000000001" y="908.0" />
+      <point x="645.5250000000001" y="102.0" />
+      <point x="2137.039853657721" y="102.0" />
+      <point x="-45.33333333333326" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectKey" target="java.lang.annotation.Documented">
+      <point x="-15.875" y="-16.0" />
+      <point x="919.0250000000001" y="344.0" />
+      <point x="2144.3731869910544" y="344.0" />
+      <point x="-38.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ConstructorArgs" target="java.lang.annotation.Target">
+      <point x="-67.875" y="-16.0" />
+      <point x="3077.7430593795907" y="948.0" />
+      <point x="2201.782041157721" y="948.0" />
+      <point x="21.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.DeleteProvider" target="java.lang.annotation.Documented">
+      <point x="-21.5" y="-16.0" />
+      <point x="1778.9" y="394.0" />
+      <point x="2164.3731869910544" y="394.0" />
+      <point x="-18.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultType" target="java.lang.annotation.Documented">
+      <point x="-17.0" y="-16.0" />
+      <point x="1069.4" y="354.0" />
+      <point x="2148.3731869910544" y="354.0" />
+      <point x="-34.0" y="16.0" />
+    </edge>
+    <edge source="java.lang.annotation.Repeatable" target="java.lang.annotation.Retention">
+      <point x="17.0" y="-16.0" />
+      <point x="2102.4" y="908.0" />
+      <point x="2104.618059379591" y="908.0" />
+      <point x="2104.618059379591" y="686.0" />
+      <point x="2217.8394135462577" y="686.0" />
+      <point x="-5.953125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Delete" target="java.lang.annotation.Annotation">
+      <point x="37.5" y="-16.0" />
+      <point x="3022.6180593795907" y="1048.0" />
+      <point x="3143.3999999999996" y="1048.0" />
+      <point x="3143.3999999999996" y="152.0" />
+      <point x="2207.1004597183273" y="152.0" />
+      <point x="24.727272727272975" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Options" target="java.lang.annotation.Documented">
+      <point x="13.625" y="-16.0" />
+      <point x="4071.2430593795907" y="1038.0" />
+      <point x="4128.844541157721" y="1038.0" />
+      <point x="4128.844541157721" y="304.0" />
+      <point x="2240.3731869910544" y="304.0" />
+      <point x="58.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultMap" target="java.lang.annotation.Target">
+      <point x="47.624999999999545" y="-16.0" />
+      <point x="274.52499999999964" y="928.0" />
+      <point x="2135.1153744910544" y="928.0" />
+      <point x="-45.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Arg" target="java.lang.annotation.Documented">
+      <point x="-14.600000000000364" y="-16.0" />
+      <point x="21.900000000000546" y="274.0" />
+      <point x="2116.3731869910544" y="274.0" />
+      <point x="-66.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Case" target="java.lang.annotation.Retention">
+      <point x="-10.25" y="-16.0" />
+      <point x="2644.8680593795907" y="998.0" />
+      <point x="2593.657041157721" y="998.0" />
+      <point x="2593.657041157721" y="676.0" />
+      <point x="2237.6831635462577" y="676.0" />
+      <point x="13.890625" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.CacheNamespace" target="java.lang.annotation.Target">
+      <point x="-64.5" y="-16.0" />
+      <point x="2215.6180593795907" y="1048.0" />
+      <point x="2185.1153744910544" y="1048.0" />
+      <point x="5.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Flush" target="java.lang.annotation.Annotation">
+      <point x="-34.125" y="-16.0" />
+      <point x="1917.775" y="908.0" />
+      <point x="1929.525" y="908.0" />
+      <point x="1929.525" y="182.0" />
+      <point x="2170.009550627418" y="182.0" />
+      <point x="-12.363636363636488" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ConstructorArgs" target="java.lang.annotation.Annotation">
+      <point x="67.875" y="-16.0" />
+      <point x="3213.4930593795907" y="1048.0" />
+      <point x="3303.8999999999996" y="1048.0" />
+      <point x="3303.8999999999996" y="142.0" />
+      <point x="2211.2216718395393" y="142.0" />
+      <point x="28.848484848484986" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.AutomapConstructor" target="java.lang.annotation.Retention">
+      <point x="-26.0" y="-16.0" />
+      <point x="2464.1180593795907" y="1018.0" />
+      <point x="2391.532041157721" y="1018.0" />
+      <point x="2391.532041157721" y="686.0" />
+      <point x="2233.7144135462577" y="686.0" />
+      <point x="9.921875" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Arg" target="java.lang.annotation.Target">
+      <point x="29.199999999999818" y="-16.0" />
+      <point x="65.69999999999982" y="1140.0" />
+      <point x="2178.448707824388" y="1140.0" />
+      <point x="-1.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Delete" target="java.lang.annotation.Target">
+      <point x="-37.5" y="-16.0" />
+      <point x="2947.6180593795907" y="968.0" />
+      <point x="2198.448707824388" y="968.0" />
+      <point x="18.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectProvider" target="java.lang.annotation.Documented">
+      <point x="-21.5" y="-16.0" />
+      <point x="374.9000000000001" y="304.0" />
+      <point x="2128.3731869910544" y="304.0" />
+      <point x="-54.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Insert" target="java.lang.annotation.Annotation">
+      <point x="37.5" y="-16.0" />
+      <point x="3343.6180593795907" y="1048.0" />
+      <point x="3423.8999999999996" y="1048.0" />
+      <point x="3423.8999999999996" y="132.0" />
+      <point x="2215.3428839607514" y="132.0" />
+      <point x="32.969696969697" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.SelectKey" target="java.lang.annotation.Target">
+      <point x="47.625" y="-16.0" />
+      <point x="982.5250000000001" y="978.0" />
+      <point x="2151.782041157721" y="978.0" />
+      <point x="-28.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.InsertProvider" target="java.lang.annotation.Documented">
+      <point x="21.5" y="-16.0" />
+      <point x="3603.6180593795907" y="1038.0" />
+      <point x="3680.907041157721" y="1038.0" />
+      <point x="3680.907041157721" y="344.0" />
+      <point x="2224.3731869910544" y="344.0" />
+      <point x="42.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.InsertProvider" target="java.lang.annotation.Target">
+      <point x="-64.5" y="-16.0" />
+      <point x="3517.6180593795907" y="888.0" />
+      <point x="2211.782041157721" y="888.0" />
+      <point x="31.666666666666515" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Results" target="java.lang.annotation.Retention">
+      <point x="13.625" y="-16.0" />
+      <point x="1653.525" y="908.0" />
+      <point x="1637.275" y="908.0" />
+      <point x="1637.275" y="656.0" />
+      <point x="2205.9331635462577" y="656.0" />
+      <point x="-17.859375" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.ResultType" target="java.lang.annotation.Target">
+      <point x="51.0" y="-16.0" />
+      <point x="1137.4" y="988.0" />
+      <point x="2155.1153744910544" y="988.0" />
+      <point x="-25.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Insert" target="java.lang.annotation.Documented">
+      <point x="12.5" y="-16.0" />
+      <point x="3318.6180593795907" y="1038.0" />
+      <point x="3376.782041157721" y="1038.0" />
+      <point x="3376.782041157721" y="364.0" />
+      <point x="2216.3731869910544" y="364.0" />
+      <point x="34.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.UpdateProvider" target="java.lang.annotation.Documented">
+      <point x="-21.5" y="-16.0" />
+      <point x="1457.9" y="374.0" />
+      <point x="2156.3731869910544" y="374.0" />
+      <point x="-26.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.UpdateProvider" target="java.lang.annotation.Target">
+      <point x="64.5" y="-16.0" />
+      <point x="1543.9" y="1008.0" />
+      <point x="2161.782041157721" y="1008.0" />
+      <point x="-18.333333333333485" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Delete" target="java.lang.annotation.Documented">
+      <point x="12.5" y="-16.0" />
+      <point x="2997.6180593795907" y="1038.0" />
+      <point x="3070.969541157721" y="1038.0" />
+      <point x="3070.969541157721" y="384.0" />
+      <point x="2208.3731869910544" y="384.0" />
+      <point x="26.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Property" target="java.lang.annotation.Retention">
+      <point x="14.75" y="-16.0" />
+      <point x="807.1500000000001" y="908.0" />
+      <point x="788.6500000000001" y="908.0" />
+      <point x="788.6500000000001" y="606.0" />
+      <point x="2186.0894135462577" y="606.0" />
+      <point x="-37.703125" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.Result" target="java.lang.annotation.Repeatable">
+      <point x="-40.0" y="-16.0" />
+      <point x="4175.618059379591" y="1130.0" />
+      <point x="2119.4" y="1130.0" />
+      <point x="34.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.annotations.TypeDiscriminator" target="java.lang.annotation.Retention">
+      <point x="24.875" y="-16.0" />
+      <point x="1298.775" y="908.0" />
+      <point x="1260.025" y="908.0" />
+      <point x="1260.025" y="636.0" />
+      <point x="2197.9956635462577" y="636.0" />
+      <point x="-25.796875" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.36471684921929626" x="2597.3057929376764" y="1138.0769968051115" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

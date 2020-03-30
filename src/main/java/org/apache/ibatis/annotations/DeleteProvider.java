@@ -48,7 +48,7 @@ import java.lang.annotation.Target;
 public @interface DeleteProvider {
 
   /**
-   * Specify a type that implements an SQL provider method.
+   * Specify a type that implements an SQL provider method.提供的类
    *
    * @return a type that implements an SQL provider method
    * @since 3.5.2
@@ -67,7 +67,7 @@ public @interface DeleteProvider {
   Class<?> type() default void.class;
 
   /**
-   * Specify a method for providing an SQL.
+   * Specify a method for providing an SQL.提供的方法
    *
    * <p>
    * Since 3.5.1, this attribute can omit.

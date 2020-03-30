@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.annotations;
 
@@ -35,6 +35,7 @@ import org.apache.ibatis.mapping.StatementType;
  *   boolean insert(User user);
  * }
  * </pre>
+ *
  * @author Clinton Begin
  */
 @Documented
@@ -43,6 +44,7 @@ import org.apache.ibatis.mapping.StatementType;
 public @interface SelectKey {
   /**
    * Returns an SQL for retrieving a key value.
+   * 语句
    *
    * @return an SQL for retrieving a key value
    */
@@ -53,6 +55,7 @@ public @interface SelectKey {
    * <p>
    * If you specify multiple property, please separate using comma(',').
    * </p>
+   * 对象的属性
    *
    * @return property names that separate with comma(',')
    */
@@ -63,6 +66,7 @@ public @interface SelectKey {
    * <p>
    * If you specify multiple column, please separate using comma(',').
    * </p>
+   * 数据库的字段
    *
    * @return column names that separate with comma(',')
    */
@@ -70,6 +74,7 @@ public @interface SelectKey {
 
   /**
    * Returns whether retrieves a key value before executing insert/update statement.
+   * 在插入语句执行前，还是执行后
    *
    * @return {@code true} if execute before; {@code false} if otherwise
    */
@@ -77,6 +82,7 @@ public @interface SelectKey {
 
   /**
    * Returns the key value type.
+   * 返回类型
    *
    * @return the key value type
    */
@@ -84,6 +90,7 @@ public @interface SelectKey {
 
   /**
    * Returns the statement type to use.
+   * {@link #statement()} 的类型
    *
    * @return the statement type
    */

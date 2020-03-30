@@ -24,6 +24,7 @@ import org.apache.ibatis.mapping.FetchType;
 
 /**
  * The annotation that specify the nested statement for retrieving single object.
+ * 复杂类型的单独属性值的注解。
  *
  * @see Result
  * @see Results
@@ -35,6 +36,7 @@ import org.apache.ibatis.mapping.FetchType;
 public @interface One {
   /**
    * Returns the statement id that retrieves single object.
+   * 已映射语句（也就是映射器方法）的全限定名
    *
    * @return the statement id
    */
@@ -42,6 +44,7 @@ public @interface One {
 
   /**
    * Returns the fetch strategy for nested statement.
+   * 加载类型
    *
    * @return the fetch strategy
    */
