@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.logging.jdbc;
 
@@ -31,10 +31,10 @@ import org.apache.ibatis.reflection.ExceptionUtil;
 
 /**
  * ResultSet proxy to add logging.
+ * ResultSet代理添加日志记录。
  *
  * @author Clinton Begin
  * @author Eduardo Macarron
- *
  */
 public final class ResultSetLogger extends BaseJdbcLogger implements InvocationHandler {
 
@@ -60,6 +60,15 @@ public final class ResultSetLogger extends BaseJdbcLogger implements InvocationH
     this.rs = rs;
   }
 
+  /**
+   * 通过动态代理的方式，对指定方法添加日志输出
+   *
+   * @param proxy  代理对象
+   * @param method 被代理的方法
+   * @param params 代理参数
+   * @return 方法执行结果
+   * @throws Throwable e
+   */
   @Override
   public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
     try {
@@ -90,6 +99,13 @@ public final class ResultSetLogger extends BaseJdbcLogger implements InvocationH
     }
   }
 
+  /**
+   * 输出行名称
+   *
+   * @param rsmd        resultSet中获取的元数据信息
+   * @param columnCount 列数
+   * @throws SQLException e
+   */
   private void printColumnHeaders(ResultSetMetaData rsmd, int columnCount) throws SQLException {
     StringJoiner row = new StringJoiner(", ", "   Columns: ", "");
     for (int i = 1; i <= columnCount; i++) {
@@ -101,6 +117,11 @@ public final class ResultSetLogger extends BaseJdbcLogger implements InvocationH
     trace(row.toString(), false);
   }
 
+  /**
+   * 输出值
+   *
+   * @param columnCount 列数
+   */
   private void printColumnValues(int columnCount) {
     StringJoiner row = new StringJoiner(", ", "       Row: ", "");
     for (int i = 1; i <= columnCount; i++) {

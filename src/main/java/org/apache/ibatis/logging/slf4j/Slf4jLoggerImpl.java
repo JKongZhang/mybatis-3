@@ -19,6 +19,8 @@ import org.apache.ibatis.logging.Log;
 import org.slf4j.Logger;
 
 /**
+ * Logger is not LocationAwareLogger or slf4j version < 1.6
+ *
  * @author Eduardo Macarron
  */
 class Slf4jLoggerImpl implements Log {

@@ -34,6 +34,13 @@ import org.apache.ibatis.reflection.ArrayUtil;
 
 /**
  * Base class for proxies to do logging.
+ * 代理进行日志记录的基类。
+ *
+ *                ConnectionLogger
+ *                      ↓
+ * PreparedStatementLogger | StatementLogger
+ *                      ↓
+ *                ResultSetLogger
  *
  * @author Clinton Begin
  * @author Eduardo Macarron
