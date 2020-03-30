@@ -143,6 +143,7 @@ public class Reflector {
    */
   private void addGetMethods(Class<?> clazz) {
     // 属性与其 getting 方法的映射。
+    // 存在继承关系，所以同一个getXXX方法可能会被重写多次，就会存在同一个属性对应多个方法的现象。
     Map<String, List<Method>> conflictingGetters = new HashMap<>();
     // 获取所有的方法（去重）
     Method[] methods = getClassMethods(clazz);
