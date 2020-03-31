@@ -57,11 +57,13 @@ public class MapperRegistry {
 
   @SuppressWarnings("unchecked")
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
+    // 指定 Mapper Proxy Factory 的泛型
     final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
     if (mapperProxyFactory == null) {
       throw new BindingException("Type " + type + " is not known to the MapperRegistry.");
     }
     try {
+      // 创建 Mapper Proxy 对象
       return mapperProxyFactory.newInstance(sqlSession);
     } catch (Exception e) {
       throw new BindingException("Error getting mapper instance. Cause: " + e, e);
@@ -73,20 +75,27 @@ public class MapperRegistry {
   }
 
   public <T> void addMapper(Class<T> type) {
+    // 指定mapper必须为接口
     if (type.isInterface()) {
+      // 是否已经存在
       if (hasMapper(type)) {
         throw new BindingException("Type " + type + " is already known to the MapperRegistry.");
       }
       boolean loadCompleted = false;
       try {
+        // 添加到 knownMappers 中
         knownMappers.put(type, new MapperProxyFactory<>(type));
-        // It's important that the type is added before the parser is run
-        // otherwise the binding may automatically be attempted by the
-        // mapper parser. If the type is already known, it won't try.
+        // It's important that the type is added before the parser is run,
+        // otherwise the binding may automatically be attempted by the mapper parser.
+        // If the type is already known, it won't try.
+
+        // 解析 Mapper 的注解配置
         MapperAnnotationBuilder parser = new MapperAnnotationBuilder(config, type);
         parser.parse();
+        // 标记加载完成
         loadCompleted = true;
       } finally {
+        // 若加载未完成，从 knownMappers 中移除
         if (!loadCompleted) {
           knownMappers.remove(type);
         }
@@ -102,6 +111,8 @@ public class MapperRegistry {
   }
 
   /**
+   * 扫描指定包下的指定类，并添加到 knownMappers 中
+   *
    * @since 3.2.2
    */
   public void addMappers(String packageName, Class<?> superType) {

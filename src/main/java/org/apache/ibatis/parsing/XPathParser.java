@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2020 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2020 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.parsing;
 
@@ -31,6 +31,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.ibatis.builder.BuilderException;
+import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -235,9 +236,16 @@ public class XPathParser {
     return evalNodes(document, expression);
   }
 
+  /**
+   * 解析 xml 元素
+   *
+   * @param root       根节点对象
+   * @param expression 表达式
+   * @return List<XNode>
+   */
   public List<XNode> evalNodes(Object root, String expression) {
     List<XNode> xNodes = new ArrayList<>();
-    // 获得 Node 数组
+    // 获得 Node 数组 NodeList
     NodeList nodes = (NodeList) evaluate(expression, root, XPathConstants.NODESET);
     for (int i = 0; i < nodes.getLength(); i++) {
       // 封装成 XNode 数组
@@ -246,6 +254,12 @@ public class XPathParser {
     return xNodes;
   }
 
+  /**
+   * {@link XMLConfigBuilder#parse()} 中调用此方法进行xml解析
+   *
+   * @param expression xml 路径
+   * @return XNode
+   */
   public XNode evalNode(String expression) {
     return evalNode(document, expression);
   }

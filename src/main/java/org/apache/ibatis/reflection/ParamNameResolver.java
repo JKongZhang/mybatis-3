@@ -44,9 +44,15 @@ public class ParamNameResolver {
    * <li>aMethod(int a, int b) -&gt; {{0, "0"}, {1, "1"}}</li>
    * <li>aMethod(int a, RowBounds rb, int b) -&gt; {{0, "0"}, {2, "1"}}</li>
    * </ul>
+   * 参数名映射
+   *
+   * KEY：参数顺序
+   * VALUE：参数名
    */
   private final SortedMap<Integer, String> names;
-
+  /**
+   * 是否有 {@link Param} 注解的参数
+   */
   private boolean hasParamAnnotation;
 
   public ParamNameResolver(Configuration config, Method method) {

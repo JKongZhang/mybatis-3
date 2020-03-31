@@ -117,17 +117,22 @@ public class MetaClass {
   }
 
   public Class<?> getGetterType(String name) {
+    // 创建 PropertyTokenizer 对象，对 name 进行分词
     PropertyTokenizer prop = new PropertyTokenizer(name);
     if (prop.hasNext()) {
+      // 创建 MetaClass 对象
       MetaClass metaProp = metaClassForProperty(prop);
+      // 递归判断子表达式 children ，获得返回值的类型
       return metaProp.getGetterType(prop.getChildren());
     }
     // issue #506. Resolve the type inside a Collection Object
+    // 直接获得返回值的类型
     return getGetterType(prop);
   }
 
   /**
    * 创建属性对应的 {@link MetaClass}
+   * metaClassForProperty => getGetterType => getGenericGetterType 。
    *
    * @param prop 属性解析器
    * @return 属性对应 MetaClass
@@ -140,7 +145,7 @@ public class MetaClass {
   }
 
   /**
-   * todo 继续
+   * 根据属性分词器
    *
    * @param prop
    * @return
@@ -170,6 +175,12 @@ public class MetaClass {
     return type;
   }
 
+  /**
+   * 获取
+   *
+   * @param propertyName
+   * @return
+   */
   private Type getGenericGetterType(String propertyName) {
     try {
       // 通过属性名称，获取getter方法代理
@@ -192,16 +203,25 @@ public class MetaClass {
     return null;
   }
 
+  /**
+   * 指定属性是否存在对应setter方法
+   *
+   * @param name 属性名称
+   * @return true：存在
+   */
   public boolean hasSetter(String name) {
+    // 使用分词器将name进行分词
     PropertyTokenizer prop = new PropertyTokenizer(name);
     if (prop.hasNext()) {
       if (reflector.hasSetter(prop.getName())) {
+        // 创建当前属性的 MetaClass
         MetaClass metaProp = metaClassForProperty(prop.getName());
         return metaProp.hasSetter(prop.getChildren());
       } else {
         return false;
       }
     } else {
+      // 验证此属性是否存在setter方法
       return reflector.hasSetter(prop.getName());
     }
   }

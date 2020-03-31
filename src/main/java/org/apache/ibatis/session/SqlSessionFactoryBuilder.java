@@ -27,11 +27,17 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 
 /**
  * Builds {@link SqlSession} instances.
- *
+ * todo 项目入口
+ * <p>
  * 这个类可以被实例化、使用和丢弃，一旦创建了 SqlSessionFactory，就不再需要它了。
  * 因此 SqlSessionFactoryBuilder 实例的最佳作用域是方法作用域（也就是局部方法变量）。
  * 你可以重用 SqlSessionFactoryBuilder 来创建多个 SqlSessionFactory 实例，
  * 但最好还是不要一直保留着它，以保证所有的 XML 解析资源可以被释放给更重要的事情。
+ * <p>
+ * 在 MyBatis 初始化过程中，会加载 mybatis-config.xml 配置文件、映射配置文件以及 Mapper 接口中的注解信息，
+ * 解析后的配置信息会形成相应的对象并保存到 Configuration 对象中。
+ * - <resultMap>节点(即 ResultSet 的映射规则) 会被解析成 ResultMap 对象。
+ * - <result> 节点(即属性映射)会被解析成 ResultMapping 对象。
  *
  * @author Clinton Begin
  */
@@ -51,7 +57,10 @@ public class SqlSessionFactoryBuilder {
 
   public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
     try {
+      // 1. 创建 XMLConfigBuilder 对象
       XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);
+      // 2. 调用 XMLConfigBuilder#parse() 方法，执行 XML 解析，返回 Configuration 对象。
+      // 3. 创建 DefaultSqlSessionFactory 对象
       return build(parser.parse());
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error building SqlSession.", e);
