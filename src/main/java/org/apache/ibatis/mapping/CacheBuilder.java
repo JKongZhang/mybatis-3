@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.mapping;
 
@@ -38,13 +38,41 @@ import org.apache.ibatis.reflection.SystemMetaObject;
  * @author Clinton Begin
  */
 public class CacheBuilder {
+  /**
+   * 编号。
+   * <p>
+   * 目前看下来，是命名空间
+   */
   private final String id;
+  /**
+   * 负责存储的 Cache 实现类
+   */
   private Class<? extends Cache> implementation;
+  /**
+   * Cache 装饰类集合
+   * <p>
+   * 例如，负责过期的 Cache 实现类
+   */
   private final List<Class<? extends Cache>> decorators;
+  /**
+   * 缓存容器大小
+   */
   private Integer size;
+  /**
+   * 清空缓存的频率。0 代表不清空
+   */
   private Long clearInterval;
+  /**
+   * 是否序列化
+   */
   private boolean readWrite;
+  /**
+   * Properties 对象
+   */
   private Properties properties;
+  /**
+   * 是否阻塞
+   */
   private boolean blocking;
 
   public CacheBuilder(String id) {
@@ -90,22 +118,35 @@ public class CacheBuilder {
   }
 
   public Cache build() {
+    // 设置缓存默认实现类 PerpetualCache
     setDefaultImplementations();
+    // 创建缓存实例
     Cache cache = newBaseCacheInstance(implementation, id);
+
+    // 设置属性
     setCacheProperties(cache);
     // issue #352, do not apply decorators to custom caches
+    // 如果是 PerpetualCache 类，则进行包装
     if (PerpetualCache.class.equals(cache.getClass())) {
+      // 遍历 decorators ，进行包装
       for (Class<? extends Cache> decorator : decorators) {
+        // 创建包装 Cache 对象
         cache = newCacheDecoratorInstance(decorator, cache);
+        // 设置属性
         setCacheProperties(cache);
       }
+      // 执行标准化的 Cache 包装
       cache = setStandardDecorators(cache);
     } else if (!LoggingCache.class.isAssignableFrom(cache.getClass())) {
+      // 如果是自定义的 Cache 类，则包装成 LoggingCache 对象，因为要统计。
       cache = new LoggingCache(cache);
     }
     return cache;
   }
 
+  /**
+   * 设置默认实现类
+   */
   private void setDefaultImplementations() {
     if (implementation == null) {
       implementation = PerpetualCache.class;
@@ -117,19 +158,25 @@ public class CacheBuilder {
 
   private Cache setStandardDecorators(Cache cache) {
     try {
+      // 如果有 size 方法，则进行设置
       MetaObject metaCache = SystemMetaObject.forObject(cache);
       if (size != null && metaCache.hasSetter("size")) {
         metaCache.setValue("size", size);
       }
+      // 包装成 ScheduledCache 对象
       if (clearInterval != null) {
         cache = new ScheduledCache(cache);
         ((ScheduledCache) cache).setClearInterval(clearInterval);
       }
+      // 包装成 SerializedCache 对象
       if (readWrite) {
         cache = new SerializedCache(cache);
       }
+      // 包装成 LoggingCache 对象
       cache = new LoggingCache(cache);
+      // 包装成 SynchronizedCache 对象
       cache = new SynchronizedCache(cache);
+      // 包装成 BlockingCache 对象
       if (blocking) {
         cache = new BlockingCache(cache);
       }
@@ -141,6 +188,7 @@ public class CacheBuilder {
 
   private void setCacheProperties(Cache cache) {
     if (properties != null) {
+      // 初始化 Cache 对象的属性
       MetaObject metaCache = SystemMetaObject.forObject(cache);
       for (Map.Entry<Object, Object> entry : properties.entrySet()) {
         String name = (String) entry.getKey();
@@ -150,25 +198,25 @@ public class CacheBuilder {
           if (String.class == type) {
             metaCache.setValue(name, value);
           } else if (int.class == type
-              || Integer.class == type) {
+            || Integer.class == type) {
             metaCache.setValue(name, Integer.valueOf(value));
           } else if (long.class == type
-              || Long.class == type) {
+            || Long.class == type) {
             metaCache.setValue(name, Long.valueOf(value));
           } else if (short.class == type
-              || Short.class == type) {
+            || Short.class == type) {
             metaCache.setValue(name, Short.valueOf(value));
           } else if (byte.class == type
-              || Byte.class == type) {
+            || Byte.class == type) {
             metaCache.setValue(name, Byte.valueOf(value));
           } else if (float.class == type
-              || Float.class == type) {
+            || Float.class == type) {
             metaCache.setValue(name, Float.valueOf(value));
           } else if (boolean.class == type
-              || Boolean.class == type) {
+            || Boolean.class == type) {
             metaCache.setValue(name, Boolean.valueOf(value));
           } else if (double.class == type
-              || Double.class == type) {
+            || Double.class == type) {
             metaCache.setValue(name, Double.valueOf(value));
           } else {
             throw new CacheException("Unsupported property type for cache: '" + name + "' of type " + type);
@@ -176,6 +224,7 @@ public class CacheBuilder {
         }
       }
     }
+    // 如果实现了 InitializingObject 接口，执行进一步初始化逻辑
     if (InitializingObject.class.isAssignableFrom(cache.getClass())) {
       try {
         ((InitializingObject) cache).initialize();
@@ -213,6 +262,12 @@ public class CacheBuilder {
     }
   }
 
+  /**
+   * 获得方法参数为 Cache 的构造方法
+   *
+   * @param cacheClass 指定类
+   * @return 构造方法
+   */
   private Constructor<? extends Cache> getCacheDecoratorConstructor(Class<? extends Cache> cacheClass) {
     try {
       return cacheClass.getConstructor(Cache.class);
