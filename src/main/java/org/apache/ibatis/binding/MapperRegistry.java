@@ -74,6 +74,12 @@ public class MapperRegistry {
     return knownMappers.containsKey(type);
   }
 
+  /**
+   * 加载 Mapper 接口
+   *
+   * @param type xxxMapper 接口
+   * @param <T>
+   */
   public <T> void addMapper(Class<T> type) {
     // 指定mapper必须为接口
     if (type.isInterface()) {
@@ -89,7 +95,7 @@ public class MapperRegistry {
         // otherwise the binding may automatically be attempted by the mapper parser.
         // If the type is already known, it won't try.
 
-        // 解析 Mapper 的注解配置
+        // todo 解析 Mapper 接口配置的核心入口
         MapperAnnotationBuilder parser = new MapperAnnotationBuilder(config, type);
         parser.parse();
         // 标记加载完成

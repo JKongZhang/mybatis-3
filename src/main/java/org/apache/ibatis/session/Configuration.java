@@ -198,6 +198,9 @@ public class Configuration {
   protected final Collection<XMLStatementBuilder> incompleteStatements = new LinkedList<>();
   protected final Collection<CacheRefResolver> incompleteCacheRefs = new LinkedList<>();
   protected final Collection<ResultMapResolver> incompleteResultMaps = new LinkedList<>();
+  /**
+   * 未完成的 MethodResolver 集合
+   */
   protected final Collection<MethodResolver> incompleteMethods = new LinkedList<>();
 
   /*
