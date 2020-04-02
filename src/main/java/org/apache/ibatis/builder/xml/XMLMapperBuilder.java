@@ -194,12 +194,19 @@ public class XMLMapperBuilder extends BaseBuilder {
     buildStatementFromContext(list, null);
   }
 
+  /**
+   * 遍历解析 <select /> <insert /> <update /> <delete /> 节点
+   *
+   * @param list               <select /> <insert /> <update /> <delete /> 节点
+   * @param requiredDatabaseId databaseId
+   */
   private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
     // 遍历 <select /> <insert /> <update /> <delete /> 节点们
     for (XNode context : list) {
-      // 创建 XMLStatementBuilder 对象，执行解析
+      // 创建 XMLStatementBuilder 对象
       final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
       try {
+        // todo XMLStatement 解析入口
         statementParser.parseStatementNode();
       } catch (IncompleteElementException e) {
         // 解析失败，添加到 configuration 中

@@ -343,6 +343,31 @@ public class MapperBuilderAssistant extends BaseBuilder {
     return new Discriminator.Builder(configuration, resultMapping, namespaceDiscriminatorMap).build();
   }
 
+  /**
+   * 创建 MappedStatement，并添加到 Configuration
+   *
+   * @param id             当前SQL的ID
+   * @param sqlSource      当前SQL的sqlSource
+   * @param statementType  根据 statementType 创建的 StatementType 对象
+   * @param sqlCommandType sql类型 {@link SqlCommandType#UNKNOWN | INSERT | UPDATE | DELETE | SELECT | FLUSH}
+   * @param fetchSize      批量操作数量，根据 fetchSize 设置
+   * @param timeout        SQL 执行超时时间
+   * @param parameterMap   用于引用外部 parameterMap 的属性，目前已被废弃。请使用行内参数映射和 parameterType 属性。
+   * @param parameterType  将会传入这条语句的参数的类全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过类型处理器（TypeHandler）推断出具体传入语句的参数，默认值为未设置（unset）。
+   * @param resultMap      对外部 resultMap 的命名引用。结果映射是 MyBatis 最强大的特性，如果你对其理解透彻，许多复杂的映射问题都能迎刃而解。 resultType 和 resultMap 之间只能同时使用一个。
+   * @param resultType     期望从这条语句中返回结果的类全限定名或别名。 注意，如果返回的是集合，那应该设置为集合包含的类型，而不是集合本身的类型。
+   * @param resultSetType  {@link ResultSetType}:FORWARD_ONLY，SCROLL_SENSITIVE, SCROLL_INSENSITIVE 或 DEFAULT（等价于 unset） 中的一个，默认值为 unset
+   * @param flushCache     是否刷新缓存，针对非select
+   * @param useCache       是否使用缓存数据，针对 select
+   * @param resultOrdered  个设置仅针对嵌套结果 select 语句：如果为 true，将会假设包含了嵌套结果集或是分组，当返回一个主结果行时，就不会产生对前面结果集的引用。
+   * @param keyGenerator   主键生成器
+   * @param keyProperty    指定能够唯一识别对象的属性
+   * @param keyColumn      设置生成键值在表中的列名
+   * @param databaseId     数据库ID
+   * @param lang           LanguageDriver
+   * @param resultSets     这个设置仅适用于多结果集的情况。它将列出语句执行后返回的结果集并赋予每个结果集一个名称，多个名称之间以逗号分隔。
+   * @return
+   */
   public MappedStatement addMappedStatement(
     String id,
     SqlSource sqlSource,
@@ -365,13 +390,17 @@ public class MapperBuilderAssistant extends BaseBuilder {
     LanguageDriver lang,
     String resultSets) {
 
+    // cache-ref 是否已处理
     if (unresolvedCacheRef) {
       throw new IncompleteElementException("Cache-ref not yet resolved");
     }
 
+    // 获得 id 编号，格式为 `${namespace}.${id}`
     id = applyCurrentNamespace(id, false);
+    // 是否为 select SQL
     boolean isSelect = sqlCommandType == SqlCommandType.SELECT;
 
+    // 创建 MappedStatement.Builder 对象
     MappedStatement.Builder statementBuilder = new MappedStatement.Builder(configuration, id, sqlSource, sqlCommandType)
       .resource(resource)
       .fetchSize(fetchSize)
@@ -390,12 +419,15 @@ public class MapperBuilderAssistant extends BaseBuilder {
       .useCache(valueOrDefault(useCache, isSelect))
       .cache(currentCache);
 
+    // 获得 ParameterMap ，并设置到 MappedStatement.Builder 中
     ParameterMap statementParameterMap = getStatementParameterMap(parameterMap, parameterType, id);
     if (statementParameterMap != null) {
       statementBuilder.parameterMap(statementParameterMap);
     }
 
+    // 创建 MappedStatement 对象
     MappedStatement statement = statementBuilder.build();
+    // 添加到 configuration 中
     configuration.addMappedStatement(statement);
     return statement;
   }
@@ -404,18 +436,29 @@ public class MapperBuilderAssistant extends BaseBuilder {
     return value == null ? defaultValue : value;
   }
 
+  /**
+   * 获得 ParameterMap 对象。
+   *
+   * @param parameterMapName
+   * @param parameterTypeClass
+   * @param statementId
+   * @return
+   */
   private ParameterMap getStatementParameterMap(
     String parameterMapName,
     Class<?> parameterTypeClass,
     String statementId) {
+    // 获得 ParameterMap 的编号，格式为 `${namespace}.${parameterMapName}`
     parameterMapName = applyCurrentNamespace(parameterMapName, true);
     ParameterMap parameterMap = null;
     if (parameterMapName != null) {
       try {
+        // 如果 parameterMapName 非空，则获得 parameterMapName 对应的 ParameterMap 对象
         parameterMap = configuration.getParameterMap(parameterMapName);
       } catch (IllegalArgumentException e) {
         throw new IncompleteElementException("Could not find parameter map " + parameterMapName, e);
       }
+      // 如果 parameterTypeClass 非空，则创建 ParameterMap 对象
     } else if (parameterTypeClass != null) {
       List<ParameterMapping> parameterMappings = new ArrayList<>();
       parameterMap = new ParameterMap.Builder(
@@ -427,13 +470,24 @@ public class MapperBuilderAssistant extends BaseBuilder {
     return parameterMap;
   }
 
+  /**
+   * 获得 ResultMap 集合。
+   *
+   * @param resultMap
+   * @param resultType
+   * @param statementId
+   * @return
+   */
   private List<ResultMap> getStatementResultMaps(
     String resultMap,
     Class<?> resultType,
     String statementId) {
+    // 获得 resultMap 的编号
     resultMap = applyCurrentNamespace(resultMap, true);
 
+    // 创建 ResultMap 集合
     List<ResultMap> resultMaps = new ArrayList<>();
+    // 如果 resultMap 非空，则获得 resultMap 对应的 ResultMap 对象(们）
     if (resultMap != null) {
       String[] resultMapNames = resultMap.split(",");
       for (String resultMapName : resultMapNames) {
@@ -443,6 +497,7 @@ public class MapperBuilderAssistant extends BaseBuilder {
           throw new IncompleteElementException("Could not find result map '" + resultMapName + "' referenced from '" + statementId + "'", e);
         }
       }
+      // 如果 resultType 非空，则创建 ResultMap 对象
     } else if (resultType != null) {
       ResultMap inlineResultMap = new ResultMap.Builder(
         configuration,
