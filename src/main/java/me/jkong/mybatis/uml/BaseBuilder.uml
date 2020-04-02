@@ -3,8 +3,8 @@
   <ID>JAVA</ID>
   <OriginalElement>org.apache.ibatis.builder.BaseBuilder</OriginalElement>
   <nodes>
-    <node x="819.0725732600731" y="190.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler</node>
     <node x="432.0413232600731" y="90.0">org.apache.ibatis.builder.xml.XMLMapperBuilder</node>
+    <node x="819.0725732600731" y="190.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler</node>
     <node x="443.0725732600731" y="300.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.ChooseHandler</node>
     <node x="734.0725732600731" y="300.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.ForEachHandler</node>
     <node x="601.0725732600731" y="300.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.SetHandler</node>
@@ -17,23 +17,23 @@
     <node x="25.820913461538453" y="90.0">org.apache.ibatis.builder.SqlSourceBuilder</node>
     <node x="241.0413232600731" y="90.0">org.apache.ibatis.builder.xml.XMLStatementBuilder</node>
     <node x="0.0" y="190.0">org.apache.ibatis.builder.SqlSourceBuilder.ParameterMappingTokenHandler</node>
-    <node x="320.0725732600731" y="300.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.IfHandler</node>
     <node x="809.5725732600731" y="90.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder</node>
+    <node x="320.0725732600731" y="300.0">org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.IfHandler</node>
     <node x="453.0413232600731" y="0.0">org.apache.ibatis.builder.BaseBuilder</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.BindHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler">
-      <point x="-30.25" y="-15.0" />
-      <point x="925.3225732600731" y="280.0" />
-      <point x="890.5100732600731" y="280.0" />
-      <point x="7.9375" y="15.0" />
-    </edge>
     <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.WhereHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler">
       <point x="-33.0" y="-15.0" />
       <point x="1242.072573260073" y="260.0" />
       <point x="922.2600732600731" y="260.0" />
       <point x="39.6875" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.BindHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler">
+      <point x="-30.25" y="-15.0" />
+      <point x="925.3225732600731" y="280.0" />
+      <point x="890.5100732600731" y="280.0" />
+      <point x="7.9375" y="15.0" />
     </edge>
     <edge source="org.apache.ibatis.builder.SqlSourceBuilder.ParameterMappingTokenHandler" target="org.apache.ibatis.builder.BaseBuilder">
       <point x="60.5" y="-15.0" />
@@ -47,15 +47,15 @@
       <point x="931.2392399267399" y="150.0" />
       <point x="48.66666666666674" y="15.0" />
     </edge>
+    <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
     <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.OtherwiseHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder">
       <point x="38.25" y="-15.0" />
       <point x="1150.822573260073" y="160.0" />
       <point x="915.0170177045176" y="160.0" />
       <point x="32.44444444444446" y="15.0" />
-    </edge>
-    <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
     </edge>
     <edge source="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.OtherwiseHandler" target="org.apache.ibatis.scripting.xmltags.XMLScriptBuilder.NodeHandler">
       <point x="-38.25" y="-15.0" />
@@ -174,7 +174,7 @@
       <point x="-64.88888888888891" y="15.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="752.0" y="65.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="753.5" y="166.0" />
   <SelectedNodes />
   <Categories>
     <Category>Inner Classes</Category>

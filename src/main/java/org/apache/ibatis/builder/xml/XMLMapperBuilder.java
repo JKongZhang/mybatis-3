@@ -458,8 +458,7 @@ public class XMLMapperBuilder extends BaseBuilder {
       }
     }
     // 获得 id 属性
-    String id = resultMapNode.getStringAttribute("id",
-      resultMapNode.getValueBasedIdentifier());
+    String id = resultMapNode.getStringAttribute("id", resultMapNode.getValueBasedIdentifier());
     // 获得 extends 属性
     String extend = resultMapNode.getStringAttribute("extends");
     // 获得 autoMapping 属性
@@ -467,7 +466,7 @@ public class XMLMapperBuilder extends BaseBuilder {
     // 创建 结果集 解析器
     ResultMapResolver resultMapResolver = new ResultMapResolver(builderAssistant, id, typeClass, extend, discriminator, resultMappings, autoMapping);
     try {
-      // 执行解析
+      // 执行解析，并将resultMap添加到Configuration中
       return resultMapResolver.resolve();
     } catch (IncompleteElementException e) {
       configuration.addIncompleteResultMap(resultMapResolver);
@@ -566,7 +565,7 @@ public class XMLMapperBuilder extends BaseBuilder {
    * 解析 discriminator 标签
    *
    * @param context
-   * @param resultType
+   * @param resultType     resultMap 的 Type
    * @param resultMappings
    * @return
    */
@@ -657,6 +656,80 @@ public class XMLMapperBuilder extends BaseBuilder {
     return context.getStringAttribute("databaseId") == null;
   }
 
+  /**
+   * <pre>
+   *   <xs:element name="resultMap">
+   *     <xs:complexType>
+   *       <xs:sequence>
+   *         <xs:element minOccurs="0" ref="constructor"/>
+   *         <xs:element minOccurs="0" maxOccurs="unbounded" ref="id"/>
+   *         <xs:element minOccurs="0" maxOccurs="unbounded" ref="result"/>
+   *         <xs:element minOccurs="0" maxOccurs="unbounded" ref="association"/>
+   *         <xs:element minOccurs="0" maxOccurs="unbounded" ref="collection"/>
+   *         <xs:element minOccurs="0" ref="discriminator"/>
+   *       </xs:sequence>
+   *       <xs:attribute name="id" use="required"/>
+   *       <xs:attribute name="type" use="required"/>
+   *       <xs:attribute name="extends"/>
+   *       <xs:attribute name="autoMapping">
+   *         <xs:simpleType>
+   *           <xs:restriction base="xs:token">
+   *             <xs:enumeration value="true"/>
+   *             <xs:enumeration value="false"/>
+   *           </xs:restriction>
+   *         </xs:simpleType>
+   *       </xs:attribute>
+   *     </xs:complexType>
+   *   </xs:element>
+   * </pre>
+   * 解析<resultMap>节点
+   * <p>
+   * 示例：
+   * <pre>
+   *  class Company{
+   *       private String c_id ;
+   *       private String c_name ;
+   *       private String c_address ;
+   *       private String c_type ;
+   *       private Dept dept =new Dept();//记得new 不然xml文件会报null
+   *       private Role role =new Role();//记得new 不然xml文件会报null
+   *       .....
+   *   }
+   *   class Dept{
+   *       private String d_id ;
+   *       private String d_name ;
+   *       private String d_num ;
+   *       .....
+   *   }
+   *   class Role{
+   *       private String r_id ;
+   *       private String r_name ;
+   *       private String r_num ;
+   *       .....
+   *   }
+   *   <resultMap ik="companyMap" type="xxx.domain.Company">
+   *       <id column="c_id" property="c_id"/>
+   *       <result column="c_name" property="c_name"/>
+   *       <result column="c_address" property="c_address"/>
+   *       <result column="c_type" property="c_type"/>
+   *       <collection property="dept" ofType="xxx.domain.Dept">
+   *           <id column="d_id" property="d_id"/>
+   *           <result column="d_name" property="d_name"/>
+   *           <result column="d_num" property="d_num"/>
+   *       </collection>
+   *       <collection property="role" ofType="xxx.domain.Role">
+   *           <id column="r_id" property="r_id"/>
+   *           <result column="r_name" property="r_name"/>
+   *           <result column="r_num" property="r_num"/>
+   *       </collection>
+   *   </resultMap>
+   * </pre>
+   *
+   * @param context    resultMap节点node
+   * @param resultType resultMap 的 Java 类型
+   * @param flags      是否存在ID
+   * @return ResultMapping
+   */
   private ResultMapping buildResultMappingFromContext(XNode context, Class<?> resultType, List<ResultFlag> flags) {
     String property;
     if (flags.contains(ResultFlag.CONSTRUCTOR)) {
@@ -664,19 +737,20 @@ public class XMLMapperBuilder extends BaseBuilder {
     } else {
       property = context.getStringAttribute("property");
     }
-    // 解析各种属性
+    // 解析各种属性 todo 分析此方法调用时机，及作用
     String column = context.getStringAttribute("column");
     String javaType = context.getStringAttribute("javaType");
     String jdbcType = context.getStringAttribute("jdbcType");
     String nestedSelect = context.getStringAttribute("select");
-    String nestedResultMap = context.getStringAttribute("resultMap", () ->
-      processNestedResultMappings(context, Collections.emptyList(), resultType));
+    String nestedResultMap = context.getStringAttribute("resultMap",
+      () -> processNestedResultMappings(context, Collections.emptyList(), resultType));
     String notNullColumn = context.getStringAttribute("notNullColumn");
     String columnPrefix = context.getStringAttribute("columnPrefix");
     String typeHandler = context.getStringAttribute("typeHandler");
     String resultSet = context.getStringAttribute("resultSet");
     String foreignColumn = context.getStringAttribute("foreignColumn");
     boolean lazy = "lazy".equals(context.getStringAttribute("fetchType", configuration.isLazyLoadingEnabled() ? "lazy" : "eager"));
+
     // 获得各种属性对应的类
     Class<?> javaTypeClass = resolveClass(javaType);
     Class<? extends TypeHandler<?>> typeHandlerClass = resolveClass(typeHandler);
