@@ -801,6 +801,12 @@ public class Configuration {
     mapperRegistry.addMappers(packageName);
   }
 
+  /**
+   * 扫描该包下所有的 Mapper 接口，并添加到 mapperRegistry 中
+   *
+   * @param type Mapper类
+   * @param <T>
+   */
   public <T> void addMapper(Class<T> type) {
     mapperRegistry.addMapper(type);
   }
