@@ -602,6 +602,8 @@ public class Configuration {
   }
 
   /**
+   * 获得 LanguageDriver 对象
+   *
    * @since 3.5.1
    */
   public LanguageDriver getLanguageDriver(Class<? extends LanguageDriver> langClass) {
