@@ -29,7 +29,7 @@ import org.apache.ibatis.scripting.defaults.RawSqlSource;
 import org.apache.ibatis.session.Configuration;
 
 /**
- * XML语言驱动
+ * 实现 LanguageDriver 接口，XML 语言驱动实现类。
  * <p>
  * Mybatis默认XML驱动类为XMLLanguageDriver，其主要作用于解析select|update|insert|delete节点为完整的SQL语句。
  * </p>
@@ -40,11 +40,22 @@ public class XMLLanguageDriver implements LanguageDriver {
 
   @Override
   public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
+    // 创建 DefaultParameterHandler 对象
     return new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
   }
 
+  /**
+   * 创建一个{@link SqlSource} 读取映射XML文件
+   *
+   * @param configuration The MyBatis configuration
+   * @param script        XNode parsed from a XML file
+   * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
+   *                      输入参数类型从一个xml类型映射器参数中指定的方法或属性。可以为空。
+   * @return
+   */
   @Override
   public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
+    // 创建 XMLScriptBuilder 对象，执行解析
     XMLScriptBuilder builder = new XMLScriptBuilder(configuration, script, parameterType);
     /*
      *  当sql中包含有${}时，就认为是动态SQL
@@ -54,11 +65,37 @@ public class XMLLanguageDriver implements LanguageDriver {
     return builder.parseScriptNode();
   }
 
+  /**
+   * 创建 SqlSource 对象，从方法注解配置，即 @Select 等。
+   * <pre>
+   *  @Update(value = {
+   *    "<script>",
+   *        "update Author",
+   *        "  <set>",
+   *        "    <if test='username != null'>username=#{username},</if>",
+   *        "    <if test='password != null'>password=#{password},</if>",
+   *        "    <if test='email != null'>email=#{email},</if>",
+   *        "    <if test='bio != null'>bio=#{bio}</if>",
+   *        "  </set>",
+   *        "where id=#{id}",
+   *    "</script>"})
+   *  void updateAuthorValues(Author author);
+   * </pre>
+   *
+   * @param configuration The MyBatis configuration
+   * @param script        The content of the annotation
+   * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
+   *                      方法参数，可以为空。
+   * @return SqlSource
+   */
   @Override
   public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
-    // issue #3 此处兼容XML方式的解析，条件以<script>为头结点
+    // issue #3
+    // 如果是 <script> 开头，使用 XML 配置的方式，使用动态 SQL
     if (script.startsWith("<script>")) {
+      // 创建 XPathParser 对象，用来解析出 <script /> 节点
       XPathParser parser = new XPathParser(script, false, configuration.getVariables(), new XMLMapperEntityResolver());
+      // 调用上面的 #createSqlSource(...) 方法，创建 SqlSource 对象
       return createSqlSource(configuration, parser.evalNode("/script"), parameterType);
     } else {
       // issue #127
@@ -66,11 +103,14 @@ public class XMLLanguageDriver implements LanguageDriver {
        * 解析Configuration#variable变量,将有${...}形式的字符串转换成对应字符串,
        *    eg:  '${first_name},${initial},${last_name}' => 'James,T,Kirk'
        */
+      // 变量替换
       script = PropertyParser.parse(script, configuration.getVariables());
+      // 创建 TextSqlNode 对象
       TextSqlNode textSqlNode = new TextSqlNode(script);
-      // 根据TextSqlNode的内部属性isDynamic来进行解析帮助类的分配
+      // 根据TextSqlNode的内部属性isDynamic来进行解析帮助类的分配，如果是动态 SQL ，则创建 DynamicSqlSource 对象
       if (textSqlNode.isDynamic()) {
         return new DynamicSqlSource(configuration, textSqlNode);
+        // 如果非动态 SQL ，则创建 RawSqlSource 对象
       } else {
         return new RawSqlSource(configuration, script, parameterType);
       }

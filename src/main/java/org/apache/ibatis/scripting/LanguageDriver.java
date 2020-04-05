@@ -24,8 +24,6 @@ import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.apache.ibatis.session.Configuration;
 
 /**
- * todo 这个类是干嘛用的？？？？
- * <p>
  * 语言驱动
  */
 public interface LanguageDriver {
@@ -38,7 +36,7 @@ public interface LanguageDriver {
    * @param mappedStatement The mapped statement that is being executed
    * @param parameterObject The input parameter object (can be null)
    * @param boundSql        The resulting SQL once the dynamic language has been executed.
-   * @return
+   * @return ParameterHandler
    * @author Frank D. Martinez [mnesarco]
    * @see DefaultParameterHandler
    */
@@ -54,7 +52,7 @@ public interface LanguageDriver {
    * @param script        XNode parsed from a XML file
    * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
    *                      输入参数类型从一个xml类型映射器参数中指定的方法或属性。可以为空。
-   * @return
+   * @return SqlSource
    */
   SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType);
 
@@ -62,13 +60,13 @@ public interface LanguageDriver {
    * Creates an {@link SqlSource} that will hold the statement read from an annotation.
    * It is called during startup, when the mapped statement is read from a class or an xml file.
    * <p>
-   * 创建一个{@link SqlSource} 从一个字解里，它在启动期间,当映射语句从一个类或读取一个xml文件被调用。;
+   * 创建 SqlSource 对象，从方法注解配置，即 @Select 等。
    *
    * @param configuration The MyBatis configuration
    * @param script        The content of the annotation
    * @param parameterType input parameter type got from a mapper method or specified in the parameterType xml attribute. Can be null.
    *                      输入参数类型从一个xml类型映射器参数中指定的方法或属性。可以为空。
-   * @return
+   * @return SqlSource
    */
   SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType);
 
