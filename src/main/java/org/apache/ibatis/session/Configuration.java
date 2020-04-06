@@ -640,6 +640,18 @@ public class Configuration {
     return resultSetHandler;
   }
 
+  /**
+   * 获取 Sql Statement 对象
+   * {@link org.apache.ibatis.executor.SimpleExecutor#doQuery}
+   *
+   * @param executor        SQL执行器
+   * @param mappedStatement 每一个SQL对应一个 MappedStatement
+   * @param parameterObject
+   * @param rowBounds
+   * @param resultHandler
+   * @param boundSql
+   * @return
+   */
   public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
     StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
     statementHandler = (StatementHandler) interceptorChain.pluginAll(statementHandler);

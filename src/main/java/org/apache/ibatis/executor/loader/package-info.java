@@ -15,5 +15,6 @@
  */
 /**
  * Base package for loading results into beans
+ * 实现延迟加载的功能。
  */
 package org.apache.ibatis.executor.loader;
