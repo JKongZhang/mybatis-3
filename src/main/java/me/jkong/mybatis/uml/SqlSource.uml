@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.ibatis.scripting.defaults.RawSqlSource</OriginalElement>
+  <nodes>
+    <node x="149.00000000000006" y="80.0">org.apache.ibatis.builder.annotation.ProviderSqlSource</node>
+    <node x="477.00000000000006" y="80.0">org.apache.ibatis.scripting.xmltags.DynamicSqlSource</node>
+    <node x="322.00000000000006" y="80.0">org.apache.ibatis.builder.StaticSqlSource</node>
+    <node x="255.00000000000006" y="0.0">org.apache.ibatis.mapping.SqlSource</node>
+    <node x="0.0" y="80.0">org.apache.ibatis.scripting.defaults.RawSqlSource</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.ibatis.scripting.defaults.RawSqlSource" target="org.apache.ibatis.mapping.SqlSource">
+      <point x="0.0" y="-15.0" />
+      <point x="64.5" y="50.0" />
+      <point x="268.12500000000006" y="50.0" />
+      <point x="-39.375" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.builder.annotation.ProviderSqlSource" target="org.apache.ibatis.mapping.SqlSource">
+      <point x="0.0" y="-15.0" />
+      <point x="225.50000000000006" y="60.0" />
+      <point x="294.37500000000006" y="60.0" />
+      <point x="-13.125" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.builder.StaticSqlSource" target="org.apache.ibatis.mapping.SqlSource">
+      <point x="0.0" y="-15.0" />
+      <point x="389.50000000000006" y="60.0" />
+      <point x="320.62500000000006" y="60.0" />
+      <point x="13.125" y="15.0" />
+    </edge>
+    <edge source="org.apache.ibatis.scripting.xmltags.DynamicSqlSource" target="org.apache.ibatis.mapping.SqlSource">
+      <point x="0.0" y="-15.0" />
+      <point x="554.0" y="50.0" />
+      <point x="346.87500000000006" y="50.0" />
+      <point x="39.375" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="400.0" y="55.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
