@@ -627,8 +627,18 @@ public class Configuration {
     return MetaObject.forObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
   }
 
+  /**
+   * 创建 ParameterHandler 对象。
+   *
+   * @param mappedStatement
+   * @param parameterObject
+   * @param boundSql
+   * @return
+   */
   public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
+    // 创建 ParameterHandler 对象
     ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
+    // 应用插件
     parameterHandler = (ParameterHandler) interceptorChain.pluginAll(parameterHandler);
     return parameterHandler;
   }
@@ -641,7 +651,7 @@ public class Configuration {
   }
 
   /**
-   * 获取 Sql Statement 对象
+   * 获取 Sql Statement Handler 对象
    * {@link org.apache.ibatis.executor.SimpleExecutor#doQuery}
    *
    * @param executor        SQL执行器
@@ -663,9 +673,8 @@ public class Configuration {
   }
 
   /**
-   * 创建 Executor 对象
+   * 根据 ExecutorType 创建 Executor 对象
    * <p>
-   * todo 继续
    *
    * @param transaction  事务对象
    * @param executorType 执行器类型

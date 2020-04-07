@@ -17,7 +17,8 @@ package org.apache.ibatis.executor;
 
 /**
  * 错误上下文，负责记录错误日志。
- * todo 继续
+ * <p>
+ * 很优秀的设计
  *
  * @author Clinton Begin
  */

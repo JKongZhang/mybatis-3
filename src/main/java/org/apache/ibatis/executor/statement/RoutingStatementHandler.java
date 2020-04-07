@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.executor.statement;
 
@@ -30,14 +30,24 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
+ * RoutingStatementHandler 实现类，负责将不同的 Statement 类型，
+ * 路由的 StatementHandler 对象，根据 Statement 类型，转发到对应的 StatementHandler 实现类中。
+ * <p>
+ * 经典的装饰器模式。
+ *
  * @author Clinton Begin
  */
 public class RoutingStatementHandler implements StatementHandler {
 
+  /**
+   * 被委托的 StatementHandler 对象
+   */
   private final StatementHandler delegate;
 
-  public RoutingStatementHandler(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
+  public RoutingStatementHandler(Executor executor, MappedStatement ms, Object parameter,
+                                 RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
 
+    // 根据不同的类型，创建对应的 StatementHandler 实现类
     switch (ms.getStatementType()) {
       case STATEMENT:
         delegate = new SimpleStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
