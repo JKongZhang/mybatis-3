@@ -83,7 +83,7 @@ public class ResultMap {
    */
   private Discriminator discriminator;
   /**
-   * 是否有内嵌的 ResultMap
+   * 是否有内嵌的 ResultMap todo 内嵌 resultMap 结构
    */
   private boolean hasNestedResultMaps;
   /**
