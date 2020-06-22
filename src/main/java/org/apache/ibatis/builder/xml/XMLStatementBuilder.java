@@ -308,6 +308,9 @@ public class XMLStatementBuilder extends BaseBuilder {
    *     </insert>
    *     首先会运行 selectKey 元素中的语句，并设置 Author 的 id，然后才会调用插入语句。
    * </pre>
+   * <p>
+   * 首先读取selectkey中配置的一系列属性，然后调用 {@link LanguageDriver#createSqlSource}来创建SqlSource对象。
+   * 最后创建MapperStatement对象，并添加到 {@link Configuration#mappedStatements}
    *
    * @param id                 完整 id ，格式为 `${id}!selectKey`
    * @param nodeToHandle       需要处理的selectKey节点
@@ -380,6 +383,10 @@ public class XMLStatementBuilder extends BaseBuilder {
     return previous.getDatabaseId() == null;
   }
 
+  /**
+   * @param lang
+   * @return
+   */
   private LanguageDriver getLanguageDriver(String lang) {
     Class<? extends LanguageDriver> langClass = null;
     if (lang != null) {
