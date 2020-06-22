@@ -375,7 +375,8 @@ public class XMLStatementBuilder extends BaseBuilder {
       return true;
     }
     // skip this statement if there is a previous one with a not null databaseId
-    MappedStatement previous = this.configuration.getMappedStatement(id, false); // issue #2
+    // issue #2
+    MappedStatement previous = this.configuration.getMappedStatement(id, false);
     return previous.getDatabaseId() == null;
   }
 
