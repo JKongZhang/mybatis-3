@@ -295,8 +295,7 @@ public class XMLStatementBuilder extends BaseBuilder {
    *     keyProperty="id"          -> selectKey 语句结果应该被设置到的目标属性。如果生成列不止一个，可以用逗号分隔多个属性名称。
    *     resultType="int"          -> 结果的类型。
    *     order="BEFORE"            -> 可以设置为 BEFORE 或 AFTER。如果设置为 BEFORE，那么它首先会生成主键，设置 keyProperty 再执行插入语句。
-   *     statementType="PREPARED"  -> MyBatis 支持 STATEMENT，PREPARED 和 CALLABLE 类型的映射语句，分别代表 Statement, PreparedStatement 和 CallableStatement 类型。
-   *     >
+   *     statementType="PREPARED">  -> MyBatis 支持 STATEMENT，PREPARED 和 CALLABLE 类型的映射语句，分别代表 Statement, PreparedStatement 和 CallableStatement 类型。
    *
    *     <insert id="insertAuthor">
    *       <selectKey keyProperty="id" resultType="int" order="BEFORE">
