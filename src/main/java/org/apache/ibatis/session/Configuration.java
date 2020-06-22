@@ -203,11 +203,16 @@ public class Configuration {
    */
   protected final Collection<MethodResolver> incompleteMethods = new LinkedList<>();
 
-  /*
+  /**
    * A map holds cache-ref relationship. The key is the namespace that
    * references a cache bound to another namespace and the value is the
    * namespace which the actual cache is bound to.
-   * Cache 指向的映射
+   * <p>
+   * 当前Mapper引用其他Mapper的cache
+   * key：当前Mapper的namespace
+   * value：备用用的Mapper的namespace
+   * <p>
+   * <cache-ref namespace="com.someone.application.data.SomeMapper"/>
    */
   protected final Map<String, String> cacheRefMap = new HashMap<>();
 
@@ -858,6 +863,11 @@ public class Configuration {
     mapperRegistry.addMappers(packageName, superType);
   }
 
+  /**
+   * 加载制定包下的Mapper类文件
+   *
+   * @param packageName 包路径
+   */
   public void addMappers(String packageName) {
     mapperRegistry.addMappers(packageName);
   }
@@ -866,7 +876,7 @@ public class Configuration {
    * 扫描该包下所有的 Mapper 接口，并添加到 mapperRegistry 中
    *
    * @param type Mapper类
-   * @param <T>
+   * @param <T>  Mapper泛型
    */
   public <T> void addMapper(Class<T> type) {
     mapperRegistry.addMapper(type);
@@ -891,6 +901,12 @@ public class Configuration {
     return mappedStatements.containsKey(statementName);
   }
 
+  /**
+   * 当前Mapper引用其他Mapper的cache
+   *
+   * @param namespace           当前mapper的namespace
+   * @param referencedNamespace 被引用的namespace
+   */
   public void addCacheRef(String namespace, String referencedNamespace) {
     cacheRefMap.put(namespace, referencedNamespace);
   }

@@ -49,6 +49,8 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
 /**
+ * 解析 Mapper 配置文件
+ *
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */
@@ -72,7 +74,7 @@ public class XMLMapperBuilder extends BaseBuilder {
    */
   private final Map<String, XNode> sqlFragments;
   /**
-   * 资源引用的地址
+   * 资源地址
    */
   private final String resource;
 
@@ -93,6 +95,14 @@ public class XMLMapperBuilder extends BaseBuilder {
     this.builderAssistant.setCurrentNamespace(namespace);
   }
 
+  /**
+   * 常见Mapper建造者
+   *
+   * @param inputStream   Mapper xml文件流
+   * @param configuration mybatis配置中心
+   * @param resource      xml配置文件的位置信息
+   * @param sqlFragments
+   */
   public XMLMapperBuilder(InputStream inputStream, Configuration configuration, String resource, Map<String, XNode> sqlFragments) {
     this(new XPathParser(inputStream, true, configuration.getVariables(), new XMLMapperEntityResolver()),
       configuration, resource, sqlFragments);
@@ -123,7 +133,8 @@ public class XMLMapperBuilder extends BaseBuilder {
     }
     // 5. 解析待定的 <resultMap /> 节点
     parsePendingResultMaps();
-    // 6. 解析待定的 <cache-ref /> 节点
+    // 6. 解析待定的 <cache-ref /> 节点，
+    // 如果在解析<cache-ref>标签时，索要引用的cache并未完成加载，name会将此引用延后处理。
     parsePendingCacheRefs();
     // 7. 解析待定的 SQL 语句的节点
     parsePendingStatements();
@@ -163,20 +174,25 @@ public class XMLMapperBuilder extends BaseBuilder {
       if (namespace == null || namespace.equals("")) {
         throw new BuilderException("Mapper's namespace cannot be empty");
       }
-      // 设置命名空间。 todo 此命名空间在什么位置会起作用？气什么作用？
+      // 设置命名空间。
       builderAssistant.setCurrentNamespace(namespace);
       // 2. 解析 <cache-ref /> 节点
       cacheRefElement(context.evalNode("cache-ref"));
       // 3. 解析 <cache /> 节点
       cacheElement(context.evalNode("cache"));
+
       // 已废弃！老式风格的参数映射。内联参数是首选,这个元素可能在将来被移除，这里不会记录。
       parameterMapElement(context.evalNodes("/mapper/parameterMap"));
-      // 4. 解析 <resultMap /> 节点们
+
+      // 4. 解析 <resultMap /> 节点，在同一个Mapper.xml中存在多个<resultMap>标签
       resultMapElements(context.evalNodes("/mapper/resultMap"));
+
       // 5. 解析 <sql /> 节点们
       sqlElement(context.evalNodes("/mapper/sql"));
+
       // 6. 解析 <select /> <insert /> <update /> <delete /> 节点们
       buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
+
     } catch (Exception e) {
       throw new BuilderException("Error parsing Mapper XML. The XML location is '" + resource + "'. Cause: " + e, e);
     }
@@ -195,18 +211,19 @@ public class XMLMapperBuilder extends BaseBuilder {
   }
 
   /**
-   * 遍历解析 <select /> <insert /> <update /> <delete /> 节点
+   * 遍历解析 <select/> <insert/> <update/> <delete/> <flush/> 节点
    *
-   * @param list               <select /> <insert /> <update /> <delete /> 节点
+   * @param list               <select/> <insert/> <update/> <delete/> <flush/> 节点
    * @param requiredDatabaseId databaseId
    */
   private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
-    // 遍历 <select /> <insert /> <update /> <delete /> 节点们
+    // 遍历 <select/> <insert/> <update/> <delete/> <flush/>节点们
     for (XNode context : list) {
       // 创建 XMLStatementBuilder 对象
-      final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
+      final XMLStatementBuilder statementParser =
+        new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
       try {
-        // todo XMLStatement 解析入口
+        // todo XMLStatement 解析入口，每一个XMLStatement对应一条SQL语句
         statementParser.parseStatementNode();
       } catch (IncompleteElementException e) {
         // 解析失败，添加到 configuration 中
@@ -263,8 +280,9 @@ public class XMLMapperBuilder extends BaseBuilder {
   /**
    * <cache-ref namespace="com.someone.application.data.SomeMapper"/>
    * <p>
-   * cache-ref – 引用其它命名空间的缓存配置。
    * 解析 cache-ref 节点
+   * <p>
+   * cache-ref：引用其它命名空间的缓存配置。
    *
    * @param context cache-ref 节点数据
    */
@@ -277,7 +295,12 @@ public class XMLMapperBuilder extends BaseBuilder {
       try {
         cacheRefResolver.resolveCacheRef();
       } catch (IncompleteElementException e) {
-        // 解析失败，添加到 configuration 的 incompleteCacheRefs 中
+        // 从Configuration 中获取指定命名空间的Cache => MapperBuilderAssistant#useCacheRef
+        //   Cache cache = configuration.getCache(namespace);
+        //   if (cache == null) {
+        //    throw new IncompleteElementException("No cache for namespace '" + namespace + "' could be found.");
+        //   }
+        // 解析失败，添加到 configuration 的 incompleteCacheRefs 中，待所有Mapper解析完成之后再处理未完成引用的cache。
         configuration.addIncompleteCacheRef(cacheRefResolver);
       }
     }
@@ -290,16 +313,17 @@ public class XMLMapperBuilder extends BaseBuilder {
    * 2. 通用设置
    * <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>
    * eviction:
-   * - LRU – 最近最少使用：移除最长时间不被使用的对象。
-   * - FIFO – 先进先出：按对象进入缓存的顺序来移除它们。
-   * - SOFT – 软引用：基于垃圾回收器状态和软引用规则移除对象。
-   * - WEAK – 弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。
+   * - {@link org.apache.ibatis.cache.decorators.LruCache}  LRU – 最近最少使用：移除最长时间不被使用的对象。
+   * - {@link org.apache.ibatis.cache.decorators.FifoCache} FIFO – 先进先出：按对象进入缓存的顺序来移除它们。
+   * - {@link org.apache.ibatis.cache.decorators.SoftCache} SOFT – 软引用：基于垃圾回收器状态和软引用规则移除对象。
+   * - {@link org.apache.ibatis.cache.decorators.WeakCache} WEAK – 弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。
    * flushInterval:
-   * - flushInterval（刷新间隔）
+   * - flushInterval（刷新间隔）{@link org.apache.ibatis.cache.decorators.ScheduledCache}
    * size:
    * - size（引用数目）
    * readOnly:
-   * - readOnly（只读）属性可以被设置为 true 或 false。
+   * - readOnly（只读）属性可以被设置为 true 或 false。{@link org.apache.ibatis.cache.decorators.SerializedCache}
+   * - blocking: 是否阻塞 {@link org.apache.ibatis.cache.decorators.BlockingCache}
    * <p>
    * 3. 自定义设置
    * 也可以通过实现你自己的缓存，或为其他第三方缓存方案创建适配器，来完全覆盖缓存行为。并且可以设置一些属性
@@ -324,7 +348,7 @@ public class XMLMapperBuilder extends BaseBuilder {
       boolean blocking = context.getBooleanAttribute("blocking", false);
       // 获取缓存配置Properties
       Properties props = context.getChildrenAsProperties();
-      // 创建 Cache 对象
+      // 创建 Cache 对象，cache 对象采用装饰器模式，根据以上cache标签中设置的属性，来完成Cache对象的创建。
       builderAssistant.useNewCache(typeClass, evictionClass, flushInterval, size, readWrite, blocking, props);
     }
   }
@@ -355,6 +379,11 @@ public class XMLMapperBuilder extends BaseBuilder {
     }
   }
 
+  /**
+   * 遍历逐个解析resultMap标签
+   *
+   * @param list resultMaps
+   */
   private void resultMapElements(List<XNode> list) {
     for (XNode resultMapNode : list) {
       try {
@@ -365,6 +394,12 @@ public class XMLMapperBuilder extends BaseBuilder {
     }
   }
 
+  /**
+   * 介意resultMap标签
+   *
+   * @param resultMapNode resultMap Node
+   * @return 解析的 {@link ResultMap}
+   */
   private ResultMap resultMapElement(XNode resultMapNode) {
     return resultMapElement(resultMapNode, Collections.emptyList(), null);
   }
@@ -427,9 +462,10 @@ public class XMLMapperBuilder extends BaseBuilder {
    * @param resultMapNode            resultMap 节点数据
    * @param additionalResultMappings null
    * @param enclosingType            null
-   * @return
+   * @return ResultMap
    */
-  private ResultMap resultMapElement(XNode resultMapNode, List<ResultMapping> additionalResultMappings, Class<?> enclosingType) {
+  private ResultMap resultMapElement(XNode resultMapNode, List<ResultMapping> additionalResultMappings,
+                                     Class<?> enclosingType) {
     ErrorContext.instance().activity("processing " + resultMapNode.getValueBasedIdentifier());
 
     // 1. 获得 type 属性(type -> ofType -> resultType -> javaType)
@@ -455,7 +491,7 @@ public class XMLMapperBuilder extends BaseBuilder {
         // 2.2 处理 <discriminator /> 节点
         discriminator = processDiscriminatorElement(resultChild, typeClass, resultMappings);
       } else {
-        // 2.3 处理其它节点
+        // 2.3 处理其它节点: <id>、<result>、<association>、<collection>
         List<ResultFlag> flags = new ArrayList<>();
         if ("id".equals(resultChild.getName())) {
           flags.add(ResultFlag.ID);
@@ -466,9 +502,9 @@ public class XMLMapperBuilder extends BaseBuilder {
     }
     // 获得 id 属性
     String id = resultMapNode.getStringAttribute("id", resultMapNode.getValueBasedIdentifier());
-    // 获得 extends 属性
+    // 获得 extends 属性，当前ResultMap 的集成属性
     String extend = resultMapNode.getStringAttribute("extends");
-    // 获得 autoMapping 属性
+    // 获得 autoMapping 属性，是否采用自动映射设置
     Boolean autoMapping = resultMapNode.getBooleanAttribute("autoMapping");
     // 创建 结果集 解析器
     ResultMapResolver resultMapResolver = new ResultMapResolver(builderAssistant, id, typeClass, extend, discriminator, resultMappings, autoMapping);
@@ -496,12 +532,18 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   /**
    * 处理 resultMap 中的 constructor 标签
+   * <pre>
+   *    <constructor>
+   *      <idArg column="blog_id" javaType="int"/>
+   *    </constructor>
+   * </pre>
    *
    * @param resultChild    constructor 标签
    * @param resultType     resultMap 的 type 类型
-   * @param resultMappings
+   * @param resultMappings 将根据构造器创建的ResultMap对象添加到 resultMappings
    */
-  private void processConstructorElement(XNode resultChild, Class<?> resultType, List<ResultMapping> resultMappings) {
+  private void processConstructorElement(XNode resultChild, Class<?> resultType,
+                                         List<ResultMapping> resultMappings) {
     // 获取构造器参数
     List<XNode> argChildren = resultChild.getChildren();
     for (XNode argChild : argChildren) {
@@ -624,6 +666,33 @@ public class XMLMapperBuilder extends BaseBuilder {
     sqlElement(list, null);
   }
 
+  /**
+   * 解析SQL模板
+   * <pre>
+   *   <xs:element name="sql">
+   *     <xs:complexType mixed="true">
+   *       <xs:choice minOccurs="0" maxOccurs="unbounded">
+   *         <xs:element ref="include"/>
+   *         <xs:element ref="trim"/>
+   *         <xs:element ref="where"/>
+   *         <xs:element ref="set"/>
+   *         <xs:element ref="foreach"/>
+   *         <xs:element ref="choose"/>
+   *         <xs:element ref="if"/>
+   *         <xs:element ref="bind"/>
+   *       </xs:choice>
+   *       <xs:attribute name="id" use="required"/>
+   *       <xs:attribute name="lang"/>
+   *       <xs:attribute name="databaseId"/>
+   *     </xs:complexType>
+   *   </xs:element>
+   * </pre>
+   *
+   * @param list               带解析的节点数据
+   * @param requiredDatabaseId 如果设置了databaseId，
+   *                           那么将验证此节点的databaseId是否与环境中设置的databaseId相同，
+   *                           如果相同或未设置，则进行处理，如果databaseId不相同，则跳过。
+   */
   private void sqlElement(List<XNode> list, String requiredDatabaseId) {
     for (XNode context : list) {
       // 指定数据源
@@ -737,7 +806,8 @@ public class XMLMapperBuilder extends BaseBuilder {
    * @param flags      是否存在ID
    * @return ResultMapping
    */
-  private ResultMapping buildResultMappingFromContext(XNode context, Class<?> resultType, List<ResultFlag> flags) {
+  private ResultMapping buildResultMappingFromContext(XNode context, Class<?> resultType,
+                                                      List<ResultFlag> flags) {
     String property;
     if (flags.contains(ResultFlag.CONSTRUCTOR)) {
       property = context.getStringAttribute("name");
@@ -763,7 +833,10 @@ public class XMLMapperBuilder extends BaseBuilder {
     Class<? extends TypeHandler<?>> typeHandlerClass = resolveClass(typeHandler);
     JdbcType jdbcTypeEnum = resolveJdbcType(jdbcType);
     // 构建 ResultMapping 对象
-    return builderAssistant.buildResultMapping(resultType, property, column, javaTypeClass, jdbcTypeEnum, nestedSelect, nestedResultMap, notNullColumn, columnPrefix, typeHandlerClass, flags, resultSet, foreignColumn, lazy);
+    return builderAssistant.buildResultMapping(
+      resultType, property, column, javaTypeClass, jdbcTypeEnum,
+      nestedSelect, nestedResultMap, notNullColumn, columnPrefix, typeHandlerClass,
+      flags, resultSet, foreignColumn, lazy);
   }
 
   private String processNestedResultMappings(XNode context, List<ResultMapping> resultMappings, Class<?> enclosingType) {

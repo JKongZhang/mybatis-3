@@ -144,7 +144,7 @@ public class XMLConfigBuilder extends BaseBuilder {
    * </pre>
    * 解析xml元素
    *
-   * @param root
+   * @param root configuration 节点
    */
   private void parseConfiguration(XNode root) {
     try {
@@ -440,14 +440,17 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   /**
-   * <properties resource="org/mybatis/example/config.properties">
-   * <property name="username" value="dev_user"/>
-   * <property name="password" value="F2Fa3!33TYyg"/>
-   * </properties>
+   * <pre>
+   *  <properties resource="org/mybatis/example/config.properties">
+   *    <property name="username" value="dev_user"/>
+   *    <property name="password" value="F2Fa3!33TYyg"/>
+   *  </properties>
+   * </pre>
+   *
    * <p>
    * properties 标签解析
    *
-   * @param context
+   * @param context peoperties 节点
    * @throws Exception
    */
   private void propertiesElement(XNode context) throws Exception {

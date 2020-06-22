@@ -124,10 +124,21 @@ public class TypeAliasRegistry {
     }
   }
 
+  /**
+   * 加载指定包下的java类带有@Alias注解的类的别名
+   *
+   * @param packageName 包名
+   */
   public void registerAliases(String packageName) {
     registerAliases(packageName, Object.class);
   }
 
+  /**
+   * 加载指定包下带有{@link Alias}注解的类的别名
+   *
+   * @param packageName 包名
+   * @param superType   父类
+   */
   public void registerAliases(String packageName, Class<?> superType) {
     ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
     resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
@@ -147,6 +158,7 @@ public class TypeAliasRegistry {
    * @param type 指定类
    */
   public void registerAlias(Class<?> type) {
+    // 获取类名
     String alias = type.getSimpleName();
     // 如果此类带有@Alias注解，则使用注解中的alias
     Alias aliasAnnotation = type.getAnnotation(Alias.class);
@@ -157,6 +169,12 @@ public class TypeAliasRegistry {
     registerAlias(alias, type);
   }
 
+  /**
+   * 注册别名
+   *
+   * @param alias 别名
+   * @param value 类
+   */
   public void registerAlias(String alias, Class<?> value) {
     if (alias == null) {
       throw new TypeException("The parameter alias cannot be null");

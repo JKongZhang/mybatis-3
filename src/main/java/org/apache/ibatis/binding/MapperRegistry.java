@@ -75,10 +75,35 @@ public class MapperRegistry {
   }
 
   /**
+   * 扫描指定包，并将符合的类，添加到 knownMappers 中。
+   *
+   * @since 3.2.2
+   */
+  public void addMappers(String packageName) {
+    addMappers(packageName, Object.class);
+  }
+
+  /**
+   * 扫描指定包下的指定类，并添加到 knownMappers 中
+   *
+   * @since 3.2.2
+   */
+  public void addMappers(String packageName, Class<?> superType) {
+    ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
+    // 扫描指定包下的指定类
+    resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
+    Set<Class<? extends Class<?>>> mapperSet = resolverUtil.getClasses();
+    // 遍历，添加到 knownMappers 中
+    for (Class<?> mapperClass : mapperSet) {
+      addMapper(mapperClass);
+    }
+  }
+
+  /**
    * 加载 Mapper 接口
    *
    * @param type xxxMapper 接口
-   * @param <T>
+   * @param <T>  Mapper 泛型
    */
   public <T> void addMapper(Class<T> type) {
     // 指定mapper必须为接口
@@ -89,7 +114,7 @@ public class MapperRegistry {
       }
       boolean loadCompleted = false;
       try {
-        // 添加到 knownMappers 中
+        // 添加到 knownMappers 中，TODO：重要：为Mapper接口创建代理对象！！！
         knownMappers.put(type, new MapperProxyFactory<>(type));
         // It's important that the type is added before the parser is run,
         // otherwise the binding may automatically be attempted by the mapper parser.
@@ -114,31 +139,6 @@ public class MapperRegistry {
    */
   public Collection<Class<?>> getMappers() {
     return Collections.unmodifiableCollection(knownMappers.keySet());
-  }
-
-  /**
-   * 扫描指定包下的指定类，并添加到 knownMappers 中
-   *
-   * @since 3.2.2
-   */
-  public void addMappers(String packageName, Class<?> superType) {
-    ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
-    // 扫描指定包下的指定类
-    resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
-    Set<Class<? extends Class<?>>> mapperSet = resolverUtil.getClasses();
-    // 遍历，添加到 knownMappers 中
-    for (Class<?> mapperClass : mapperSet) {
-      addMapper(mapperClass);
-    }
-  }
-
-  /**
-   * 扫描指定包，并将符合的类，添加到 knownMappers 中。
-   *
-   * @since 3.2.2
-   */
-  public void addMappers(String packageName) {
-    addMappers(packageName, Object.class);
   }
 
 }

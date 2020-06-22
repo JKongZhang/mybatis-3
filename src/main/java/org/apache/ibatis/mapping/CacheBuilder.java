@@ -117,6 +117,11 @@ public class CacheBuilder {
     return this;
   }
 
+  /**
+   * 采用装饰器设计模式的cache的设计，在创建Cache对象时也采用套娃式创建。
+   *
+   * @return 创建的cache对象
+   */
   public Cache build() {
     // 设置缓存默认实现类 PerpetualCache
     setDefaultImplementations();
@@ -130,7 +135,7 @@ public class CacheBuilder {
     if (PerpetualCache.class.equals(cache.getClass())) {
       // 遍历 decorators ，进行包装
       for (Class<? extends Cache> decorator : decorators) {
-        // 创建包装 Cache 对象
+        // 创建包装 Cache 对象，逐层创建Cache对象
         cache = newCacheDecoratorInstance(decorator, cache);
         // 设置属性
         setCacheProperties(cache);

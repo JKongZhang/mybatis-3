@@ -230,7 +230,7 @@ public class MapperBuilderAssistant extends BaseBuilder {
   }
 
   /**
-   * 将resultMap添加到configuration中
+   * 将resultMap添加到configuration中， {@link ResultMapResolver#resolve()}
    *
    * @param id             ResultMap 编号
    * @param type           类型
@@ -282,7 +282,7 @@ public class MapperBuilderAssistant extends BaseBuilder {
     ResultMap resultMap = new ResultMap.Builder(configuration, id, type, resultMappings, autoMapping)
       .discriminator(discriminator)
       .build();
-    // 添加到 configuration 中
+    // 添加到 configuration 中，以便SQL标签使用
     configuration.addResultMap(resultMap);
     return resultMap;
   }

@@ -88,17 +88,19 @@ public class XMLIncludeTransformer {
    */
   private void applyIncludes(Node source, final Properties variablesContext, boolean included) {
     // 如果是 <include /> 标签
-    if (source.getNodeName().equals("include")) {
+    if ("include".equals(source.getNodeName())) {
       // 获得 <sql /> 对应的节点
       Node toInclude = findSqlFragment(
-        // 获取 <include> 标签中的refid 的值
+        // 获取 <include> 标签中的refid 的值，并将refid中的 ${} 占位符替换掉，然后使用 namespace.id的形式查找<sql>节点。
         getStringAttribute(source, "refid"),
         variablesContext
       );
-      // 获得包含 <include /> 标签内的属性 <property>。
+      // 获得包含 <include/> 标签内的属性 <property>，
+      // 并将得到的键值添加到variablesContext形成新的properties对象，用于替换${xxx}占位符。
       // toIncludeContext：当前include中的Properties与mybatis-config中的Properties集合
       Properties toIncludeContext = getVariablesContext(source, variablesContext);
-      // 递归调用 #applyIncludes(...) 方法，继续替换。注意，此处是 <sql /> 对应的节点
+      // 递归调用 #applyIncludes(...) 方法，继续替换${}。
+      // 注意，此处是 <sql/> 对应的节点，主要是因为在<sql></sql>中仍然有可能继续使用include引用其他<sql>
       applyIncludes(toInclude, toIncludeContext, true);
 
       if (toInclude.getOwnerDocument() != source.getOwnerDocument()) {
@@ -106,15 +108,16 @@ public class XMLIncludeTransformer {
       }
       // 将 <include /> 节点替换成 <sql /> 节点
       source.getParentNode().replaceChild(toInclude, source);
-      // 将 <sql /> 子节点添加到 <sql /> 节点前面
+      // 将 <sql/> 子节点添加到 <sql/> 节点前面
       while (toInclude.hasChildNodes()) {
         toInclude.getParentNode().insertBefore(toInclude.getFirstChild(), toInclude);
       }
-      // 移除 <include /> 标签自身
+      // 移除 <sql/> 标签自身
       toInclude.getParentNode().removeChild(toInclude);
     } else if (source.getNodeType() == Node.ELEMENT_NODE) {
       // 如果节点类型为 Node.ELEMENT_NODE
-      // 如果在处理 <include /> 标签中，则替换其上的属性，例如 <sql id="123" lang="${cpu}"> 的情况，lang 属性是可以被替换的
+      // 如果在处理 <include /> 标签中，则替换其上的属性，
+      // 例如 <sql id="123" lang="${cpu}"> 的情况，lang 属性是可以被替换的
       if (included && !variablesContext.isEmpty()) {
         // replace variables in attribute values
         NamedNodeMap attributes = source.getAttributes();
@@ -129,7 +132,8 @@ public class XMLIncludeTransformer {
         applyIncludes(children.item(i), variablesContext, included);
       }
     } else if (included &&
-      (source.getNodeType() == Node.TEXT_NODE || source.getNodeType() == Node.CDATA_SECTION_NODE)
+      (source.getNodeType() == Node.TEXT_NODE ||
+        source.getNodeType() == Node.CDATA_SECTION_NODE)
       && !variablesContext.isEmpty()) {
       // 如果在处理 <include /> 标签中，并且节点类型为 Node.TEXT_NODE ，并且变量非空
       // 则进行变量的替换，并修改原节点 source
@@ -139,7 +143,7 @@ public class XMLIncludeTransformer {
   }
 
   /**
-   * 获得对应的 <sql /> 节点。
+   * 获得对应的 <sql/> 节点。
    *
    * @param refid     refid
    * @param variables mybatis-config.xml 中的 properties 集合

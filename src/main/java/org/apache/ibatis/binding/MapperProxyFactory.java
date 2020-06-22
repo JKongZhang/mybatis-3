@@ -50,6 +50,12 @@ public class MapperProxyFactory<T> {
     return methodCache;
   }
 
+  /**
+   * 在使用Mapper对象进行SQL操作时，实际上是使用的mapper的代理对象。
+   *
+   * @param mapperProxy Mapper 的代理对象
+   * @return Mapper 的大力对象
+   */
   @SuppressWarnings("unchecked")
   protected T newInstance(MapperProxy<T> mapperProxy) {
     // 基于 JDK Proxy 实现，而 InvocationHandler 参数是 MapperProxy 对象。

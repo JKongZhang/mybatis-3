@@ -104,8 +104,7 @@ public class XMLStatementBuilder extends BaseBuilder {
    *   fetchSize="256"            -> 这是一个给驱动的建议值，尝试让驱动程序每次批量返回的结果行数等于这个设置值。
    *   statementType="PREPARED"   -> 可选 STATEMENT，PREPARED 或 CALLABLE。这会让 MyBatis 分别使用 Statement，PreparedStatement 或 CallableStatement，默认值：PREPARED。
    *   resultSetType="FORWARD_ONLY"
-   *   databaseId=""              -> 如果配置了数据库厂商标识（databaseIdProvider），MyBatis 会加载所有不带 databaseId 或匹配当前 databaseId 的语句；如果带和不带的语句都有，则不带的会被忽略。
-   *   >
+   *   databaseId="">             -> 如果配置了数据库厂商标识（databaseIdProvider），MyBatis 会加载所有不带 databaseId 或匹配当前 databaseId 的语句；如果带和不带的语句都有，则不带的会被忽略。
    *
    * </pre>
    */
@@ -115,12 +114,12 @@ public class XMLStatementBuilder extends BaseBuilder {
     // 获取 databaseId
     String databaseId = context.getStringAttribute("databaseId");
 
-    // 如果databaseId不一致则结束处理
+    // 如果 databaseId 不一致则结束处理
     if (!databaseIdMatchesCurrent(id, databaseId, this.requiredDatabaseId)) {
       return;
     }
 
-    // 获取 node 的名称：select、insert、update、delete
+    // 获取 node 的名称：select、insert、update、delete、flush
     String nodeName = context.getNode().getNodeName();
     // 将sql类型转为枚举类
     SqlCommandType sqlCommandType = SqlCommandType.valueOf(nodeName.toUpperCase(Locale.ENGLISH));
@@ -146,6 +145,7 @@ public class XMLStatementBuilder extends BaseBuilder {
     </select>
      */
     XMLIncludeTransformer includeParser = new XMLIncludeTransformer(configuration, builderAssistant);
+    // 替换<include></include>标签文本
     includeParser.applyIncludes(context.getNode());
 
     // 获取 parameterType，及 class
@@ -153,9 +153,9 @@ public class XMLStatementBuilder extends BaseBuilder {
     Class<?> parameterTypeClass = resolveClass(parameterType);
 
     // 获取 lang 属性
-    /* 动态 SQL 中的插入脚本语言 ****************************************************************
-    MyBatis 从 3.2 版本开始支持插入脚本语言，这允许你插入一种语言驱动，并基于这种语言来编写动态 SQL 查询语句。
-    可以通过实现以下接口来插入一种语言：
+    /* 动态 SQL 中的插入脚本语言
+      MyBatis 从 3.2 版本开始支持插入脚本语言，这允许你插入一种语言驱动，并基于这种语言来编写动态 SQL 查询语句。
+      可以通过实现以下接口来插入一种语言：
     public interface LanguageDriver {
       ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql);
       SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType);
