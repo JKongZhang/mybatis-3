@@ -310,7 +310,7 @@ public class XMLStatementBuilder extends BaseBuilder {
    * </pre>
    * <p>
    * 首先读取selectkey中配置的一系列属性，然后调用 {@link LanguageDriver#createSqlSource}来创建SqlSource对象。
-   * 最后创建MapperStatement对象，并添加到 {@link Configuration#mappedStatements}
+   * 最后创建MapperStatement对象，并添加到 {@link Configuration##mappedStatements}
    *
    * @param id                 完整 id ，格式为 `${id}!selectKey`
    * @param nodeToHandle       需要处理的selectKey节点
@@ -342,7 +342,7 @@ public class XMLStatementBuilder extends BaseBuilder {
     String resultMap = null;
     ResultSetType resultSetTypeEnum = null;
 
-    // 创建 SqlSource 对象 TODO
+    // 创建 SqlSource 对象
     SqlSource sqlSource = langDriver.createSqlSource(configuration, nodeToHandle, parameterTypeClass);
     SqlCommandType sqlCommandType = SqlCommandType.SELECT;
 

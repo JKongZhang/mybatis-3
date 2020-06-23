@@ -16,6 +16,11 @@
 package org.apache.ibatis.scripting.xmltags;
 
 /**
+ * 主要针对动态SQL中的 <bind> 节点。
+ * 该节点可以从OGNL表达式中创建一个变量，并将其记录到上下文中。
+ * 在 VarDeclSqlNode 中使用 name 字段记录<bind> 节点的 name 属性值。
+ * expression 字段记录 <bind> 字段的value 属性值。
+ *
  * @author Frank D. Martinez [mnesarco]
  */
 public class VarDeclSqlNode implements SqlNode {

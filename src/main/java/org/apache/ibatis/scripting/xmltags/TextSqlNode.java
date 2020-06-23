@@ -90,17 +90,17 @@ public class TextSqlNode implements SqlNode {
     }
 
     /**
-     * todo 待验证：
      * <p>
      * 对于该方法，如下的示例：
      * SELECT * FROM subject WHERE id = ${id}
-     * id = ${id} 的 ${id} 部分，将被替换成对应的具体编号。例如说，id 为 1 ，则会变成 SELECT * FROM subject WHERE id = 1 。
+     * id = ${id} 的 ${id} 部分，将被替换成对应的具体编号。
+     * 例如说，id 为 1 ，则会变成 SELECT * FROM subject WHERE id = 1 。
      * <p>
      * 而对于如下的示例：
      * SELECT * FROM subject WHERE id = #{id}
      * id = #{id} 的 #{id} 部分，则不会进行替换。
      *
-     * @param content
+     * @param content 待处理的SQL
      * @return
      */
     @Override

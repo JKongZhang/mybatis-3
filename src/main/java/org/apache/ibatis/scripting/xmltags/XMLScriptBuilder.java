@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.BuilderException;
+import org.apache.ibatis.builder.xml.XMLStatementBuilder;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.scripting.defaults.RawSqlSource;
@@ -93,7 +94,7 @@ public class XMLScriptBuilder extends BaseBuilder {
    * @return SqlSource
    */
   public SqlSource parseScriptNode() {
-    // 解析 SQL
+    // TODO 核心解析动态 SQL
     MixedSqlNode rootSqlNode = parseDynamicTags(context);
     // 创建 SqlSource 对象
     SqlSource sqlSource;
@@ -125,6 +126,20 @@ public class XMLScriptBuilder extends BaseBuilder {
    *          </foreach>
    *  </select>
    * </pre>
+   * <p>
+   * {@link XMLStatementBuilder#parseStatementNode()} 方法在处理SQL节点时，首先将SQL标签中的<include/>标签替换为具体SQL内容。
+   * 所以以上xml文件到此步时会变为：
+   * <pre>
+   *  <select id="selectByIds" resultType="UserDO">
+   *      SELECT
+   *          id, username, password, create_time
+   *      FROM users
+   *      WHERE id IN
+   *          <foreach item="id" collection="ids" separator="," open="(" close=")" index="">
+   *              #{id}
+   *          </foreach>
+   *  </select>
+   * </pre>
    *
    * @param node xml的sql节点
    * @return
@@ -137,28 +152,31 @@ public class XMLScriptBuilder extends BaseBuilder {
     for (int i = 0; i < children.getLength(); i++) {
       // 2.1 当前子节点
       XNode child = node.newXNode(children.item(i));
-      // 2.2 如果类型是 Node.CDATA_SECTION_NODE 或者 Node.TEXT_NODE 时
+      // 2.2 如果类型是 Node.CDATA_SECTION_NODE 或者 Node.TEXT_NODE 时，将被看作是 TextSqlNode 或 StaticTextSqlNode节点。
+      // StaticTextSqlNode：不包含占位符的非动态SQL节点
+      // TextSqlNode：表示包含“${}”占位符的动态SQL节点
       if (child.getNode().getNodeType() == Node.CDATA_SECTION_NODE ||
         child.getNode().getNodeType() == Node.TEXT_NODE) {
         // 2.2.1 获得内容
         String data = child.getStringBody("");
-        // 2.2.2 创建 TextSqlNode 对象
+        // 2.2.2 创建 TextSqlNode 对象，在 TextSqlNode 内有内部类 DynamicCheckerTokenParser，主要用来解析"${}"占位符
         TextSqlNode textSqlNode = new TextSqlNode(data);
-        // 2.2.3 如果是动态的 TextSqlNode 对象
+        // 2.2.3 如果是动态的 TextSqlNode 对象（如果存在"${}"占位符则是动态SQL）
         if (textSqlNode.isDynamic()) {
           // 添加到 contents 中
           contents.add(textSqlNode);
           // 标记为动态 SQL
           isDynamic = true;
-          // 2.2.4 如果是非动态的 TextSqlNode 对象
         } else {
+          // 2.2.4 如果是非动态的 SqlNode 对象
           contents.add(new StaticTextSqlNode(data));
         }
         // gcode issue #628
         // 2.3 如果类型是 Node.ELEMENT_NODE
       } else if (child.getNode().getNodeType() == Node.ELEMENT_NODE) {
-        // 2.3.1 根据子节点的标签，获得对应的 NodeHandler 对象
+        // 2.3.1 根据子节点的标签，获得对应的 NodeHandler 对象。（在本类创建时就初始化了nodeHandler，@see XMLScriptBuilder#initNodeHandlerMap()）
         String nodeName = child.getNode().getNodeName();
+        // 根据xml标签名称选择nodeHandler处理节点数据
         NodeHandler handler = nodeHandlerMap.get(nodeName);
         if (handler == null) {
           throw new BuilderException("Unknown element <" + nodeName + "> in SQL statement.");
@@ -381,7 +399,7 @@ public class XMLScriptBuilder extends BaseBuilder {
     public void handleNode(XNode nodeToHandle, List<SqlNode> targetContents) {
       // 解析内部的 SQL 节点，成 MixedSqlNode 对象
       MixedSqlNode mixedSqlNode = parseDynamicTags(nodeToHandle);
-      // 获得 test 属性
+      // 获得 test 属性（if条件表达式）
       String test = nodeToHandle.getStringAttribute("test");
       // 创建 IfSqlNode 对象
       IfSqlNode ifSqlNode = new IfSqlNode(mixedSqlNode, test);

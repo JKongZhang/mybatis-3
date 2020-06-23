@@ -28,6 +28,20 @@ import org.apache.ibatis.session.Configuration;
  * TrimSqlNode ，实现 SqlNode 接口，<trim /> 标签的 SqlNode 实现类。
  * 在下文中，我们会看到，<trim /> 标签是 <where /> 和 <set /> 标签的基础。
  *
+ * <pre>
+ *     <trim prefix="WHERE" prefixOverrides="AND | OR ">
+ *       ...
+ *     </trim>
+ *     <update id="testTrim" parameterType="com.mybatis.pojo.User">
+ *         update user
+ *         set
+ *         <trim suffixOverrides="," suffix="where id = #{id},">
+ *             <if test="cash!=null and cash!=''">cash= #{cash},</if>
+ *             <if test="address!=null and address!=''">address= #{address},</if>
+ *         </trim>
+ *     </update>
+ * </pre>
+ *
  * @author Clinton Begin
  */
 public class TrimSqlNode implements SqlNode {
@@ -54,7 +68,8 @@ public class TrimSqlNode implements SqlNode {
   private final List<String> suffixesToOverride;
   private final Configuration configuration;
 
-  public TrimSqlNode(Configuration configuration, SqlNode contents, String prefix, String prefixesToOverride, String suffix, String suffixesToOverride) {
+  public TrimSqlNode(Configuration configuration, SqlNode contents, String prefix,
+                     String prefixesToOverride, String suffix, String suffixesToOverride) {
     this(configuration, contents, prefix, parseOverrides(prefixesToOverride), suffix, parseOverrides(suffixesToOverride));
   }
 

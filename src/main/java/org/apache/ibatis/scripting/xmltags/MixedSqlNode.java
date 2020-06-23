@@ -34,7 +34,7 @@ public class MixedSqlNode implements SqlNode {
 
   @Override
   public boolean apply(DynamicContext context) {
-    // 遍历 SqlNode 数组，逐个应用
+    // 遍历 SqlNode 数组，逐个拼接SQL片段
     contents.forEach(node -> node.apply(context));
     return true;
   }

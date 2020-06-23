@@ -29,10 +29,12 @@ import org.apache.ibatis.builder.BuilderException;
 public class ExpressionEvaluator {
 
   /**
-   * 判断表达式对应的值，是否为 true
+   * 借助于Ognl表达式来判断表达式是否为 true
+   * <p>
+   * eg: name != null
    *
    * @param expression      表达式
-   * @param parameterObject 参数对象
+   * @param parameterObject 参数对象(参数中必定包含表达式中的参数)
    * @return 是否为 true
    */
   public boolean evaluateBoolean(String expression, Object parameterObject) {

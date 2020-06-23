@@ -21,6 +21,9 @@ package org.apache.ibatis.scripting.xmltags;
  * @author Clinton Begin
  */
 public class IfSqlNode implements SqlNode {
+  /**
+   * if表达式计算器
+   */
   private final ExpressionEvaluator evaluator;
   /**
    * 判断表达式
@@ -37,6 +40,12 @@ public class IfSqlNode implements SqlNode {
     this.evaluator = new ExpressionEvaluator();
   }
 
+  /**
+   * 计算if表达式的值
+   *
+   * @param context 上下文
+   * @return 表达式结果
+   */
   @Override
   public boolean apply(DynamicContext context) {
     // 1. 判断是否符合条件

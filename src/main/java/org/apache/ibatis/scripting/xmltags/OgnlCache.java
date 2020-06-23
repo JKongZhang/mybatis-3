@@ -25,6 +25,11 @@ import org.apache.ibatis.builder.BuilderException;
 
 /**
  * Caches OGNL parsed expressions.
+ * 主要因为OGNL表达式执行效率比较低，所以每次完成解析之后将解析结果缓存起来，以备下次继续使用。
+ * <p>
+ * 在记性OGNL表达式解析时，先验证是否已经解析过，如果解析过那么直接拿来使用，否则进行解析。
+ * <p>
+ * 例如：{@link ExpressionEvaluator#evaluateBoolean(String, Object)}
  *
  * @author Eduardo Macarron
  * @see <a href='http://code.google.com/p/mybatis/issues/detail?id=342'>Issue 342</a>
