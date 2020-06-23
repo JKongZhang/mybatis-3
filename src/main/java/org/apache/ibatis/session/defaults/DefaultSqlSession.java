@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.session.defaults;
 
@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.cursor.defaults.DefaultCursor;
 import org.apache.ibatis.exceptions.ExceptionFactory;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.ibatis.executor.BatchResult;
@@ -48,9 +49,17 @@ import org.apache.ibatis.session.SqlSession;
 public class DefaultSqlSession implements SqlSession {
 
   private final Configuration configuration;
+  /**
+   * 当前SQLSession所采用的executor对象
+   */
   private final Executor executor;
-
+  /**
+   * 是否自动提交事务
+   */
   private final boolean autoCommit;
+  /**
+   * 标识当前的缓存数据是否是脏数据
+   */
   private boolean dirty;
   private List<Cursor<?>> cursorList;
 
@@ -70,6 +79,14 @@ public class DefaultSqlSession implements SqlSession {
     return this.selectOne(statement, null);
   }
 
+  /**
+   * 根据statementId执行SQL
+   *
+   * @param statement ${namespace}.${id}
+   * @param parameter sql 参数
+   * @param <T>       当前statement返回的数据bean类型
+   * @return 查询结果，当返回结果为1条时，正常返回；大于1条时，将会报错；无数据时，返回null。
+   */
   @Override
   public <T> T selectOne(String statement, Object parameter) {
     // Popular vote was to return null on 0 results and throw exception on too many.
@@ -97,37 +114,13 @@ public class DefaultSqlSession implements SqlSession {
   public <K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey, RowBounds rowBounds) {
     final List<? extends V> list = selectList(statement, parameter, rowBounds);
     final DefaultMapResultHandler<K, V> mapResultHandler = new DefaultMapResultHandler<>(mapKey,
-            configuration.getObjectFactory(), configuration.getObjectWrapperFactory(), configuration.getReflectorFactory());
+      configuration.getObjectFactory(), configuration.getObjectWrapperFactory(), configuration.getReflectorFactory());
     final DefaultResultContext<V> context = new DefaultResultContext<>();
     for (V o : list) {
       context.nextResultObject(o);
       mapResultHandler.handleResult(context);
     }
     return mapResultHandler.getMappedResults();
-  }
-
-  @Override
-  public <T> Cursor<T> selectCursor(String statement) {
-    return selectCursor(statement, null);
-  }
-
-  @Override
-  public <T> Cursor<T> selectCursor(String statement, Object parameter) {
-    return selectCursor(statement, parameter, RowBounds.DEFAULT);
-  }
-
-  @Override
-  public <T> Cursor<T> selectCursor(String statement, Object parameter, RowBounds rowBounds) {
-    try {
-      MappedStatement ms = configuration.getMappedStatement(statement);
-      Cursor<T> cursor = executor.queryCursor(ms, wrapCollection(parameter), rowBounds);
-      registerCursor(cursor);
-      return cursor;
-    } catch (Exception e) {
-      throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
-    } finally {
-      ErrorContext.instance().reset();
-    }
   }
 
   @Override
@@ -140,11 +133,53 @@ public class DefaultSqlSession implements SqlSession {
     return this.selectList(statement, parameter, RowBounds.DEFAULT);
   }
 
+  /**
+   * 查询数据列表
+   *
+   * @param statement Unique identifier matching the statement to use.
+   * @param parameter A parameter object to pass to the statement.
+   * @param rowBounds Bounds to limit object retrieval
+   * @param <E>       返回体泛型
+   * @return 结果数据
+   */
   @Override
   public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
       return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
+    } catch (Exception e) {
+      throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
+    } finally {
+      ErrorContext.instance().reset();
+    }
+  }
+
+  @Override
+  public <T> Cursor<T> selectCursor(String statement) {
+    return selectCursor(statement, null);
+  }
+
+  @Override
+  public <T> Cursor<T> selectCursor(String statement, Object parameter) {
+    return selectCursor(statement, parameter, RowBounds.DEFAULT);
+  }
+
+  /**
+   * 大量数据的游标查询（{@link DefaultCursor}）
+   *
+   * @param statement Unique identifier matching the statement to use.
+   * @param parameter A parameter object to pass to the statement.
+   * @param rowBounds Bounds to limit object retrieval
+   * @param <T>
+   * @return
+   */
+  @Override
+  public <T> Cursor<T> selectCursor(String statement, Object parameter, RowBounds rowBounds) {
+    try {
+      MappedStatement ms = configuration.getMappedStatement(statement);
+      Cursor<T> cursor = executor.queryCursor(ms, wrapCollection(parameter), rowBounds);
+      registerCursor(cursor);
+      return cursor;
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
     } finally {
@@ -162,6 +197,14 @@ public class DefaultSqlSession implements SqlSession {
     select(statement, null, RowBounds.DEFAULT, handler);
   }
 
+  /**
+   * 查询数据
+   *
+   * @param statement Unique identifier matching the statement to use.
+   * @param parameter
+   * @param rowBounds RowBound instance to limit the query results
+   * @param handler   ResultHandler that will handle each retrieved row
+   */
   @Override
   public void select(String statement, Object parameter, RowBounds rowBounds, ResultHandler handler) {
     try {
@@ -185,10 +228,27 @@ public class DefaultSqlSession implements SqlSession {
   }
 
   @Override
+  public int delete(String statement) {
+    return update(statement, null);
+  }
+
+  @Override
+  public int delete(String statement, Object parameter) {
+    return update(statement, parameter);
+  }
+
+  @Override
   public int update(String statement) {
     return update(statement, null);
   }
 
+  /**
+   * insert、delete与update都是用此重载方法
+   *
+   * @param statement Unique identifier matching the statement to execute.
+   * @param parameter A parameter object to pass to the statement.
+   * @return
+   */
   @Override
   public int update(String statement, Object parameter) {
     try {
@@ -202,15 +262,6 @@ public class DefaultSqlSession implements SqlSession {
     }
   }
 
-  @Override
-  public int delete(String statement) {
-    return update(statement, null);
-  }
-
-  @Override
-  public int delete(String statement, Object parameter) {
-    return update(statement, parameter);
-  }
 
   @Override
   public void commit() {
@@ -286,6 +337,17 @@ public class DefaultSqlSession implements SqlSession {
     return configuration;
   }
 
+  /**
+   * todo：非常关键。
+   * 此处获取的Mapper对象，实际上是在初始化configuration对象时，创建的mapper的代理对象。
+   * 那么，当mapper对象的方法被执行时，实际上执行的是mapper代理对象的方法。
+   * 也就是在执行mapper方法的时候，代理对象会找到与此方法对象的SQL语句，将SQL中的占位符，使用方法参数的具体指进行替换。
+   * SQL执行完成之后，会根据resultMap的设置，将resultSet对象转为JavaBean对象。
+   *
+   * @param type Mapper interface class
+   * @param <T>  mapper类型
+   * @return mapper的代理对象（通过jdk的动态代理实现的。）
+   */
   @Override
   public <T> T getMapper(Class<T> type) {
     return configuration.getMapper(type, this);

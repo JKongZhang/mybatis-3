@@ -24,6 +24,9 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 
 /**
  * Creates {@link Transaction} instances.
+ * 事务工厂，两个实现类：
+ * {@link org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory}
+ * {@link org.apache.ibatis.transaction.managed.ManagedTransactionFactory}
  *
  * @author Clinton Begin
  */

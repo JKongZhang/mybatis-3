@@ -55,6 +55,14 @@ public class MapperRegistry {
     this.config = config;
   }
 
+  /**
+   * 根据mapper的class对象获取mapper代理对象
+   *
+   * @param type       mapper的class对象
+   * @param sqlSession 执行当前操作的SQLSession
+   * @param <T>        mapper类型
+   * @return mapper的代理实现类
+   */
   @SuppressWarnings("unchecked")
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
     // 指定 Mapper Proxy Factory 的泛型

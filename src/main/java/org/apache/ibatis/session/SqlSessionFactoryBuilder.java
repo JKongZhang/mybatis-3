@@ -55,6 +55,17 @@ public class SqlSessionFactoryBuilder {
     return build(reader, null, properties);
   }
 
+  /**
+   * 创建SQLSessionFactory工厂：
+   * 1. 创建 XMLConfigBuilder 对象
+   * 2. 调用 XMLConfigBuilder#parse() 方法，执行 XML 解析，返回 Configuration 对象。
+   * 3. 创建 DefaultSqlSessionFactory 对象
+   *
+   * @param reader      reader读取文件
+   * @param environment 配置的环境（比如：开发，测试，生产）
+   * @param properties  配置文件信息
+   * @return SqlSessionFactory
+   */
   public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
     try {
       // 1. 创建 XMLConfigBuilder 对象
@@ -102,6 +113,12 @@ public class SqlSessionFactoryBuilder {
     }
   }
 
+  /**
+   * 创建SQLSessionFactory的默认实现类{@link DefaultSqlSessionFactory}对象
+   *
+   * @param config mybatis 核心配置
+   * @return SQLSessionFactory对象
+   */
   public SqlSessionFactory build(Configuration config) {
     return new DefaultSqlSessionFactory(config);
   }

@@ -687,8 +687,10 @@ public class Configuration {
    */
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
     // 1. 获得执行器类型
-    executorType = executorType == null ? defaultExecutorType : executorType; // 使用默认
-    executorType = executorType == null ? ExecutorType.SIMPLE : executorType; // 使用 ExecutorType.SIMPLE
+    // 使用默认
+    executorType = executorType == null ? defaultExecutorType : executorType;
+    // 使用 ExecutorType.SIMPLE
+    executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
     // 2. 创建对应实现的 Executor 对象
     // value 有三种类型：SIMPLE REUSE BATCH
     // <setting name="defaultExecutorType" value="" />
@@ -882,6 +884,14 @@ public class Configuration {
     mapperRegistry.addMapper(type);
   }
 
+  /**
+   * 从MapperRegistry中获取Mapper的代理对象
+   *
+   * @param type       需要获取的mapper的class
+   * @param sqlSession 执行当前SQL的SQLSession对象
+   * @param <T>        mapper类型
+   * @return mapper代理对象
+   */
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
     return mapperRegistry.getMapper(type, sqlSession);
   }
