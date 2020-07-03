@@ -126,7 +126,7 @@ public class CachingExecutor implements Executor {
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
     // 获得 BoundSql 对象
     BoundSql boundSql = ms.getBoundSql(parameterObject);
-    // 创建 CacheKey 对象
+    // mybatis中默认开启一级缓存你的，所以在执行SQL之前需要验证此条SQL是否执行过。此处是创建 CacheKey 对象
     CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
     // 查询
     return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);

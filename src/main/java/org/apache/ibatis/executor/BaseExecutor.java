@@ -233,7 +233,7 @@ public abstract class BaseExecutor implements Executor {
 
     List<E> list;
     try {
-      // 4. 查询 queryStack + 1
+      // 4. 查询 queryStack + 1 todo：queryStack的作用是什么？
       queryStack++;
       // 5. 从一级缓存中，获取查询结果
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
@@ -558,7 +558,8 @@ public abstract class BaseExecutor implements Executor {
     // 通过事务对象获取conn对象
     Connection connection = transaction.getConnection();
     if (statementLog.isDebugEnabled()) {
-      // 如果 debug 日志级别，则创建 ConnectionLogger 对象，进行动态代理
+      // 如果 debug 日志级别，则创建 ConnectionLogger 对象，进行动态代理。
+      // 根据日志等级，创建connection的代理对象，主要目的是输出日志信息。
       return ConnectionLogger.newInstance(connection, statementLog, queryStack);
     } else {
       return connection;

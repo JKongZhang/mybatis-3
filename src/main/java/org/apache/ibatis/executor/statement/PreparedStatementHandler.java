@@ -65,6 +65,15 @@ public class PreparedStatementHandler extends BaseStatementHandler {
     ps.addBatch();
   }
 
+  /**
+   * 执行 PreparedStatement，并将查询结果交给ResultHandler处理。
+   *
+   * @param statement     Statement 对象
+   * @param resultHandler ResultHandler 对象，处理结果
+   * @param <E>           返回类型
+   * @return 查询结果
+   * @throws SQLException e
+   */
   @Override
   public <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException {
     PreparedStatement ps = (PreparedStatement) statement;
@@ -83,6 +92,13 @@ public class PreparedStatementHandler extends BaseStatementHandler {
     return resultSetHandler.handleCursorResultSets(ps);
   }
 
+  /**
+   * 通过Connection对象，创建SQL的Statement对象
+   *
+   * @param connection 数据库连接对象
+   * @return {@link Statement} java.sql.Statement
+   * @throws SQLException e
+   */
   @Override
   protected Statement instantiateStatement(Connection connection) throws SQLException {
     String sql = boundSql.getSql();

@@ -53,6 +53,7 @@ public class RoutingStatementHandler implements StatementHandler {
         delegate = new SimpleStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
         break;
       case PREPARED:
+        // 在构造器中主要初始化SQL执行过程中需要的参数
         delegate = new PreparedStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
         break;
       case CALLABLE:

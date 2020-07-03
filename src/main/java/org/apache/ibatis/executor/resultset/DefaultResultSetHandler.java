@@ -228,7 +228,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     while (rsw != null && resultMapCount > resultSetCount) {
       // 获得 ResultMap 对象
       ResultMap resultMap = resultMaps.get(resultSetCount);
-      // 处理 ResultSet ，将结果添加到 multipleResults 中
+      // todo 重要！！！ 处理 ResultSet ，将结果添加到 multipleResults 中
       handleResultSet(rsw, resultMap, multipleResults, null);
       // 获得下一个 ResultSet 对象，并封装成 ResultSetWrapper 对象
       rsw = getNextResultSet(stmt);
@@ -279,15 +279,14 @@ public class DefaultResultSetHandler implements ResultSetHandler {
   /**
    * 将 ResultSet 对象，封装成 ResultSetWrapper 对象
    *
-   * @param stmt
-   * @return
-   * @throws SQLException
+   * @param stmt SQL执行的statement
+   * @return ResultSet 的 包装对象，封装 ResultSet 和 Configuration 对象
+   * @throws SQLException e
    */
   private ResultSetWrapper getFirstResultSet(Statement stmt) throws SQLException {
     ResultSet rs = stmt.getResultSet();
     while (rs == null) {
-      // move forward to get the first resultset in case the driver
-      // doesn't return the resultset as the first result (HSQLDB 2.1)
+      // move forward to get the first resultset in case the driver doesn't return the resultset as the first result (HSQLDB 2.1)
       if (stmt.getMoreResults()) {
         rs = stmt.getResultSet();
       } else {
@@ -453,7 +452,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 
   /**
    * 处理简单映射的结果。
-   * todo 继续
+   * todo 解析resultSet 结果集
    *
    * @param rsw
    * @param resultMap
@@ -500,6 +499,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
   @SuppressWarnings("unchecked" /* because ResultHandler<?> is always ResultHandler<Object>*/)
   private void callResultHandler(ResultHandler<?> resultHandler, DefaultResultContext<Object> resultContext, Object rowValue) {
     resultContext.nextResultObject(rowValue);
+    // todo 重要！！！ 执行拦截器处理
     ((ResultHandler<Object>) resultHandler).handleResult(resultContext);
   }
 
@@ -507,6 +507,18 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     return !context.isStopped() && context.getResultCount() < rowBounds.getLimit();
   }
 
+  /**
+   * {@link ResultSet#TYPE_FORWARD_ONLY} 结果集的游标只能向下滚动。
+   * {@link ResultSet#TYPE_SCROLL_INSENSITIVE} 结果集的游标可以上下移动，当数据库变化时，当前结果集不变。
+   * {@link ResultSet#TYPE_SCROLL_SENSITIVE} 返回可滚动的结果集，当数据库变化时，当前结果集同步改变。
+   * <p>
+   * {@link ResultSet#CONCUR_READ_ONLY} 不能用结果集更新数据库中的表。
+   * {@link ResultSet#CONCUR_UPDATABLE} 能用结果集更新数据库中的表。
+   *
+   * @param rs
+   * @param rowBounds
+   * @throws SQLException
+   */
   private void skipRows(ResultSet rs, RowBounds rowBounds) throws SQLException {
     if (rs.getType() != ResultSet.TYPE_FORWARD_ONLY) {
       if (rowBounds.getOffset() != RowBounds.NO_ROW_OFFSET) {
@@ -525,6 +537,17 @@ public class DefaultResultSetHandler implements ResultSetHandler {
   // GET VALUE FROM ROW FOR SIMPLE RESULT MAP
   //
 
+  /**
+   * 处理行数据，并将数据已定义的returnType的Bean对象
+   * <p>
+   * todo 重要：resultSet解析为JavaBean对象
+   *
+   * @param rsw
+   * @param resultMap
+   * @param columnPrefix
+   * @return
+   * @throws SQLException
+   */
   private Object getRowValue(ResultSetWrapper rsw, ResultMap resultMap, String columnPrefix) throws SQLException {
     final ResultLoaderMap lazyLoader = new ResultLoaderMap();
     Object rowValue = createResultObject(rsw, resultMap, lazyLoader, columnPrefix);

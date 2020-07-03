@@ -66,10 +66,15 @@ public class DefaultParameterHandler implements ParameterHandler {
     return parameterObject;
   }
 
+  /**
+   * 通过PrepareStatement设置SQL中的站位参数，例如：select * from user where id = ?
+   *
+   * @param ps PreparedStatement 对象
+   */
   @Override
   public void setParameters(PreparedStatement ps) {
     ErrorContext.instance().activity("setting parameters").object(mappedStatement.getParameterMap().getId());
-    // 1. 遍历 ParameterMapping 数组
+    // 1. 遍历 ParameterMapping 数组，其中封装了参数名称，参数类型等
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     if (parameterMappings != null) {
       for (int i = 0; i < parameterMappings.size(); i++) {

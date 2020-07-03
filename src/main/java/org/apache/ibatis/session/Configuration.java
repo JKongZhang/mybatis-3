@@ -668,7 +668,20 @@ public class Configuration {
    * @return
    */
   public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
+    // RoutingStatementHandler 根据SQL类型选择对象的StatementHandler来处理SQL执行
+    // 可供选择的有：
+    // 1. SimpleStatementHandler（简单SQL执行）
+    // 2. PreparedStatementHandler（SQL预处理）
+    // 3. CallableStatementHandler（存储过程）
+    // 在 RoutingStatementHandler 对象内部会存在一个被代理的 StatementHandler，真实操作SQL执行的还是被代理的 StatementHandler
     StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
+    // 为当前的 RoutingStatementHandler 对象添加拦截器。
+    // 在mybatis中拦截器的类型分为四种：
+    // 1. ParameterHandler
+    // 2. StatementHandler
+    // 3. Executor
+    // 4. ResultSetHandler
+    // todo 研究 Interceptor执行的流程
     statementHandler = (StatementHandler) interceptorChain.pluginAll(statementHandler);
     return statementHandler;
   }

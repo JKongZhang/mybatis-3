@@ -103,12 +103,20 @@ public abstract class BaseStatementHandler implements StatementHandler {
     return parameterHandler;
   }
 
+  /**
+   * 根据Connection创建Statement对象，并设置超时时间和每次从数据库获取数据的数量（fetchSize）
+   *
+   * @param connection         Connection 对象
+   * @param transactionTimeout 事务超时时间
+   * @return java.sql.Statement
+   * @throws SQLException e
+   */
   @Override
   public Statement prepare(Connection connection, Integer transactionTimeout) throws SQLException {
     ErrorContext.instance().sql(boundSql.getSql());
     Statement statement = null;
     try {
-      // 1. 创建 Statement 对象
+      // 1. 根据Connection对象创建 Statement 对象
       statement = instantiateStatement(connection);
       // 2. 设置超时时间
       setStatementTimeout(statement, transactionTimeout);
@@ -157,6 +165,17 @@ public abstract class BaseStatementHandler implements StatementHandler {
     StatementUtil.applyTransactionTimeout(stmt, queryTimeout, transactionTimeout);
   }
 
+  /**
+   * 设置每次从数据库读取数据的size大小。
+   * 简单来讲，Fetch相当于读缓存，默认FetchSize值是10，
+   * 1. 若读取10000条记录，一次数据库交互，即rs.next的操作，ResultSet会一次性从数据库服务器，得到10条记录，
+   * 那么下次执行rs.next，就直接使用内存读取，不用和数据库交互了。
+   * 2. 如果使用setFetchSize设置FetchSize为10000，则只需要一次数据库交互，本地缓存10000条记录，
+   * 每次执行rs.next，只是内存操作，不会有数据库网络消耗，效率就会高些。
+   *
+   * @param stmt java.sql.Statement
+   * @throws SQLException e
+   */
   protected void setFetchSize(Statement stmt) throws SQLException {
     // 获得 fetchSize 。非空，则进行设置
     Integer fetchSize = mappedStatement.getFetchSize();

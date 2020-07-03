@@ -32,6 +32,11 @@ import org.apache.ibatis.session.Configuration;
  * Can also have additional parameters that are created by the dynamic language (for loops, bind...).
  * 一次可执行的 SQL 封装。
  *
+ * 在 BoundSql中封装了可执行的SQL语句，例如：select * from user where id = ?
+ * 同时，还会持有此条SQL的参数类型，使用{@link ParameterMapping} 进行管理，其中包含参数的名称，参数的类型
+ * 还包括用户在使用此SQL是传的参数。例如：1
+ *
+ *
  * @author Clinton Begin
  */
 public class BoundSql {

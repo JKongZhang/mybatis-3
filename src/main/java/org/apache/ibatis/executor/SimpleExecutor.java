@@ -69,16 +69,16 @@ public class SimpleExecutor extends BaseExecutor {
   }
 
   /**
-   * 继承自 BaseExecutor
+   * 继承自 BaseExecutor，执行数据去查询操作
    *
-   * @param ms
-   * @param parameter
+   * @param ms            每一个SQL标签对应一个 MappedStatement
+   * @param parameter     SQL需要的参数
    * @param rowBounds
-   * @param resultHandler
-   * @param boundSql
-   * @param <E>
-   * @return
-   * @throws SQLException
+   * @param resultHandler 结果处理器
+   * @param boundSql      封装的可执行的SQL
+   * @param <E>           返回体泛型
+   * @return 查询结果list
+   * @throws SQLException e
    */
   @Override
   public <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler,
@@ -86,7 +86,7 @@ public class SimpleExecutor extends BaseExecutor {
     Statement stmt = null;
     try {
       Configuration configuration = ms.getConfiguration();
-      // 1. 创建 StatementHandler 对象
+      // 1. 创建 RoutingStatementHandler 对象，并为 RoutingStatementHandler 添加 拦截器（Interceptor）
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
       // 2. 初始化 StatementHandler 对象
       stmt = prepareStatement(handler, ms.getStatementLog());
@@ -135,12 +135,15 @@ public class SimpleExecutor extends BaseExecutor {
   }
 
   /**
-   * 初始化 StatementHandler 对象。
+   * 初始化 Statement 对象。
+   * 1. 使用Connection对象创建Statement对象；
+   * 2. 初始化 Statement 对象，包括 超时时间和fetchSize；
+   * 3. 如果 Statement 需要参数，那么则设置参数。
    *
    * @param handler      statementHandler 对象
-   * @param statementLog
-   * @return
-   * @throws SQLException
+   * @param statementLog 用来创建Connection大力对象，便于日志输出
+   * @return 完成初始化的 java.sql.Statement
+   * @throws SQLException e
    */
   private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
     Statement stmt;
