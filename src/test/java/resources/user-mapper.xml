@@ -5,6 +5,9 @@
 <mapper namespace="me.jkong.mybatis.UserMapper">
 
     <select id="findUserById" parameterType="Integer" resultType="me.jkong.mybatis.User">
-       select * from user where id = #{id}
+       select * from user where 1 = 1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
     </select>
 </mapper>
