@@ -7,4 +7,4 @@
  * @version v0.0.1
  * @date 2020-06-23 23:24.
  */
-package me.jkong.mybatis;
+package me.labazhang.mybatis;

@@ -1,4 +1,4 @@
-package me.jkong.mybatis;
+package me.labazhang.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 

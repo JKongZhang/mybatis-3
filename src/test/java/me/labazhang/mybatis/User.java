@@ -1,4 +1,4 @@
-package me.laba.mybatis;
+package me.labazhang.mybatis;
 
 import java.io.Serializable;
 import java.util.Date;

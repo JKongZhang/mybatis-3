@@ -1,4 +1,4 @@
-package me.laba.mybatis;
+package me.labazhang.mybatis;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -28,7 +28,7 @@ public class SimpleMyBatisTest {
             //3.使用工厂生产SqlSession对象
             session = sqlSessionFactory.openSession();
             //4.执行Sql语句
-            User user = session.selectOne("me.jkong.mybatis.UserMapper.findUserById", 1);
+            User user = session.selectOne("findUserById", 1);
             //5. 打印结果
             System.out.println(user);
         } catch (IOException e) {

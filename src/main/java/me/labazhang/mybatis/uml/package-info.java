@@ -19,4 +19,4 @@
  * @version v1.0
  * @date 2020/3/25 16:38.
  */
-package me.jkong.mybatis.uml;
+package me.labazhang.mybatis.uml;
