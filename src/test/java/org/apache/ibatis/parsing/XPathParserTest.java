@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,6 +30,8 @@ import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.io.Resources;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 class XPathParserTest {
@@ -237,6 +240,39 @@ class XPathParserTest {
     assertEquals(usersNodeToStringExpect, usersNodeToString);
     assertEquals(userNodeToStringExpect, userNodeToString);
     assertEquals(carsNodeToStringExpect, carsNodeToString);
+  }
+
+  @Test
+  public void testGetNodeType() {
+    String xml = "" +
+            "<mapper namespace=\"me.jkong.mybatis.UserMapper\">" +
+            "   <select id=\"findUserById\" parameterType=\"Integer\" resultType=\"me.labazhang.mybatis.User\">" +
+            "     select * from user where 1 = 1" +
+            "     <if test=\"id != null\">" +
+            "       AND id = #{id}" +
+            "     </if>" +
+            "   </select>" +
+            "</mapper>";
+
+    XPathParser parser = new XPathParser(xml);
+
+    List<XNode> xNodes = parser.evalNode("/mapper").evalNodes("select");
+    for (XNode node : xNodes) {
+      NodeList children = node.getNode().getChildNodes();
+      for (int i = 0; i < children.getLength(); i++) {
+        XNode child = node.newXNode(children.item(i));
+        if (child.getNode().getNodeType() == Node.CDATA_SECTION_NODE || child.getNode().getNodeType() == Node.TEXT_NODE) {
+          System.out.println("txt");
+          System.out.println( child.getStringBody());
+        } else if (child.getNode().getNodeType() == Node.ELEMENT_NODE) {
+          System.out.println( child.getStringBody());
+        }
+      }
+    }
+
+
+
+
   }
 
 }

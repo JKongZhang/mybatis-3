@@ -6,11 +6,11 @@
     <node x="1443.0" y="112.0">org.apache.ibatis.logging.log4j2.Log4j2LoggerImpl</node>
     <node x="0.0" y="112.0">org.apache.ibatis.logging.stdout.StdOutImpl</node>
     <node x="201.00000000000003" y="271.0">org.apache.ibatis.logging.jdbc.StatementLogger</node>
-    <node x="357.0" y="112.0">org.apache.ibatis.logging.slf4j.Slf4jImpl</node>
     <node x="504.0" y="112.0">org.apache.ibatis.logging.slf4j.Slf4jLocationAwareLoggerImpl</node>
+    <node x="357.0" y="112.0">org.apache.ibatis.logging.slf4j.Slf4jImpl</node>
+    <node x="675.0" y="271.0">org.apache.ibatis.logging.jdbc.ConnectionLogger</node>
     <node x="910.0" y="189.0">org.apache.ibatis.logging.LogFactory</node>
     <node x="0.0" y="271.0">org.apache.ibatis.logging.jdbc.ResultSetLogger</node>
-    <node x="675.0" y="271.0">org.apache.ibatis.logging.jdbc.ConnectionLogger</node>
     <node x="156.0" y="112.0">org.apache.ibatis.logging.slf4j.Slf4jLoggerImpl</node>
     <node x="1800.0" y="112.0">org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl</node>
     <node x="324.0" y="189.0">org.apache.ibatis.logging.jdbc.BaseJdbcLogger</node>
@@ -52,12 +52,6 @@
       <point x="345.5" y="241.0" />
       <point x="-64.5" y="16.0" />
     </edge>
-    <edge source="org.apache.ibatis.logging.jdbc.PreparedStatementLogger" target="org.apache.ibatis.logging.jdbc.BaseJdbcLogger">
-      <point x="0.0" y="-16.0" />
-      <point x="528.5" y="251.0" />
-      <point x="431.5" y="251.0" />
-      <point x="21.5" y="16.0" />
-    </edge>
     <edge source="org.apache.ibatis.logging.jdbc.ConnectionLogger" target="org.apache.ibatis.logging.jdbc.BaseJdbcLogger">
       <point x="0.0" y="-16.0" />
       <point x="770.0" y="241.0" />
@@ -69,6 +63,12 @@
       <point x="903.5" y="92.0" />
       <point x="1066.3636363636363" y="92.0" />
       <point x="-6.63636363636374" y="16.0" />
+    </edge>
+    <edge source="org.apache.ibatis.logging.jdbc.PreparedStatementLogger" target="org.apache.ibatis.logging.jdbc.BaseJdbcLogger">
+      <point x="0.0" y="-16.0" />
+      <point x="528.5" y="251.0" />
+      <point x="431.5" y="251.0" />
+      <point x="21.5" y="16.0" />
     </edge>
     <edge source="org.apache.ibatis.logging.log4j.Log4jImpl" target="org.apache.ibatis.logging.Log">
       <point x="0.0" y="-16.0" />
@@ -113,7 +113,7 @@
       <point x="-19.90909090909099" y="16.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.6801390699695784" x="1140.5" y="151.5" />
+  <settings layout="Hierarchic Group" zoom="0.6781810231744644" x="1133.5" y="150.5" />
   <SelectedNodes>
     <node>org.apache.ibatis.logging.stdout.StdOutImpl</node>
   </SelectedNodes>

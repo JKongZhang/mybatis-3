@@ -94,7 +94,7 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   private XMLConfigBuilder(XPathParser parser, String environment, Properties props) {
-// <1> 创建 Configuration 对象
+    // <1> 创建 Configuration 对象
     super(new Configuration());
     ErrorContext.instance().resource("SQL Mapper Configuration");
     // <2> 设置 Configuration 的 variables 属性
@@ -114,7 +114,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
     parsed = true;
-    // todo xml核心解析方法
+    // todo xml核心解析方法 解析 mybatis-config.xml 配置文件
     parseConfiguration(
       // 获取xml根节点对象
       parser.evalNode("/configuration")
@@ -175,7 +175,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
       // 12. 解析 <typeHandlers /> 标签
       typeHandlerElement(root.evalNode("typeHandlers"));
-      // 13. 解析 <mappers /> 标签
+      // 13. 解析 <mappers /> 标签 todo 从mybatis-config.xml中解析出mappers的文件位置
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);

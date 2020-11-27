@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.jkong.mybatis.UserMapper">
-
     <select id="findUserById" parameterType="Integer" resultType="me.labazhang.mybatis.User">
        select * from user where 1 = 1
         <if test="id != null">

@@ -5,8 +5,8 @@
   <nodes>
     <node x="12.0" y="0.0">org.apache.ibatis.scripting.LanguageDriver</node>
     <node x="0.0" y="80.0">org.apache.ibatis.scripting.xmltags.XMLLanguageDriver</node>
-    <node x="0.0" y="235.0">org.apache.ibatis.scripting.LanguageDriverRegistry</node>
     <node x="0.0" y="160.0">org.apache.ibatis.scripting.defaults.RawLanguageDriver</node>
+    <node x="0.0" y="235.0">org.apache.ibatis.scripting.LanguageDriverRegistry</node>
   </nodes>
   <notes />
   <edges>
@@ -19,7 +19,7 @@
       <point x="0.0" y="15.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="70.0" y="15.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="112.0" y="132.5" />
   <SelectedNodes>
     <node>org.apache.ibatis.scripting.LanguageDriverRegistry</node>
   </SelectedNodes>

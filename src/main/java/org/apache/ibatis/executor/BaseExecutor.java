@@ -220,7 +220,7 @@ public abstract class BaseExecutor implements Executor {
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler,
                            CacheKey key, BoundSql boundSql) throws SQLException {
-    // todo 1. ErrorContext 的作用是什么？？？
+    // ErrorContext 的作用是什么
     ErrorContext.instance().resource(ms.getResource()).activity("executing a query").object(ms.getId());
     // 2. 如果已经关闭，则抛出异常
     if (closed) {
